@@ -1,0 +1,93 @@
+#!/usr/bin/env node
+
+import yargs from 'yargs'
+import { hideBin } from 'yargs/helpers'
+import { spawn } from 'child_process'
+import { dirname, join } from 'path'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+const rootDir = join(__dirname, '..')
+
+function launchFrontendCli(args) {
+  const frontendCliPath = join(rootDir, 'frontend-cli', 'index.js')
+
+  const frontendCli = spawn('node', [frontendCliPath, ...args], {
+    stdio: 'inherit'
+  })
+
+  frontendCli.on('exit', (code) => {
+    process.exit(code || 0)
+  })
+
+  frontendCli.on('error', (err) => {
+    console.error('Failed to launch frontend CLI:', err)
+    process.exit(1)
+  })
+}
+
+yargs(hideBin(process.argv))
+  .scriptName('try-catch')
+  .usage('Usage: $0 <command> [options]')
+  .command(
+    'init [project-name]',
+    'Initialize a new Next.js project',
+    (yargs) => {
+      return yargs.help(false).version(false)
+    },
+    (argv) => {
+      launchFrontendCli(process.argv.slice(2))
+    }
+  )
+  .command(
+    'module <module-name>',
+    'Generate a new module in an existing Next.js application',
+    (yargs) => {
+      return yargs.help(false).version(false)
+    },
+    (argv) => {
+      launchFrontendCli(process.argv.slice(2))
+    }
+  )
+  .command(
+    'frontend',
+    'Launch frontend CLI',
+    (yargs) => {
+      return yargs.help(false).version(false)
+    },
+    (argv) => {
+      launchFrontendCli(process.argv.slice(3))
+    }
+  )
+  .command(
+    'backend',
+    'Launch backend CLI',
+    (yargs) => {
+      return yargs.help(false).version(false)
+    },
+    (argv) => {
+      const backendCliPath = join(rootDir, 'backend-cli', 'generator.py')
+      const originalArgs = process.argv.slice(3)
+
+      const backendCli = spawn('python3', [backendCliPath, ...originalArgs], {
+        stdio: 'inherit'
+      })
+
+      backendCli.on('exit', (code) => {
+        process.exit(code || 0)
+      })
+
+      backendCli.on('error', (err) => {
+        console.error('Failed to launch backend CLI:', err)
+        process.exit(1)
+      })
+    }
+  )
+  .demandCommand(1, 'You need to specify a command')
+  .help('h')
+  .alias('h', 'help')
+  .version('1.0.0')
+  .alias('v', 'version')
+  .epilogue('For more information, visit: https://github.com/avangenio/try-catch-cli')
+  .parse()
