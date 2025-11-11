@@ -1,7 +1,7 @@
 import { outro, note } from '@clack/prompts'
 import { PromptsManager } from '../prompts.js'
 import { ActionsManager } from '../actions.js'
-import { CLIUtils } from '../utils.js'
+import { handleCancel } from '../utils.js'
 import { PackageManagerFactory } from '../core/PackageManagerStrategy.js'
 
 export const command = 'init [project-name]'
@@ -44,7 +44,6 @@ export const builder = (yargs) => {
 export const handler = async (argv) => {
   const promptsManager = new PromptsManager()
   const actionsManager = new ActionsManager()
-  const cliUtils = new CLIUtils()
 
   try {
     promptsManager.showWelcome()
@@ -52,19 +51,19 @@ export const handler = async (argv) => {
     let projectName = argv['project-name']
     if (!projectName) {
       projectName = await promptsManager.askProjectName()
-      cliUtils.handleCancel(projectName)
+      handleCancel(projectName)
     }
 
     let packageManager = argv['package-manager'] || argv.pm
     if (!packageManager) {
       packageManager = await promptsManager.askPackageManager()
-      cliUtils.handleCancel(packageManager)
+      handleCancel(packageManager)
     }
 
     let useTailwind = argv.tailwind || argv.t
     if (useTailwind === undefined) {
       useTailwind = await promptsManager.askTailwind()
-      cliUtils.handleCancel(useTailwind)
+      handleCancel(useTailwind)
     }
 
     await actionsManager.runCreateNextApp(packageManager, projectName, useTailwind)
@@ -72,7 +71,7 @@ export const handler = async (argv) => {
     let linterFormatter = argv['linter-formatter'] || argv.lf
     if (!linterFormatter) {
       linterFormatter = await promptsManager.askLinterFormatter()
-      cliUtils.handleCancel(linterFormatter)
+      handleCancel(linterFormatter)
     }
 
     if (linterFormatter === 'eslint-prettier') {
@@ -84,7 +83,7 @@ export const handler = async (argv) => {
     let dockerConfig = argv.docker || argv.d
     if (!dockerConfig) {
       dockerConfig = await promptsManager.askDockerConfig()
-      cliUtils.handleCancel(dockerConfig)
+      handleCancel(dockerConfig)
     }
 
     if (dockerConfig !== 'none') {

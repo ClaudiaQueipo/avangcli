@@ -15,14 +15,12 @@ export class NextJsValidator {
     let isValid = false
     let nextVersion = null
 
-    // Check 1: package.json exists
     const packageJsonPath = path.join(this.projectPath, 'package.json')
     if (!fs.existsSync(packageJsonPath)) {
       errors.push('  ✗ package.json not found')
       return { isValid: false, errors, nextVersion }
     }
 
-    // Check 2: package.json contains Next.js dependency
     try {
       const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'))
       const dependencies = { ...packageJson.dependencies, ...packageJson.devDependencies }
@@ -38,13 +36,11 @@ export class NextJsValidator {
       return { isValid: false, errors, nextVersion }
     }
 
-    // Check 3: Next.js project structure (next.config.js or next.config.mjs or next.config.ts)
     const nextConfigFiles = ['next.config.js', 'next.config.mjs', 'next.config.ts']
     const hasNextConfig = nextConfigFiles.some(configFile =>
       fs.existsSync(path.join(this.projectPath, configFile))
     )
 
-    // Check 4: App Router or Pages Router structure
     const hasAppDir = fs.existsSync(path.join(this.projectPath, 'app'))
     const hasPagesDir = fs.existsSync(path.join(this.projectPath, 'pages'))
     const hasSrcAppDir = fs.existsSync(path.join(this.projectPath, 'src', 'app'))
@@ -52,8 +48,6 @@ export class NextJsValidator {
 
     const hasValidStructure = hasAppDir || hasPagesDir || hasSrcAppDir || hasSrcPagesDir
 
-    // If we found Next.js in package.json but no config or structure, it's still valid
-    // (might be a fresh install)
     if (isValid) {
       if (!hasNextConfig) {
         errors.push('  ⚠ Warning: No next.config.{js,mjs,ts} file found (this is optional)')
@@ -63,9 +57,7 @@ export class NextJsValidator {
       }
     }
 
-    // Additional validations
     if (isValid) {
-      // Check for node_modules
       const hasNodeModules = fs.existsSync(path.join(this.projectPath, 'node_modules'))
       if (!hasNodeModules) {
         errors.push('  ⚠ Warning: node_modules not found. Run npm/yarn/pnpm/bun install first')

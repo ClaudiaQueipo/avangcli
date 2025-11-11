@@ -1,7 +1,10 @@
-import { outro, note, cancel, isCancel } from '@clack/prompts'
+import { outro, note, cancel, isCancel, spinner } from '@clack/prompts'
 import { ModuleGenerator } from '../core/ModuleGenerator.js'
 import { NextJsValidator } from '../core/NextJsValidator.js'
-import { CLIUtils } from '../utils.js'
+import { handleCancel, toPascalCase, toCamelCase, detectPackageManager, isPackageInstalled, validateModuleName } from '../utils.js'
+import { PromptFactory } from '../core/Prompt.js'
+import { ConfigManager } from '../core/ConfigManager.js'
+import { execSync } from 'child_process'
 
 export const command = 'module <module-name>'
 export const desc = 'Generate a new module in an existing Next.js application'
@@ -18,32 +21,44 @@ export const builder = (yargs) => {
       type: 'boolean',
       default: false
     })
-    .example('$0 module user', 'Create a user module')
-    .example('$0 module shopping-cart', 'Create a shopping-cart module')
+    .option('store', {
+      alias: 'st',
+      describe: 'Store manager to use (zustand, redux, none)',
+      type: 'string',
+      choices: ['zustand', 'redux', 'none']
+    })
+    .option('set-default-global', {
+      alias: 'g',
+      describe: 'Set the chosen store manager as default globally',
+      type: 'boolean',
+      default: false
+    })
+    .option('set-default-project', {
+      alias: 'p',
+      describe: 'Set the chosen store manager as default for this project',
+      type: 'boolean',
+      default: false
+    })
+    .example('$0 module user', 'Create a user module (will prompt for store manager)')
+    .example('$0 module shopping-cart --store zustand', 'Create a shopping-cart module with Zustand')
+    .example('$0 module auth --store redux -g', 'Create auth module with Redux and set Redux as global default')
+    .example('$0 module products --store zustand -p', 'Create products module with Zustand and set as project default')
 }
 
 export const handler = async (argv) => {
-  const cliUtils = new CLIUtils()
   const nextJsValidator = new NextJsValidator()
   const moduleGenerator = new ModuleGenerator()
+  const configManager = new ConfigManager()
 
   try {
     const moduleName = argv['module-name']
 
-    // Validate module name
-    if (!moduleName || moduleName.trim() === '') {
-      cancel('❌ Module name is required')
+    const validation = validateModuleName(moduleName)
+    if (!validation.isValid) {
+      cancel(`❌ ${validation.error}`)
       process.exit(1)
     }
 
-    // Validate module name format (kebab-case)
-    const moduleNamePattern = /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/
-    if (!moduleNamePattern.test(moduleName)) {
-      cancel('❌ Module name must be in kebab-case format (e.g., user, shopping-cart, user-profile)')
-      process.exit(1)
-    }
-
-    // Validate that we're in a Next.js project (unless skipped)
     if (!argv['skip-validation']) {
       const validationResult = nextJsValidator.validate()
 
@@ -55,28 +70,47 @@ export const handler = async (argv) => {
       note(`✓ Next.js ${validationResult.nextVersion || 'detected'}`, 'Valid Next.js project')
     }
 
-    // Generate module
-    const result = await moduleGenerator.generate(moduleName)
+    let storeManager = argv.store || argv.st
+
+    if (!storeManager) {
+      const defaultStore = configManager.getDefaultStoreManager()
+      if (defaultStore) {
+        storeManager = defaultStore
+        note(`Using configured default: ${defaultStore}`, '⚙️ Store Manager')
+      }
+    }
+
+    if (!storeManager) {
+      const storePrompt = PromptFactory.createStoreManagerPrompt()
+      storeManager = await storePrompt.ask()
+      handleCancel(storeManager)
+    }
+
+    if (argv['set-default-global'] || argv.g) {
+      configManager.setDefaultStoreManagerGlobal(storeManager)
+      note(`Set ${storeManager} as global default`, '🌍 Global Config')
+    }
+
+    if (argv['set-default-project'] || argv.p) {
+      configManager.setDefaultStoreManagerProject(storeManager)
+      note(`Set ${storeManager} as project default`, '📁 Project Config')
+    }
+
+    const result = await moduleGenerator.generate(moduleName, storeManager)
 
     if (!result.success) {
       cancel(`❌ ${result.error}`)
       process.exit(1)
     }
 
-    // Show success message with created files
+    await installDependencies(storeManager)
+
     const filesCreated = result.files.map(f => `  ✓ ${f}`).join('\n')
     note(filesCreated, '📁 Files created')
 
     outro(`✅ Module "${moduleName}" created successfully!`)
 
-    // Show next steps
-    const nextSteps = `Next steps:
-  1. Import the container in your page:
-     import { ${toPascalCase(moduleName)}Container } from '@/modules/${moduleName}/containers/${moduleName}-container'
-
-  2. Use the service in your components:
-     import { ${toCamelCase(moduleName)}Service } from '@/modules/${moduleName}/services/${moduleName}.service'`
-
+    const nextSteps = generateNextSteps(moduleName, storeManager)
     note(nextSteps, '🚀 Get started')
 
   } catch (error) {
@@ -86,15 +120,73 @@ export const handler = async (argv) => {
   }
 }
 
-// Helper functions for name conversion
-function toPascalCase(str) {
-  return str
-    .split('-')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join('')
+function generateNextSteps(moduleName, storeManager) {
+  const pascalName = toPascalCase(moduleName)
+  const camelName = toCamelCase(moduleName)
+
+  let steps = `Next steps:
+  1. Import the container in your page:
+     import { ${pascalName}Container } from '@/modules/${moduleName}/containers/${moduleName}-container'
+
+  2. Use the service in your components:
+     import { ${camelName}Service } from '@/modules/${moduleName}/services/${moduleName}.service'`
+
+  if (storeManager === 'zustand') {
+    steps += `
+
+  3. Use the Zustand store:
+     import { use${pascalName}Store } from '@/modules/${moduleName}/store/${moduleName}.store'`
+  } else if (storeManager === 'redux') {
+    steps += `
+
+  3. Configure Redux store in your app:
+     - Import the reducer in your store configuration
+     - Add ${moduleName}Reducer to your root reducer`
+  }
+
+  return steps
 }
 
-function toCamelCase(str) {
-  const pascal = toPascalCase(str)
-  return pascal.charAt(0).toLowerCase() + pascal.slice(1)
+async function installDependencies(storeManager) {
+  if (storeManager === 'none') {
+    return
+  }
+
+  const packageMap = {
+    zustand: 'zustand',
+    redux: '@reduxjs/toolkit'
+  }
+
+  const packageToInstall = packageMap[storeManager]
+
+  if (!packageToInstall) {
+    return
+  }
+
+  if (isPackageInstalled(packageToInstall)) {
+    return
+  }
+
+  const s = spinner()
+  s.start(`Installing ${packageToInstall}...`)
+
+  try {
+    const pm = detectPackageManager()
+    const installCommands = {
+      npm: `npm install ${packageToInstall}`,
+      yarn: `yarn add ${packageToInstall}`,
+      pnpm: `pnpm add ${packageToInstall}`,
+      bun: `bun add ${packageToInstall}`
+    }
+
+    execSync(installCommands[pm], {
+      stdio: 'pipe',
+      cwd: process.cwd()
+    })
+
+    s.stop(`✓ Installed ${packageToInstall}`)
+  } catch (error) {
+    s.stop(`⚠ Failed to install ${packageToInstall}`)
+    note(`Please install manually: ${packageToInstall}`, '⚠️ Manual Installation Required')
+  }
 }

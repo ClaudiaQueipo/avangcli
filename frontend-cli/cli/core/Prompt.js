@@ -93,4 +93,12 @@ export class PromptFactory {
   static createIntroPrompt(message) {
     return new IntroPrompt(message)
   }
+
+  static createStoreManagerPrompt() {
+    return new SelectPrompt('Select a store manager for this module:', [
+      { value: 'zustand', label: 'Zustand', hint: 'Lightweight and simple' },
+      { value: 'redux', label: 'Redux', hint: 'Full-featured state management' },
+      { value: 'none', label: 'None', hint: 'No store boilerplate' },
+    ])
+  }
 }
