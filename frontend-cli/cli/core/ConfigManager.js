@@ -105,4 +105,16 @@ export class ConfigManager {
   hasProjectConfig() {
     return fs.existsSync(this.projectConfigFile)
   }
+
+  getPackageManager() {
+    return this.get('packageManager', null)
+  }
+
+  setPackageManagerGlobal(packageManager) {
+    this.setGlobal('packageManager', packageManager)
+  }
+
+  setPackageManagerProject(packageManager) {
+    this.setProject('packageManager', packageManager)
+  }
 }

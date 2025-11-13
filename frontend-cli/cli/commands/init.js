@@ -36,9 +36,17 @@ export const builder = (yargs) => {
       type: 'string',
       choices: ['dev', 'prod', 'both', 'none']
     })
+    .option('ui-library', {
+      alias: 'ui',
+      describe: 'UI component library',
+      type: 'string',
+      choices: ['mui', 'shadcn', 'heroui', 'none']
+    })
     .example('$0 init', 'Initialize a new project with interactive prompts')
     .example('$0 init my-app --pm bun --tailwind', 'Create a project with Tailwind CSS')
     .example('$0 init my-app --pm npm --lf biome --docker dev', 'Create a fully configured project')
+    .example('$0 init my-app --pm npm --ui mui', 'Create a project with Material UI')
+    .example('$0 init my-app --pm npm --ui heroui --tailwind', 'Create a project with HeroUI')
 }
 
 export const handler = async (argv) => {
@@ -88,6 +96,28 @@ export const handler = async (argv) => {
 
     if (dockerConfig !== 'none') {
       await actionsManager.setupDocker(dockerConfig, projectName)
+    }
+
+    let uiLibrary = argv['ui-library'] || argv.ui
+    if (!uiLibrary) {
+      uiLibrary = await promptsManager.askUILibrary()
+      handleCancel(uiLibrary)
+    }
+
+    if (uiLibrary === 'mui') {
+      await actionsManager.setupMaterialUI(packageManager, projectName)
+    } else if (uiLibrary === 'shadcn') {
+      if (!useTailwind) {
+        console.log('\n⚠️  shadcn/ui requires Tailwind CSS. Installing Tailwind CSS first...')
+        await actionsManager.setupTailwind(packageManager, projectName)
+      }
+      await actionsManager.setupShadcn(packageManager, projectName)
+    } else if (uiLibrary === 'heroui') {
+      if (!useTailwind) {
+        console.log('\n⚠️  HeroUI requires Tailwind CSS. Installing Tailwind CSS first...')
+        await actionsManager.setupTailwind(packageManager, projectName)
+      }
+      await actionsManager.setupHeroUI(packageManager, projectName)
     }
 
     outro('✅ Project setup complete!')

@@ -34,6 +34,30 @@ export class ActionsManager {
     const command = SetupCommandFactory.createDockerSetup(dockerConfig, projectPath)
     await command.execute()
   }
+
+  async setupMaterialUI(packageManager, projectPath) {
+    const strategy = PackageManagerFactory.create(packageManager)
+    const command = SetupCommandFactory.createMaterialUISetup(strategy, projectPath, this.commandExecutor)
+    await command.execute()
+  }
+
+  async setupShadcn(packageManager, projectPath) {
+    const strategy = PackageManagerFactory.create(packageManager)
+    const command = SetupCommandFactory.createShadcnSetup(strategy, projectPath, this.commandExecutor)
+    await command.execute()
+  }
+
+  async setupTailwind(packageManager, projectPath) {
+    const strategy = PackageManagerFactory.create(packageManager)
+    const command = SetupCommandFactory.createTailwindSetup(strategy, projectPath, this.commandExecutor)
+    await command.execute()
+  }
+
+  async setupHeroUI(packageManager, projectPath) {
+    const strategy = PackageManagerFactory.create(packageManager)
+    const command = SetupCommandFactory.createHeroUISetup(strategy, projectPath, this.commandExecutor)
+    await command.execute()
+  }
 }
 
 export const actionsManager = new ActionsManager()
@@ -46,3 +70,11 @@ export const setupBiome = (packageManager, projectPath) =>
   actionsManager.setupBiome(packageManager, projectPath)
 export const setupDocker = (dockerConfig, projectPath) =>
   actionsManager.setupDocker(dockerConfig, projectPath)
+export const setupMaterialUI = (packageManager, projectPath) =>
+  actionsManager.setupMaterialUI(packageManager, projectPath)
+export const setupShadcn = (packageManager, projectPath) =>
+  actionsManager.setupShadcn(packageManager, projectPath)
+export const setupTailwind = (packageManager, projectPath) =>
+  actionsManager.setupTailwind(packageManager, projectPath)
+export const setupHeroUI = (packageManager, projectPath) =>
+  actionsManager.setupHeroUI(packageManager, projectPath)

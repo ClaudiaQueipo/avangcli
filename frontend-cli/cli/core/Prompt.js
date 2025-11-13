@@ -101,4 +101,13 @@ export class PromptFactory {
       { value: 'none', label: 'None', hint: 'No store boilerplate' },
     ])
   }
+
+  static createUILibraryPrompt() {
+    return new SelectPrompt('Configure UI component library:', [
+      { value: 'mui', label: 'Material UI', hint: 'Complete component library' },
+      { value: 'shadcn', label: 'shadcn/ui', hint: 'Customizable components with Tailwind' },
+      { value: 'heroui', label: 'HeroUI', hint: 'Modern React UI with Tailwind v4' },
+      { value: 'none', label: 'None', hint: 'Skip UI library setup' },
+    ])
+  }
 }

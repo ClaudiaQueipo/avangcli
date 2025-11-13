@@ -1,5 +1,6 @@
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
+import fs from 'fs'
 import { SetupCommand } from './SetupCommand.js'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -150,6 +151,245 @@ export class DockerSetupCommand extends SetupCommand {
   }
 }
 
+export class MaterialUISetupCommand extends SetupCommand {
+  constructor(packageManagerStrategy, projectPath, commandExecutor) {
+    super(packageManagerStrategy, projectPath)
+    this.commandExecutor = commandExecutor
+  }
+
+  startSpinner() {
+    this.spinner.start('Installing Material UI dependencies...')
+  }
+
+  async installDependencies() {
+    const { cmd, args } = this.packageManagerStrategy.getInstallCommand()
+    const dependencies = [
+      '@mui/material',
+      '@mui/icons-material',
+      '@emotion/react',
+      '@emotion/styled',
+    ]
+
+    this.spinner.stop()
+
+    await this.commandExecutor.execute(cmd, [...args, ...dependencies], {
+      cwd: this.projectPath,
+    })
+  }
+
+  async copyTemplates() {
+    // Material UI doesn't require template files, configuration is done in code
+  }
+
+  logSuccess() {
+    console.log('✓ Material UI configured successfully!')
+    console.log('\nNext steps:')
+    console.log('  1. Import ThemeProvider in your layout or _app file')
+    console.log('  2. Start using MUI components: import { Button } from "@mui/material"')
+  }
+
+  logError() {
+    console.error('✗ Failed to setup Material UI')
+  }
+}
+
+export class ShadcnSetupCommand extends SetupCommand {
+  constructor(packageManagerStrategy, projectPath, commandExecutor) {
+    super(packageManagerStrategy, projectPath)
+    this.commandExecutor = commandExecutor
+  }
+
+  startSpinner() {
+    this.spinner.start('Installing shadcn/ui dependencies...')
+  }
+
+  async installDependencies() {
+    const { cmd, args } = this.packageManagerStrategy.getInstallCommand()
+    const dependencies = [
+      'class-variance-authority',
+      'clsx',
+      'tailwind-merge',
+    ]
+
+    this.spinner.stop()
+
+    await this.commandExecutor.execute(cmd, [...args, ...dependencies], {
+      cwd: this.projectPath,
+    })
+
+    const devDependencies = [
+      '@types/node',
+      'tailwindcss-animate',
+    ]
+
+    await this.commandExecutor.execute(cmd, [...args, '-D', ...devDependencies], {
+      cwd: this.projectPath,
+    })
+  }
+
+  async copyTemplates() {
+    const templatesDir = join(__dirname, '..', '..', 'templates', 'shadcn')
+
+    const templates = [
+      { file: 'components.json', target: 'components.json' },
+      { file: 'lib/utils.ts', target: 'lib/utils.ts' },
+    ]
+
+    for (const { file, target } of templates) {
+      await this.copyTemplate(join(templatesDir, file), join(this.projectPath, target))
+    }
+
+    // Install default components: button and label
+    console.log('\n📦 Installing default shadcn components (button, label)...')
+
+    try {
+      await this.commandExecutor.execute('npx', ['shadcn@latest', 'add', 'button', '--yes', '--overwrite'], {
+        cwd: this.projectPath,
+      })
+      console.log('  ✓ Button component installed')
+    } catch (error) {
+      console.warn('  ⚠ Warning: Failed to install button component')
+    }
+
+    try {
+      await this.commandExecutor.execute('npx', ['shadcn@latest', 'add', 'label', '--yes', '--overwrite'], {
+        cwd: this.projectPath,
+      })
+      console.log('  ✓ Label component installed')
+    } catch (error) {
+      console.warn('  ⚠ Warning: Failed to install label component')
+    }
+  }
+
+  logSuccess() {
+    console.log('\n✓ shadcn/ui configured successfully!')
+    console.log('\nDefault components installed:')
+    console.log('  - Button (components/ui/button.tsx)')
+    console.log('  - Label (components/ui/label.tsx)')
+    console.log('\nAdd more components:')
+    console.log('  npx shadcn@latest add <component-name>')
+    console.log('\nExample usage:')
+    console.log('  import { Button } from "@/components/ui/button"')
+  }
+
+  logError() {
+    console.error('✗ Failed to setup shadcn/ui')
+  }
+}
+
+export class TailwindSetupCommand extends SetupCommand {
+  constructor(packageManagerStrategy, projectPath, commandExecutor) {
+    super(packageManagerStrategy, projectPath)
+    this.commandExecutor = commandExecutor
+  }
+
+  startSpinner() {
+    this.spinner.start('Installing Tailwind CSS...')
+  }
+
+  async installDependencies() {
+    const { cmd, args } = this.packageManagerStrategy.getInstallCommand()
+    const dependencies = [
+      'tailwindcss',
+      '@tailwindcss/postcss',
+    ]
+
+    this.spinner.stop()
+
+    await this.commandExecutor.execute(cmd, [...args, '-D', ...dependencies], {
+      cwd: this.projectPath,
+    })
+  }
+
+  async copyTemplates() {
+    const templatesDir = join(__dirname, '..', '..', 'templates', 'tailwind')
+
+    const templates = [
+      { file: 'postcss.config.mjs', target: 'postcss.config.mjs' },
+    ]
+
+    for (const { file, target } of templates) {
+      await this.copyTemplate(join(templatesDir, file), join(this.projectPath, target))
+    }
+
+    // Update globals.css to include Tailwind directives
+    const globalsPath = join(this.projectPath, 'app', 'globals.css')
+    if (fs.existsSync(globalsPath)) {
+      const content = fs.readFileSync(globalsPath, 'utf-8')
+      if (!content.includes('@import "tailwindcss"')) {
+        const tailwindImport = '@import "tailwindcss";\n\n'
+        fs.writeFileSync(globalsPath, tailwindImport + content)
+      }
+    }
+  }
+
+  logSuccess() {
+    console.log('✓ Tailwind CSS configured successfully!')
+  }
+
+  logError() {
+    console.error('✗ Failed to setup Tailwind CSS')
+  }
+}
+
+export class HeroUISetupCommand extends SetupCommand {
+  constructor(packageManagerStrategy, projectPath, commandExecutor) {
+    super(packageManagerStrategy, projectPath)
+    this.commandExecutor = commandExecutor
+  }
+
+  startSpinner() {
+    this.spinner.start('Installing HeroUI dependencies...')
+  }
+
+  async installDependencies() {
+    const { cmd, args } = this.packageManagerStrategy.getInstallCommand()
+    const dependencies = [
+      '@heroui/react',
+      'framer-motion',
+    ]
+
+    this.spinner.stop()
+
+    await this.commandExecutor.execute(cmd, [...args, ...dependencies], {
+      cwd: this.projectPath,
+    })
+  }
+
+  async copyTemplates() {
+    const templatesDir = join(__dirname, '..', '..', 'templates', 'heroui')
+
+    const templates = [
+      { file: 'hero.ts', target: 'hero.ts' },
+      { file: 'app/globals.css', target: 'app/globals.css' },
+      { file: 'app/providers.tsx', target: 'app/providers.tsx' },
+      { file: 'app/layout.tsx', target: 'app/layout.tsx' },
+    ]
+
+    for (const { file, target } of templates) {
+      await this.copyTemplate(join(templatesDir, file), join(this.projectPath, target))
+    }
+  }
+
+  logSuccess() {
+    console.log('\n✓ HeroUI configured successfully!')
+    console.log('\nConfiguration files created:')
+    console.log('  - hero.ts (HeroUI Tailwind plugin)')
+    console.log('  - app/globals.css (Updated with HeroUI imports)')
+    console.log('  - app/providers.tsx (HeroUIProvider component)')
+    console.log('  - app/layout.tsx (Root layout with HeroUIProvider)')
+    console.log('\nNext steps:')
+    console.log('  1. Install heroui CLI globally: npm install -g heroui-cli')
+    console.log('  2. Add components: heroui add button')
+    console.log('  3. Import components: import { Button } from "@heroui/react"')
+    console.log('\nThe HeroUIProvider is already configured in your layout!')
+  }
+
+  logError() {
+    console.error('✗ Failed to setup HeroUI')
+  }
+}
+
 export class SetupCommandFactory {
   static createEslintPrettierSetup(packageManagerStrategy, projectPath, commandExecutor) {
     return new EslintPrettierSetupCommand(packageManagerStrategy, projectPath, commandExecutor)
@@ -161,5 +401,21 @@ export class SetupCommandFactory {
 
   static createDockerSetup(dockerConfig, projectPath) {
     return new DockerSetupCommand(dockerConfig, projectPath)
+  }
+
+  static createTailwindSetup(packageManagerStrategy, projectPath, commandExecutor) {
+    return new TailwindSetupCommand(packageManagerStrategy, projectPath, commandExecutor)
+  }
+
+  static createMaterialUISetup(packageManagerStrategy, projectPath, commandExecutor) {
+    return new MaterialUISetupCommand(packageManagerStrategy, projectPath, commandExecutor)
+  }
+
+  static createShadcnSetup(packageManagerStrategy, projectPath, commandExecutor) {
+    return new ShadcnSetupCommand(packageManagerStrategy, projectPath, commandExecutor)
+  }
+
+  static createHeroUISetup(packageManagerStrategy, projectPath, commandExecutor) {
+    return new HeroUISetupCommand(packageManagerStrategy, projectPath, commandExecutor)
   }
 }

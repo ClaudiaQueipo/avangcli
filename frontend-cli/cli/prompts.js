@@ -45,6 +45,11 @@ export class PromptsManager {
     const prompt = PromptFactory.createTailwindPrompt()
     return await prompt.ask()
   }
+
+  async askUILibrary() {
+    const prompt = PromptFactory.createUILibraryPrompt()
+    return await prompt.ask()
+  }
 }
 
 export const promptsManager = new PromptsManager()
@@ -55,3 +60,4 @@ export const askProjectName = () => promptsManager.askProjectName()
 export const askLinterFormatter = () => promptsManager.askLinterFormatter()
 export const askDockerConfig = () => promptsManager.askDockerConfig()
 export const askTailwind = () => promptsManager.askTailwind()
+export const askUILibrary = () => promptsManager.askUILibrary()

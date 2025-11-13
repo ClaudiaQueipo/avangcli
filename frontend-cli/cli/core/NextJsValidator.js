@@ -96,4 +96,52 @@ export class NextJsValidator {
     const modulePath = path.join(sourceDir, 'modules', moduleName)
     return fs.existsSync(modulePath)
   }
+
+  /**
+   * Checks if this is a Next.js project
+   * @returns {boolean}
+   */
+  isNextJsProject() {
+    const packageJsonPath = path.join(this.projectPath, 'package.json')
+    if (!fs.existsSync(packageJsonPath)) {
+      return false
+    }
+
+    try {
+      const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'))
+      const dependencies = { ...packageJson.dependencies, ...packageJson.devDependencies }
+      return !!dependencies.next
+    } catch (error) {
+      return false
+    }
+  }
+
+  /**
+   * Detects the package manager being used
+   * @returns {string|null} 'npm', 'yarn', 'pnpm', 'bun', or null
+   */
+  detectPackageManager() {
+    if (fs.existsSync(path.join(this.projectPath, 'bun.lockb'))) {
+      return 'bun'
+    }
+    if (fs.existsSync(path.join(this.projectPath, 'pnpm-lock.yaml'))) {
+      return 'pnpm'
+    }
+    if (fs.existsSync(path.join(this.projectPath, 'yarn.lock'))) {
+      return 'yarn'
+    }
+    if (fs.existsSync(path.join(this.projectPath, 'package-lock.json'))) {
+      return 'npm'
+    }
+    return null
+  }
+
+  /**
+   * Checks if Tailwind CSS is configured
+   * @returns {boolean}
+   */
+  hasTailwindConfig() {
+    const tailwindConfigs = ['tailwind.config.js', 'tailwind.config.ts', 'tailwind.config.mjs']
+    return tailwindConfigs.some(config => fs.existsSync(path.join(this.projectPath, config)))
+  }
 }

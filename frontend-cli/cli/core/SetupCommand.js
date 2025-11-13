@@ -48,6 +48,9 @@ export class SetupCommand {
 
   async copyTemplate(templatePath, targetPath) {
     const content = await fs.readFile(templatePath, 'utf-8')
+    // Create parent directory if it doesn't exist
+    const targetDir = join(targetPath, '..')
+    await fs.mkdir(targetDir, { recursive: true })
     await fs.writeFile(targetPath, content, 'utf-8')
   }
 
