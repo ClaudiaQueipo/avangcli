@@ -1,0 +1,21 @@
+
+services:
+  nextjs-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    container_name: nextjs-prod
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+      - PORT=3000
+      - HOSTNAME=0.0.0.0
+    restart: always
+    networks:
+      - nextjs-network
+
+networks:
+  nextjs-network:
+    driver: bridge

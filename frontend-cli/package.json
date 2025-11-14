@@ -1,0 +1,27 @@
+{
+  "name": "try-catch-frontend-cli",
+  "version": "1.0.0",
+  "description": "Frontend CLI for scaffolding Next.js projects",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "type-check": "tsc --noEmit",
+    "type-check:strict": "tsc --noEmit -p tsconfig.strict.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["cli", "nextjs", "scaffolding", "frontend"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@clack/prompts": "^0.7.0",
+    "yargs": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/yargs": "^17.0.32",
+    "typescript": "^5.3.3"
+  }
+}

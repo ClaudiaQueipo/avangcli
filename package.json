@@ -1,0 +1,24 @@
+{
+  "name": "try-catch-cli",
+  "version": "1.0.0",
+  "description": "Master CLI for scaffolding fullstack projects with Next.js and FastAPI",
+  "type": "module",
+  "bin": {
+    "try-catch": "./bin/try-catch"
+  },
+  "scripts": {
+    "dev": "node src/index.js",
+    "dev:frontend": "cd frontend-cli && node index.js",
+    "dev:backend": "cd backend-cli && python3 generator.py",
+    "install:frontend": "cd frontend-cli && bun install",
+    "install:backend": "cd backend-cli && pip install -r requirements.txt",
+    "install:all": "bun install && bun run install:frontend && bun run install:backend",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["cli", "scaffolding", "nextjs", "fastapi", "fullstack"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "yargs": "^18.0.0"
+  }
+}
