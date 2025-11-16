@@ -1,10 +1,10 @@
 {
-  "name": "try-catch-cli",
+  "name": "avangcli",
   "version": "1.0.0",
   "description": "Master CLI for scaffolding fullstack projects with Next.js and FastAPI",
   "type": "module",
   "bin": {
-    "try-catch": "./bin/try-catch"
+    "avangcli": "./bin/avangcli"
   },
   "scripts": {
     "dev": "node src/index.js",

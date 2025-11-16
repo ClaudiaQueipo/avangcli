@@ -11,9 +11,9 @@ Designed as an npm package for easy installation and distribution.
 ## Current Folder Structure
 
 ```
-try-catch-cli/
+avangcli/
 ├── bin/                          # Executables (npm bin links)
-│   └── try-catch                 # Main CLI entry point (symlinked by npm)
+│   └── avangcli                  # Main CLI entry point (symlinked by npm)
 ├── src/                          # Master CLI logic
 │   └── index.js                  # Master CLI coordinator
 ├── frontend-cli/                 # Frontend CLI (independent)
@@ -75,9 +75,9 @@ Each CLI has its own dependencies:
 - **Purpose**: Orchestrates the creation of fullstack projects
 - **Framework**: Commander.js or Oclif for CLI interface
 - **npm Integration**:
-  - `bin/try-catch` as main executable
+  - `bin/avangcli` as main executable
   - Published to npm registry
-  - Installed globally: `npm install -g try-catch-cli`
+  - Installed globally: `npm install -g avangcli`
 - **Responsibilities**:
   - Parse user options (project name, frontend type, backend type, etc.)
   - Call FE CLI to generate frontend

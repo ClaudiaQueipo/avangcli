@@ -28,7 +28,7 @@ function launchFrontendCli(args) {
 }
 
 yargs(hideBin(process.argv))
-  .scriptName('try-catch')
+  .scriptName('avangcli')
   .usage('Usage: $0 <command> [options]')
   .command(
     'init [project-name]',
@@ -89,5 +89,5 @@ yargs(hideBin(process.argv))
   .alias('h', 'help')
   .version('1.0.0')
   .alias('v', 'version')
-  .epilogue('For more information, visit: https://github.com/avangenio/try-catch-cli')
+  .epilogue('For more information, visit: https://github.com/avangenio/avangcli')
   .parse()
