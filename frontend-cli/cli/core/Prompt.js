@@ -110,4 +110,11 @@ export class PromptFactory {
       { value: 'none', label: 'None', hint: 'Skip UI library setup' },
     ])
   }
+
+  static createGitSetupPrompt() {
+    return new SelectPrompt('Configure Git with Commitizen, Commitlint, Husky & Lint-staged?', [
+      { value: true, label: 'Yes', hint: 'Recommended for better commit quality' },
+      { value: false, label: 'No' },
+    ])
+  }
 }
