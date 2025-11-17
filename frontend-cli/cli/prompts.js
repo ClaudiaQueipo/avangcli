@@ -1,17 +1,12 @@
 import { PromptFactory } from './core/Prompt.js'
 
 const ASCII_ART = `
-███████████                           █████████             █████             █████           █████████  █████       █████
-▒█▒▒▒███▒▒▒█                          ███▒▒▒▒▒███           ▒▒███             ▒▒███           ███▒▒▒▒▒███▒▒███       ▒▒███
-▒   ▒███  ▒  ████████  █████ ████    ███     ▒▒▒   ██████   ███████    ██████  ▒███████      ███     ▒▒▒  ▒███        ▒███
-    ▒███    ▒▒███▒▒███▒▒███ ▒███    ▒███          ▒▒▒▒▒███ ▒▒▒███▒    ███▒▒███ ▒███▒▒███    ▒███          ▒███        ▒███
-    ▒███     ▒███ ▒▒▒  ▒███ ▒███    ▒███           ███████   ▒███    ▒███ ▒▒▒  ▒███ ▒███    ▒███          ▒███        ▒███
-    ▒███     ▒███      ▒███ ▒███    ▒▒███     ███ ███▒▒███   ▒███ ███▒███  ███ ▒███ ▒███    ▒▒███     ███ ▒███      █ ▒███
-    █████    █████     ▒▒███████     ▒▒█████████ ▒▒████████  ▒▒█████ ▒▒██████  ████ █████    ▒▒█████████  ███████████ █████
-   ▒▒▒▒▒    ▒▒▒▒▒       ▒▒▒▒▒███      ▒▒▒▒▒▒▒▒▒   ▒▒▒▒▒▒▒▒    ▒▒▒▒▒   ▒▒▒▒▒▒  ▒▒▒▒ ▒▒▒▒▒      ▒▒▒▒▒▒▒▒▒  ▒▒▒▒▒▒▒▒▒▒▒ ▒▒▒▒▒
-                        ███ ▒███
-                       ▒▒██████
-                        ▒▒▒▒▒▒
+ █████╗ ██╗   ██╗ █████╗ ███╗   ██╗ ██████╗        ██████╗██╗     ██╗
+██╔══██╗██║   ██║██╔══██╗████╗  ██║██╔════╝       ██╔════╝██║     ██║
+███████║██║   ██║███████║██╔██╗ ██║██║  ███╗█████╗██║     ██║     ██║
+██╔══██║╚██╗ ██╔╝██╔══██║██║╚██╗██║██║   ██║╚════╝██║     ██║     ██║
+██║  ██║ ╚████╔╝ ██║  ██║██║ ╚████║╚██████╔╝      ╚██████╗███████╗██║
+╚═╝  ╚═╝  ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝        ╚═════╝╚══════╝╚═╝
 `
 
 export class PromptsManager {
@@ -50,6 +45,11 @@ export class PromptsManager {
     const prompt = PromptFactory.createUILibraryPrompt()
     return await prompt.ask()
   }
+
+  async askGitSetup() {
+    const prompt = PromptFactory.createGitSetupPrompt()
+    return await prompt.ask()
+  }
 }
 
 export const promptsManager = new PromptsManager()
@@ -61,3 +61,4 @@ export const askLinterFormatter = () => promptsManager.askLinterFormatter()
 export const askDockerConfig = () => promptsManager.askDockerConfig()
 export const askTailwind = () => promptsManager.askTailwind()
 export const askUILibrary = () => promptsManager.askUILibrary()
+export const askGitSetup = () => promptsManager.askGitSetup()

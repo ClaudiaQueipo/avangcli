@@ -4,9 +4,9 @@ import os from 'os'
 
 export class ConfigManager {
   constructor() {
-    this.globalConfigDir = path.join(os.homedir(), '.try-catch-cli')
+    this.globalConfigDir = path.join(os.homedir(), '.avangcli')
     this.globalConfigFile = path.join(this.globalConfigDir, 'config.json')
-    this.projectConfigFile = path.join(process.cwd(), '.trycatchrc.json')
+    this.projectConfigFile = path.join(process.cwd(), '.avangclirc.json')
   }
 
   ensureGlobalConfigDir() {

@@ -390,6 +390,142 @@ export class HeroUISetupCommand extends SetupCommand {
   }
 }
 
+export class GitSetupCommand extends SetupCommand {
+  constructor(packageManagerStrategy, projectPath, commandExecutor, linterFormatter) {
+    super(packageManagerStrategy, projectPath)
+    this.commandExecutor = commandExecutor
+    this.linterFormatter = linterFormatter
+  }
+
+  startSpinner() {
+    this.spinner.start('Setting up Git with Commitizen, Commitlint, Husky & Lint-staged...')
+  }
+
+  async installDependencies() {
+    const { cmd, args } = this.packageManagerStrategy.getInstallCommand()
+    const dependencies = [
+      'commitizen',
+      '@commitlint/cli',
+      '@commitlint/config-conventional',
+      'husky',
+      'lint-staged',
+    ]
+
+    this.spinner.stop()
+
+    await this.commandExecutor.execute(cmd, [...args, '-D', ...dependencies], {
+      cwd: this.projectPath,
+    })
+  }
+
+  async copyTemplates() {
+    const templatesDir = join(__dirname, '..', '..', 'templates', 'git-setup')
+
+    // Copy commitlint config
+    await this.copyTemplate(
+      join(templatesDir, 'commitlint.config.js'),
+      join(this.projectPath, 'commitlint.config.js')
+    )
+
+    // Copy lint-staged config based on linter
+    if (this.linterFormatter === 'eslint-prettier') {
+      await this.copyTemplate(
+        join(templatesDir, 'lint-staged.eslint-prettier.js'),
+        join(this.projectPath, 'lint-staged.config.js')
+      )
+    } else if (this.linterFormatter === 'biome') {
+      await this.copyTemplate(
+        join(templatesDir, 'lint-staged.biome.js'),
+        join(this.projectPath, 'lint-staged.config.js')
+      )
+    } else {
+      // No linter, only format check
+      await this.copyTemplate(
+        join(templatesDir, 'lint-staged.none.js'),
+        join(this.projectPath, 'lint-staged.config.js')
+      )
+    }
+  }
+
+  async setupAdditionalConfig() {
+    // Initialize git repository
+    console.log('\n📦 Initializing Git repository...')
+    await this.commandExecutor.execute('git', ['init'], {
+      cwd: this.projectPath,
+    })
+    console.log('  ✓ Git repository initialized')
+  }
+
+  async postInstall() {
+    // Setup Commitizen
+    console.log('\n📦 Setting up Commitizen...')
+    await this.commandExecutor.execute('npx', ['commitizen', 'init', 'cz-conventional-changelog', '--save-dev', '--save-exact'], {
+      cwd: this.projectPath,
+    })
+    console.log('  ✓ Commitizen configured')
+
+    // Setup Husky
+    console.log('\n📦 Setting up Husky...')
+    await this.commandExecutor.execute('npx', ['husky', 'init'], {
+      cwd: this.projectPath,
+    })
+    console.log('  ✓ Husky initialized')
+
+    // Create commit-msg hook for commitlint
+    const commitMsgHook = `npx --no -- commitlint --edit \${1}`
+    fs.writeFileSync(
+      join(this.projectPath, '.husky', 'commit-msg'),
+      `#!/usr/bin/env sh\n. "$(dirname -- "$0")/_/husky.sh"\n\n${commitMsgHook}\n`
+    )
+
+    // Update pre-commit hook for lint-staged
+    const preCommitHook = `npx lint-staged`
+    fs.writeFileSync(
+      join(this.projectPath, '.husky', 'pre-commit'),
+      `#!/usr/bin/env sh\n. "$(dirname -- "$0")/_/husky.sh"\n\n${preCommitHook}\n`
+    )
+
+    console.log('  ✓ Husky hooks configured (commit-msg, pre-commit)')
+  }
+
+  async execute() {
+    try {
+      // Initialize git repository before everything
+      await this.setupAdditionalConfig()
+
+      // Call parent execute which handles spinner, install, and templates
+      await super.execute()
+
+      // Post installation configuration
+      await this.postInstall()
+
+      this.logSuccess()
+    } catch (error) {
+      this.logError()
+      throw error
+    }
+  }
+
+  logSuccess() {
+    console.log('\n✓ Git setup completed successfully!')
+    console.log('\nConfigured tools:')
+    console.log('  - Git repository initialized')
+    console.log('  - Commitizen (conventional commits)')
+    console.log('  - Commitlint (commit message validation)')
+    console.log('  - Husky (Git hooks)')
+    console.log('  - Lint-staged (pre-commit linting)')
+    console.log('\nUsage:')
+    console.log('  - Make your changes and stage them: git add .')
+    console.log('  - Create a commit with Commitizen: npx cz')
+    console.log('  - Or use regular commit: git commit -m "feat: your message"')
+    console.log('  - Pre-commit hook will automatically format and lint your code')
+  }
+
+  logError() {
+    console.error('✗ Failed to setup Git configuration')
+  }
+}
+
 export class SetupCommandFactory {
   static createEslintPrettierSetup(packageManagerStrategy, projectPath, commandExecutor) {
     return new EslintPrettierSetupCommand(packageManagerStrategy, projectPath, commandExecutor)
@@ -417,5 +553,9 @@ export class SetupCommandFactory {
 
   static createHeroUISetup(packageManagerStrategy, projectPath, commandExecutor) {
     return new HeroUISetupCommand(packageManagerStrategy, projectPath, commandExecutor)
+  }
+
+  static createGitSetup(packageManagerStrategy, projectPath, commandExecutor, linterFormatter) {
+    return new GitSetupCommand(packageManagerStrategy, projectPath, commandExecutor, linterFormatter)
   }
 }

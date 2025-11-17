@@ -19,23 +19,23 @@ The `module` command is a scaffolding tool for Next.js applications that automat
 ### Basic Usage
 
 ```bash
-try-catch module <module-name>
+avangcli module <module-name>
 ```
 
 ### Examples
 
 ```bash
 # Create a user module
-try-catch module user
+avangcli module user
 
 # Create a shopping cart module
-try-catch module shopping-cart
+avangcli module shopping-cart
 
 # Create a user profile module
-try-catch module user-profile
+avangcli module user-profile
 
 # Skip Next.js validation (use with caution)
-try-catch module my-module --skip-validation
+avangcli module my-module --skip-validation
 ```
 
 ## Module Structure
@@ -331,11 +331,11 @@ After generating a module, you should:
 
 ```bash
 # Create modules for an e-commerce application
-try-catch module product-catalog
-try-catch module shopping-cart
-try-catch module checkout
-try-catch module user-account
-try-catch module order-history
+avangcli module product-catalog
+avangcli module shopping-cart
+avangcli module checkout
+avangcli module user-account
+avangcli module order-history
 ```
 
 ### Working with TypeScript Path Aliases

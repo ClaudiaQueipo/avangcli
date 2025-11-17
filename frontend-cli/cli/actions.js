@@ -58,6 +58,12 @@ export class ActionsManager {
     const command = SetupCommandFactory.createHeroUISetup(strategy, projectPath, this.commandExecutor)
     await command.execute()
   }
+
+  async setupGit(packageManager, projectPath, linterFormatter) {
+    const strategy = PackageManagerFactory.create(packageManager)
+    const command = SetupCommandFactory.createGitSetup(strategy, projectPath, this.commandExecutor, linterFormatter)
+    await command.execute()
+  }
 }
 
 export const actionsManager = new ActionsManager()
@@ -78,3 +84,5 @@ export const setupTailwind = (packageManager, projectPath) =>
   actionsManager.setupTailwind(packageManager, projectPath)
 export const setupHeroUI = (packageManager, projectPath) =>
   actionsManager.setupHeroUI(packageManager, projectPath)
+export const setupGit = (packageManager, projectPath, linterFormatter) =>
+  actionsManager.setupGit(packageManager, projectPath, linterFormatter)

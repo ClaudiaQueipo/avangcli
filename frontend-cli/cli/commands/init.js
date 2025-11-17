@@ -42,11 +42,17 @@ export const builder = (yargs) => {
       type: 'string',
       choices: ['mui', 'shadcn', 'heroui', 'none']
     })
+    .option('git-setup', {
+      alias: 'git',
+      describe: 'Setup Git with Commitizen, Commitlint, Husky & Lint-staged',
+      type: 'boolean'
+    })
     .example('$0 init', 'Initialize a new project with interactive prompts')
     .example('$0 init my-app --pm bun --tailwind', 'Create a project with Tailwind CSS')
     .example('$0 init my-app --pm npm --lf biome --docker dev', 'Create a fully configured project')
     .example('$0 init my-app --pm npm --ui mui', 'Create a project with Material UI')
     .example('$0 init my-app --pm npm --ui heroui --tailwind', 'Create a project with HeroUI')
+    .example('$0 init my-app --pm npm --git-setup', 'Create a project with Git setup')
 }
 
 export const handler = async (argv) => {
@@ -120,9 +126,19 @@ export const handler = async (argv) => {
       await actionsManager.setupHeroUI(packageManager, projectName)
     }
 
+    let gitSetup = argv['git-setup'] || argv.git
+    if (gitSetup === undefined) {
+      gitSetup = await promptsManager.askGitSetup()
+      handleCancel(gitSetup)
+    }
+
+    if (gitSetup) {
+      await actionsManager.setupGit(packageManager, projectName, linterFormatter)
+    }
+
     outro('✅ Project setup complete!')
 
-    const nextSteps = generateNextSteps(projectName, packageManager, dockerConfig)
+    const nextSteps = generateNextSteps(projectName, packageManager, dockerConfig, gitSetup)
     note(nextSteps, 'Get started')
   } catch (error) {
     outro('❌ An error occurred during setup')
@@ -152,12 +168,13 @@ function generateDockerInstructions(dockerConfig) {
   return ''
 }
 
-function generateNextSteps(projectName, packageManager, dockerConfig) {
+function generateNextSteps(projectName, packageManager, dockerConfig, gitSetup) {
   const strategy = PackageManagerFactory.create(packageManager)
   const runCommand = strategy.getRunCommand()
   const dockerInstructions = generateDockerInstructions(dockerConfig)
+  const gitInstructions = gitSetup ? '\n  # To commit changes:\n  npx cz' : ''
 
   return `Next steps:
   cd ${projectName}
-  ${runCommand} dev${dockerInstructions}`
+  ${runCommand} dev${dockerInstructions}${gitInstructions}`
 }

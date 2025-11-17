@@ -1,5 +1,5 @@
 {
-  "name": "try-catch-frontend-cli",
+  "name": "avangcli-frontend",
   "version": "1.0.0",
   "description": "Frontend CLI for scaffolding Next.js projects",
   "type": "module",

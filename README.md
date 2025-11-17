@@ -1,4 +1,4 @@
-# try-catch-cli
+# avangcli
 
 A powerful CLI tool for scaffolding fullstack projects with Next.js (frontend) and FastAPI (backend).
 
@@ -19,7 +19,7 @@ A powerful CLI tool for scaffolding fullstack projects with Next.js (frontend) a
 
 ```bash
 git clone <repository-url>
-cd try-catch-cli
+cd avangcli
 
 # Install master CLI dependencies
 bun install
@@ -34,7 +34,7 @@ bun run install:all
 ### Global installation (coming soon)
 
 ```bash
-npm install -g try-catch-cli
+npm install -g avangcli
 ```
 
 ## Usage
@@ -44,8 +44,8 @@ npm install -g try-catch-cli
 The master CLI coordinates between frontend and backend CLIs:
 
 ```bash
-try-catch frontend    # Launch frontend CLI
-try-catch backend     # Launch backend CLI
+avangcli frontend    # Launch frontend CLI
+avangcli backend     # Launch backend CLI
 ```
 
 ### Frontend CLI
@@ -54,10 +54,10 @@ try-catch backend     # Launch backend CLI
 
 ```bash
 # Interactive mode
-try-catch init
+avangcli init
 
 # With arguments
-try-catch init my-app --pm bun --tailwind --lf biome --docker dev
+avangcli init my-app --pm bun --tailwind --lf biome --docker dev
 
 # Options:
 #   --package-manager, --pm   Package manager (npm, yarn, pnpm, bun)
@@ -72,15 +72,15 @@ try-catch init my-app --pm bun --tailwind --lf biome --docker dev
 
 ```bash
 # Create a module with complete folder structure and boilerplate
-try-catch module <module-name>
+avangcli module <module-name>
 
 # Examples:
-try-catch module user-profile
-try-catch module shopping-cart
-try-catch module authentication
+avangcli module user-profile
+avangcli module shopping-cart
+avangcli module authentication
 
 # Skip Next.js validation (use with caution)
-try-catch module my-module --skip-validation
+avangcli module my-module --skip-validation
 ```
 
 **Module features:**
@@ -98,7 +98,7 @@ See [Module Command Documentation](docs/module-command.md) for detailed usage.
 ### Backend CLI (coming soon)
 
 ```bash
-try-catch backend init
+avangcli backend init
 ```
 
 ## Development
@@ -117,7 +117,7 @@ bun run dev:backend
 ## Project Structure
 
 ```
-try-catch-cli/
+avangcli/
 ├── bin/              # Executables
 ├── src/              # Master CLI logic
 ├── frontend-cli/     # Frontend CLI (independent)
