@@ -1,15 +1,15 @@
-import { spawn } from 'child_process'
+import { spawn } from "child_process"
 
 export class CommandExecutor {
   async execute(command, args = [], options = {}) {
     return new Promise((resolve, reject) => {
       const child = spawn(command, args, {
-        stdio: 'inherit',
+        stdio: "inherit",
         shell: true,
-        ...options,
+        ...options
       })
 
-      child.on('close', code => {
+      child.on("close", (code) => {
         if (code !== 0) {
           reject(new Error(`Command failed with exit code ${code}`))
           return
@@ -17,7 +17,7 @@ export class CommandExecutor {
         resolve()
       })
 
-      child.on('error', error => {
+      child.on("error", (error) => {
         reject(error)
       })
     })
@@ -25,16 +25,16 @@ export class CommandExecutor {
 
   async executeWithOutput(command, args = [], options = {}) {
     return new Promise((resolve, reject) => {
-      let stdout = ''
-      let stderr = ''
+      const stdout = ""
+      const stderr = ""
 
       const child = spawn(command, args, {
-        stdio: 'inherit',
+        stdio: "inherit",
         shell: true,
-        ...options,
+        ...options
       })
 
-      child.on('close', code => {
+      child.on("close", (code) => {
         if (code !== 0) {
           reject(new Error(`Command failed with exit code ${code}`))
           return
@@ -42,7 +42,7 @@ export class CommandExecutor {
         resolve({ stdout, stderr })
       })
 
-      child.on('error', error => {
+      child.on("error", (error) => {
         reject(error)
       })
     })

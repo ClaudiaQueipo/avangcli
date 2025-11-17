@@ -13,6 +13,7 @@
     "install:frontend": "cd frontend-cli && bun install",
     "install:backend": "cd backend-cli && pip install -r requirements.txt",
     "install:all": "bun install && bun run install:frontend && bun run install:backend",
+    "prepare": "husky",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": ["cli", "scaffolding", "nextjs", "fastapi", "fullstack"],
@@ -20,5 +21,18 @@
   "license": "ISC",
   "dependencies": {
     "yargs": "^18.0.0"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6"
+  },
+  "lint-staged": {
+    "frontend-cli/**/*.{js,ts}": [
+      "cd frontend-cli && eslint --fix",
+      "cd frontend-cli && prettier --write"
+    ],
+    "frontend-cli/**/*.{json,md}": [
+      "cd frontend-cli && prettier --write"
+    ]
   }
 }

@@ -1,17 +1,17 @@
 export class PackageManagerStrategy {
   constructor(name) {
     if (this.constructor === PackageManagerStrategy) {
-      throw new Error('Cannot instantiate abstract class PackageManagerStrategy')
+      throw new Error("Cannot instantiate abstract class PackageManagerStrategy")
     }
     this.name = name
   }
 
   getCreateCommand() {
-    throw new Error('Method getCreateCommand() must be implemented')
+    throw new Error("Method getCreateCommand() must be implemented")
   }
 
   getInstallCommand() {
-    throw new Error('Method getInstallCommand() must be implemented')
+    throw new Error("Method getInstallCommand() must be implemented")
   }
 
   getRunCommand() {
@@ -21,73 +21,73 @@ export class PackageManagerStrategy {
 
 export class NpmStrategy extends PackageManagerStrategy {
   constructor() {
-    super('npm')
+    super("npm")
   }
 
   getCreateCommand() {
-    return 'npx'
+    return "npx"
   }
 
   getInstallCommand() {
-    return { cmd: 'npm', args: ['install'] }
+    return { cmd: "npm", args: ["install"] }
   }
 
   getRunCommand() {
-    return 'npm run'
+    return "npm run"
   }
 }
 
 export class PnpmStrategy extends PackageManagerStrategy {
   constructor() {
-    super('pnpm')
+    super("pnpm")
   }
 
   getCreateCommand() {
-    return 'pnpm'
+    return "pnpm"
   }
 
   getInstallCommand() {
-    return { cmd: 'pnpm', args: ['add'] }
+    return { cmd: "pnpm", args: ["add"] }
   }
 
   getRunCommand() {
-    return 'pnpm'
+    return "pnpm"
   }
 }
 
 export class YarnStrategy extends PackageManagerStrategy {
   constructor() {
-    super('yarn')
+    super("yarn")
   }
 
   getCreateCommand() {
-    return 'yarn'
+    return "yarn"
   }
 
   getInstallCommand() {
-    return { cmd: 'yarn', args: ['add'] }
+    return { cmd: "yarn", args: ["add"] }
   }
 
   getRunCommand() {
-    return 'yarn'
+    return "yarn"
   }
 }
 
 export class BunStrategy extends PackageManagerStrategy {
   constructor() {
-    super('bun')
+    super("bun")
   }
 
   getCreateCommand() {
-    return 'bunx'
+    return "bunx"
   }
 
   getInstallCommand() {
-    return { cmd: 'bun', args: ['add'] }
+    return { cmd: "bun", args: ["add"] }
   }
 
   getRunCommand() {
-    return 'bun'
+    return "bun"
   }
 }
 
@@ -96,7 +96,7 @@ export class PackageManagerFactory {
     npm: NpmStrategy,
     pnpm: PnpmStrategy,
     yarn: YarnStrategy,
-    bun: BunStrategy,
+    bun: BunStrategy
   }
 
   static create(packageManager) {

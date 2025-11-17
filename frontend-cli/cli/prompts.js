@@ -1,4 +1,6 @@
-import { PromptFactory } from './core/Prompt.js'
+import { log } from "@clack/prompts"
+
+import { PromptFactory } from "./core/Prompt.js"
 
 const ASCII_ART = `
  █████╗ ██╗   ██╗ █████╗ ███╗   ██╗ ██████╗        ██████╗██╗     ██╗
@@ -11,8 +13,8 @@ const ASCII_ART = `
 
 export class PromptsManager {
   showWelcome() {
-    console.log(ASCII_ART)
-    const introPrompt = PromptFactory.createIntroPrompt('Next.js Project Generator')
+    log.info(ASCII_ART)
+    const introPrompt = PromptFactory.createIntroPrompt("Next.js Project Generator")
     introPrompt.ask()
   }
 

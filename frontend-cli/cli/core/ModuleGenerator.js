@@ -1,6 +1,7 @@
-import fs from 'fs'
-import path from 'path'
-import { NextJsValidator } from './NextJsValidator.js'
+import fs from "fs"
+import path from "path"
+
+import { NextJsValidator } from "./NextJsValidator.js"
 
 export class ModuleGenerator {
   constructor(projectPath = process.cwd()) {
@@ -14,7 +15,7 @@ export class ModuleGenerator {
    * @param {string} storeManager - Store manager to use ('zustand', 'redux', or 'none')
    * @returns {Object} { success: boolean, files: string[], error?: string }
    */
-  async generate(moduleName, storeManager = 'none') {
+  async generate(moduleName, storeManager = "none") {
     try {
       if (this.validator.moduleExists(moduleName)) {
         return {
@@ -25,7 +26,7 @@ export class ModuleGenerator {
       }
 
       const sourceDir = this.validator.getSourceDirectory()
-      const modulesDir = path.join(sourceDir, 'modules')
+      const modulesDir = path.join(sourceDir, "modules")
       const modulePath = path.join(modulesDir, moduleName)
 
       if (!fs.existsSync(modulesDir)) {
@@ -34,19 +35,9 @@ export class ModuleGenerator {
 
       fs.mkdirSync(modulePath, { recursive: true })
 
-      const folders = [
-        'components',
-        'containers',
-        'adapters',
-        'types',
-        'services',
-        'hooks',
-        'store',
-        'lib',
-        'helpers'
-      ]
+      const folders = ["components", "containers", "adapters", "types", "services", "hooks", "store", "lib", "helpers"]
 
-      folders.forEach(folder => {
+      folders.forEach((folder) => {
         const folderPath = path.join(modulePath, folder)
         fs.mkdirSync(folderPath, { recursive: true })
       })
@@ -62,10 +53,10 @@ export class ModuleGenerator {
       const typesFile = this.generateTypes(moduleName, modulePath)
       createdFiles.push(typesFile)
 
-      if (storeManager === 'zustand') {
+      if (storeManager === "zustand") {
         const storeFile = this.generateZustandStore(moduleName, modulePath)
         createdFiles.push(storeFile)
-      } else if (storeManager === 'redux') {
+      } else if (storeManager === "redux") {
         const storeFile = this.generateReduxStore(moduleName, modulePath)
         createdFiles.push(storeFile)
       }
@@ -73,9 +64,7 @@ export class ModuleGenerator {
       const indexFile = this.generateIndexFile(moduleName, modulePath, storeManager)
       createdFiles.push(indexFile)
 
-      const relativeFiles = createdFiles.map(file =>
-        path.relative(this.projectPath, file)
-      )
+      const relativeFiles = createdFiles.map((file) => path.relative(this.projectPath, file))
 
       return {
         success: true,
@@ -92,11 +81,10 @@ export class ModuleGenerator {
     }
   }
 
-  
   generateContainer(moduleName, modulePath) {
     const pascalName = this.toPascalCase(moduleName)
     const containerFileName = `${moduleName}-container.tsx`
-    const containerPath = path.join(modulePath, 'containers', containerFileName)
+    const containerPath = path.join(modulePath, "containers", containerFileName)
 
     const containerContent = `'use client'
 
@@ -140,7 +128,7 @@ ${pascalName}Container.displayName = '${pascalName}Container'
     const pascalName = this.toPascalCase(moduleName)
     const camelName = this.toCamelCase(moduleName)
     const serviceFileName = `${moduleName}.service.ts`
-    const servicePath = path.join(modulePath, 'services', serviceFileName)
+    const servicePath = path.join(modulePath, "services", serviceFileName)
 
     const serviceContent = `/**
  * ${pascalName}Service
@@ -212,7 +200,7 @@ export const ${camelName}Service = ${pascalName}Service.getInstance()
   generateTypes(moduleName, modulePath) {
     const pascalName = this.toPascalCase(moduleName)
     const typesFileName = `${moduleName}.types.ts`
-    const typesPath = path.join(modulePath, 'types', typesFileName)
+    const typesPath = path.join(modulePath, "types", typesFileName)
 
     const typesContent = `/**
  * Type definitions for ${moduleName} module
@@ -251,7 +239,7 @@ export type ${pascalName}Status = 'idle' | 'loading' | 'success' | 'error'
   generateZustandStore(moduleName, modulePath) {
     const pascalName = this.toPascalCase(moduleName)
     const storeFileName = `${moduleName}.store.ts`
-    const storePath = path.join(modulePath, 'store', storeFileName)
+    const storePath = path.join(modulePath, "store", storeFileName)
 
     const storeContent = `import { create } from 'zustand'
 import type { ${pascalName}Data, ${pascalName}State } from '../types/${moduleName}.types'
@@ -296,7 +284,7 @@ export const use${pascalName}Store = create<${pascalName}Store>((set) => ({
     const pascalName = this.toPascalCase(moduleName)
     const camelName = this.toCamelCase(moduleName)
     const storeFileName = `${moduleName}.slice.ts`
-    const storePath = path.join(modulePath, 'store', storeFileName)
+    const storePath = path.join(modulePath, "store", storeFileName)
 
     const storeContent = `import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { ${pascalName}Data, ${pascalName}State } from '../types/${moduleName}.types'
@@ -346,10 +334,10 @@ export const select${pascalName}Error = (state: { ${camelName}: ${pascalName}Sta
     return storePath
   }
 
-  generateIndexFile(moduleName, modulePath, storeManager = 'none') {
+  generateIndexFile(moduleName, modulePath, storeManager = "none") {
     const pascalName = this.toPascalCase(moduleName)
     const camelName = this.toCamelCase(moduleName)
-    const indexPath = path.join(modulePath, 'index.ts')
+    const indexPath = path.join(modulePath, "index.ts")
 
     let indexContent = `/**
  * ${pascalName} Module
@@ -373,12 +361,12 @@ export type {
 } from './types/${moduleName}.types'
 `
 
-    if (storeManager === 'zustand') {
+    if (storeManager === "zustand") {
       indexContent += `
 // Zustand Store
 export { use${pascalName}Store } from './store/${moduleName}.store'
 `
-    } else if (storeManager === 'redux') {
+    } else if (storeManager === "redux") {
       indexContent += `
 // Redux Store
 export { ${camelName}Actions, ${camelName}Reducer } from './store/${moduleName}.slice'
@@ -391,9 +379,9 @@ export { select${pascalName}Data, select${pascalName}Loading, select${pascalName
   }
   toPascalCase(str) {
     return str
-      .split('-')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join('')
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join("")
   }
 
   toCamelCase(str) {

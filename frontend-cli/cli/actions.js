@@ -1,7 +1,7 @@
-import { CommandExecutor } from './core/CommandExecutor.js'
-import { PackageManagerFactory } from './core/PackageManagerStrategy.js'
-import { CreateNextAppCommand } from './core/SetupCommand.js'
-import { SetupCommandFactory } from './core/ToolSetupCommands.js'
+import { CommandExecutor } from "./core/CommandExecutor.js"
+import { PackageManagerFactory } from "./core/PackageManagerStrategy.js"
+import { CreateNextAppCommand } from "./core/SetupCommand.js"
+import { SetupCommandFactory } from "./core/ToolSetupCommands.js"
 
 export class ActionsManager {
   constructor() {
@@ -16,11 +16,7 @@ export class ActionsManager {
 
   async setupEslintPrettier(packageManager, projectPath) {
     const strategy = PackageManagerFactory.create(packageManager)
-    const command = SetupCommandFactory.createEslintPrettierSetup(
-      strategy,
-      projectPath,
-      this.commandExecutor
-    )
+    const command = SetupCommandFactory.createEslintPrettierSetup(strategy, projectPath, this.commandExecutor)
     await command.execute()
   }
 
@@ -72,17 +68,12 @@ export const runCreateNextApp = (packageManager, projectName) =>
   actionsManager.runCreateNextApp(packageManager, projectName)
 export const setupEslintPrettier = (packageManager, projectPath) =>
   actionsManager.setupEslintPrettier(packageManager, projectPath)
-export const setupBiome = (packageManager, projectPath) =>
-  actionsManager.setupBiome(packageManager, projectPath)
-export const setupDocker = (dockerConfig, projectPath) =>
-  actionsManager.setupDocker(dockerConfig, projectPath)
+export const setupBiome = (packageManager, projectPath) => actionsManager.setupBiome(packageManager, projectPath)
+export const setupDocker = (dockerConfig, projectPath) => actionsManager.setupDocker(dockerConfig, projectPath)
 export const setupMaterialUI = (packageManager, projectPath) =>
   actionsManager.setupMaterialUI(packageManager, projectPath)
-export const setupShadcn = (packageManager, projectPath) =>
-  actionsManager.setupShadcn(packageManager, projectPath)
-export const setupTailwind = (packageManager, projectPath) =>
-  actionsManager.setupTailwind(packageManager, projectPath)
-export const setupHeroUI = (packageManager, projectPath) =>
-  actionsManager.setupHeroUI(packageManager, projectPath)
+export const setupShadcn = (packageManager, projectPath) => actionsManager.setupShadcn(packageManager, projectPath)
+export const setupTailwind = (packageManager, projectPath) => actionsManager.setupTailwind(packageManager, projectPath)
+export const setupHeroUI = (packageManager, projectPath) => actionsManager.setupHeroUI(packageManager, projectPath)
 export const setupGit = (packageManager, projectPath, linterFormatter) =>
   actionsManager.setupGit(packageManager, projectPath, linterFormatter)

@@ -5,14 +5,25 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
+    "commit": "cz",
     "dev": "node index.js",
     "build": "tsc",
     "build:watch": "tsc --watch",
     "type-check": "tsc --noEmit",
     "type-check:strict": "tsc --noEmit -p tsconfig.strict.json",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write \"**/*.{js,ts,json,md}\"",
+    "format:check": "prettier --check \"**/*.{js,ts,json,md}\"",
+    "prepare": "cd .. && husky frontend-cli/.husky",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["cli", "nextjs", "scaffolding", "frontend"],
+  "keywords": [
+    "cli",
+    "nextjs",
+    "scaffolding",
+    "frontend"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -20,8 +31,27 @@
     "yargs": "^18.0.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@eslint/js": "^9.39.1",
     "@types/node": "^20.11.0",
     "@types/yargs": "^17.0.32",
-    "typescript": "^5.3.3"
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^9.39.1",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-plugin-unused-imports": "^4.3.0",
+    "globals": "^16.5.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6",
+    "prettier": "^3.6.2",
+    "typescript": "^5.3.3",
+    "typescript-eslint": "^8.46.4"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   }
 }

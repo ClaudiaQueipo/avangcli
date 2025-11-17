@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Only run lint-staged if there are changes in frontend-cli directory
+if git diff --cached --name-only | grep -q "^frontend-cli/"; then
+  echo "Running lint-staged for frontend-cli..."
+  cd frontend-cli && npx lint-staged
+fi

@@ -1,12 +1,12 @@
-import fs from 'fs'
-import path from 'path'
-import os from 'os'
+import fs from "fs"
+import os from "os"
+import path from "path"
 
 export class ConfigManager {
   constructor() {
-    this.globalConfigDir = path.join(os.homedir(), '.avangcli')
-    this.globalConfigFile = path.join(this.globalConfigDir, 'config.json')
-    this.projectConfigFile = path.join(process.cwd(), '.avangclirc.json')
+    this.globalConfigDir = path.join(os.homedir(), ".avangcli")
+    this.globalConfigFile = path.join(this.globalConfigDir, "config.json")
+    this.projectConfigFile = path.join(process.cwd(), ".avangclirc.json")
   }
 
   ensureGlobalConfigDir() {
@@ -18,11 +18,11 @@ export class ConfigManager {
   readGlobalConfig() {
     try {
       if (fs.existsSync(this.globalConfigFile)) {
-        const content = fs.readFileSync(this.globalConfigFile, 'utf8')
+        const content = fs.readFileSync(this.globalConfigFile, "utf8")
         return JSON.parse(content)
       }
     } catch (error) {
-      console.warn('Failed to read global config:', error.message)
+      console.warn("Failed to read global config:", error.message)
     }
     return {}
   }
@@ -30,37 +30,29 @@ export class ConfigManager {
   writeGlobalConfig(config) {
     try {
       this.ensureGlobalConfigDir()
-      fs.writeFileSync(
-        this.globalConfigFile,
-        JSON.stringify(config, null, 2),
-        'utf8'
-      )
+      fs.writeFileSync(this.globalConfigFile, JSON.stringify(config, null, 2), "utf8")
     } catch (error) {
-      console.warn('Failed to write global config:', error.message)
+      console.warn("Failed to write global config:", error.message)
     }
   }
 
   readProjectConfig() {
     try {
       if (fs.existsSync(this.projectConfigFile)) {
-        const content = fs.readFileSync(this.projectConfigFile, 'utf8')
+        const content = fs.readFileSync(this.projectConfigFile, "utf8")
         return JSON.parse(content)
       }
     } catch (error) {
-      console.warn('Failed to read project config:', error.message)
+      console.warn("Failed to read project config:", error.message)
     }
     return {}
   }
 
   writeProjectConfig(config) {
     try {
-      fs.writeFileSync(
-        this.projectConfigFile,
-        JSON.stringify(config, null, 2),
-        'utf8'
-      )
+      fs.writeFileSync(this.projectConfigFile, JSON.stringify(config, null, 2), "utf8")
     } catch (error) {
-      console.warn('Failed to write project config:', error.message)
+      console.warn("Failed to write project config:", error.message)
     }
   }
 
@@ -91,15 +83,15 @@ export class ConfigManager {
   }
 
   getDefaultStoreManager() {
-    return this.get('defaultStoreManager', null)
+    return this.get("defaultStoreManager", null)
   }
 
   setDefaultStoreManagerGlobal(storeManager) {
-    this.setGlobal('defaultStoreManager', storeManager)
+    this.setGlobal("defaultStoreManager", storeManager)
   }
 
   setDefaultStoreManagerProject(storeManager) {
-    this.setProject('defaultStoreManager', storeManager)
+    this.setProject("defaultStoreManager", storeManager)
   }
 
   hasProjectConfig() {
@@ -107,14 +99,14 @@ export class ConfigManager {
   }
 
   getPackageManager() {
-    return this.get('packageManager', null)
+    return this.get("packageManager", null)
   }
 
   setPackageManagerGlobal(packageManager) {
-    this.setGlobal('packageManager', packageManager)
+    this.setGlobal("packageManager", packageManager)
   }
 
   setPackageManagerProject(packageManager) {
-    this.setProject('packageManager', packageManager)
+    this.setProject("packageManager", packageManager)
   }
 }

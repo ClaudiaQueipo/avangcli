@@ -1,17 +1,17 @@
 export class Validator {
-  validate(value) {
-    throw new Error('Method validate() must be implemented')
+  validate(_value) {
+    throw new Error("Method validate() must be implemented")
   }
 }
 
 export class RequiredValidator extends Validator {
-  constructor(message = 'This field is required') {
+  constructor(message = "This field is required") {
     super()
     this.message = message
   }
 
   validate(value) {
-    if (!value || (typeof value === 'string' && value.trim() === '')) {
+    if (!value || (typeof value === "string" && value.trim() === "")) {
       return this.message
     }
   }
@@ -33,13 +33,13 @@ export class RegexValidator extends Validator {
 
 export class ProjectNameValidator extends Validator {
   validate(value) {
-    const requiredValidator = new RequiredValidator('Project name is required')
+    const requiredValidator = new RequiredValidator("Project name is required")
     const requiredError = requiredValidator.validate(value)
     if (requiredError) return requiredError
 
     const regexValidator = new RegexValidator(
       /^[a-z0-9-]+$/,
-      'Project name must only contain lowercase letters, numbers, and hyphens'
+      "Project name must only contain lowercase letters, numbers, and hyphens"
     )
     return regexValidator.validate(value)
   }
