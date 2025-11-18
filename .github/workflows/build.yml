@@ -1,0 +1,64 @@
+name: Build Verification
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  build-frontend:
+    name: Build Frontend CLI
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install root dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Install frontend dependencies
+        working-directory: frontend-cli
+        run: bun install --frozen-lockfile
+
+      - name: Verify project structure
+        working-directory: frontend-cli
+        run: |
+          test -f index.js
+          test -d templates
+
+  # build-backend:
+  #   name: Build Backend CLI
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+
+  #     - name: Setup Python
+  #       uses: actions/setup-python@v5
+  #       with:
+  #         python-version: '3.11'
+  #         cache: 'pip'
+
+  #     - name: Install dependencies
+  #       working-directory: backend-cli
+  #       run: |
+  #         python -m pip install --upgrade pip
+  #         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+  #     - name: Compile Python files
+  #       working-directory: backend-cli
+  #       run: python -m py_compile *.py || true
+
+  #     - name: Verify project structure
+  #       working-directory: backend-cli
+  #       run: |
+  #         test -f generator.py
+  #         test -d templates
