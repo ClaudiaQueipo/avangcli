@@ -1,5 +1,6 @@
-import { cancel, note, outro, spinner } from "@clack/prompts"
-import { execSync } from "child_process"
+import { execSync } from "node:child_process"
+
+import { cancel, log, note, outro, spinner } from "@clack/prompts"
 
 import { ConfigManager } from "../core/ConfigManager.js"
 import { ModuleGenerator } from "../core/ModuleGenerator.js"
@@ -122,7 +123,7 @@ export const handler = async (argv) => {
     note(nextSteps, "🚀 Get started")
   } catch (error) {
     outro("❌ An error occurred while creating the module")
-    console.error(error.message)
+    log.error(error.message)
     process.exit(1)
   }
 }
