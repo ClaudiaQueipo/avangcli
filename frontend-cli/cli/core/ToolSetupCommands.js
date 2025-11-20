@@ -1,4 +1,4 @@
-import { log, warn } from "@clack/prompts"
+import { log } from "@clack/prompts"
 import fs from "fs"
 import { dirname, join } from "path"
 import { fileURLToPath } from "url"
@@ -231,7 +231,7 @@ export class ShadcnSetupCommand extends SetupCommand {
       })
       log("  ✓ Button component installed")
     } catch (error) {
-      warn("  ⚠ Warning: Failed to install button component:", error)
+      console.warn("  ⚠ Warning: Failed to install button component:", error)
     }
 
     try {
@@ -240,7 +240,7 @@ export class ShadcnSetupCommand extends SetupCommand {
       })
       log("  ✓ Label component installed")
     } catch (error) {
-      warn("  ⚠ Warning: Failed to install label component:", error)
+      console.warn("  ⚠ Warning: Failed to install label component:", error)
     }
   }
 
