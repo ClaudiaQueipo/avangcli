@@ -30,8 +30,8 @@ export const handler = async (argv) => {
 
   try {
     if (!validator.isNextJsProject()) {
-      console.error("❌ Error: This command must be run in a Next.js project directory")
-      log("\nPlease run this command from the root of your Next.js project.")
+      log.error("❌ Error: This command must be run in a Next.js project directory")
+      log.info("\nPlease run this command from the root of your Next.js project.")
       process.exit(1)
     }
 
@@ -41,8 +41,8 @@ export const handler = async (argv) => {
     }
 
     if (!packageManager) {
-      console.error("❌ Error: Could not detect package manager")
-      log("\nPlease ensure you have a package.json and lock file in your project.")
+      log.error("❌ Error: Could not detect package manager")
+      log.info("\nPlease ensure you have a package.json and lock file in your project.")
       process.exit(1)
     }
 
@@ -63,14 +63,14 @@ export const handler = async (argv) => {
     } else if (library === "shadcn") {
       const hasTailwind = validator.hasTailwindConfig()
       if (!hasTailwind) {
-        log("\n⚠️  shadcn/ui requires Tailwind CSS. Installing Tailwind CSS first...")
+        log.warning("\n⚠️  shadcn/ui requires Tailwind CSS. Installing Tailwind CSS first...")
         await actionsManager.setupTailwind(packageManager, process.cwd())
       }
       await actionsManager.setupShadcn(packageManager, process.cwd())
     } else if (library === "heroui") {
       const hasTailwind = validator.hasTailwindConfig()
       if (!hasTailwind) {
-        log("\n⚠️  HeroUI requires Tailwind CSS. Installing Tailwind CSS first...")
+        log.warning("\n⚠️  HeroUI requires Tailwind CSS. Installing Tailwind CSS first...")
         await actionsManager.setupTailwind(packageManager, process.cwd())
       }
       await actionsManager.setupHeroUI(packageManager, process.cwd())
@@ -93,7 +93,7 @@ export const handler = async (argv) => {
     }
   } catch (error) {
     outro("❌ An error occurred during setup")
-    console.error(error.message)
+    log.error(error.message)
     process.exit(1)
   }
 }

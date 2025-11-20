@@ -1,5 +1,4 @@
-import { note, outro } from "@clack/prompts"
-import { log } from "@clack/prompts"
+import { log, note, outro } from "@clack/prompts"
 
 import { ActionsManager } from "../actions.js"
 import { PackageManagerFactory } from "../core/PackageManagerStrategy.js"
@@ -116,13 +115,13 @@ export const handler = async (argv) => {
       await actionsManager.setupMaterialUI(packageManager, projectName)
     } else if (uiLibrary === "shadcn") {
       if (!useTailwind) {
-        log("\n⚠️  shadcn/ui requires Tailwind CSS. Installing Tailwind CSS first...")
+        log.warning("\n⚠️  shadcn/ui requires Tailwind CSS. Installing Tailwind CSS first...")
         await actionsManager.setupTailwind(packageManager, projectName)
       }
       await actionsManager.setupShadcn(packageManager, projectName)
     } else if (uiLibrary === "heroui") {
       if (!useTailwind) {
-        log("\n⚠️  HeroUI requires Tailwind CSS. Installing Tailwind CSS first...")
+        log.warning("\n⚠️  HeroUI requires Tailwind CSS. Installing Tailwind CSS first...")
         await actionsManager.setupTailwind(packageManager, projectName)
       }
       await actionsManager.setupHeroUI(packageManager, projectName)
@@ -144,7 +143,7 @@ export const handler = async (argv) => {
     note(nextSteps, "Get started")
   } catch (error) {
     outro("❌ An error occurred during setup")
-    console.error(error.message)
+    log.error(error.message)
     process.exit(1)
   }
 }

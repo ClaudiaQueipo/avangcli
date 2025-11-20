@@ -1,4 +1,4 @@
-import { log, warn } from "@clack/prompts"
+import { log } from "@clack/prompts"
 import fs from "fs"
 import { dirname, join } from "path"
 import { fileURLToPath } from "url"
@@ -52,11 +52,11 @@ export class EslintPrettierSetupCommand extends SetupCommand {
   }
 
   logSuccess() {
-    log("✓ ESLint + Prettier configured successfully!")
+    log.success("✓ ESLint + Prettier configured successfully!")
   }
 
   logError() {
-    console.error("✗ Failed to setup ESLint + Prettier")
+    log.error("✗ Failed to setup ESLint + Prettier")
   }
 }
 
@@ -94,11 +94,11 @@ export class BiomeSetupCommand extends SetupCommand {
   }
 
   logSuccess() {
-    log("✓ Biome configured successfully!")
+    log.success("✓ Biome configured successfully!")
   }
 
   logError() {
-    console.error("✗ Failed to setup Biome")
+    log.error("✗ Failed to setup Biome")
   }
 }
 
@@ -139,11 +139,11 @@ export class DockerSetupCommand extends SetupCommand {
   }
 
   logSuccess() {
-    log("✓ Docker configuration setup successfully!")
+    log.success("✓ Docker configuration setup successfully!")
   }
 
   logError() {
-    console.error("✗ Failed to setup Docker")
+    log.error("✗ Failed to setup Docker")
   }
 }
 
@@ -173,14 +173,14 @@ export class MaterialUISetupCommand extends SetupCommand {
   }
 
   logSuccess() {
-    log("✓ Material UI configured successfully!")
-    log("\nNext steps:")
-    log("  1. Import ThemeProvider in your layout or _app file")
-    log('  2. Start using MUI components: import { Button } from "@mui/material"')
+    log.success("✓ Material UI configured successfully!")
+    log.info("\nNext steps:")
+    log.info("  1. Import ThemeProvider in your layout or _app file")
+    log.info('  2. Start using MUI components: import { Button } from "@mui/material"')
   }
 
   logError() {
-    console.error("✗ Failed to setup Material UI")
+    log.error("✗ Failed to setup Material UI")
   }
 }
 
@@ -223,40 +223,40 @@ export class ShadcnSetupCommand extends SetupCommand {
       await this.copyTemplate(join(templatesDir, file), join(this.projectPath, target))
     }
 
-    log("\n📦 Installing default shadcn components (button, label)...")
+    log.info("\n📦 Installing default shadcn components (button, label)...")
 
     try {
       await this.commandExecutor.execute("npx", ["shadcn@latest", "add", "button", "--yes", "--overwrite"], {
         cwd: this.projectPath
       })
-      log("  ✓ Button component installed")
+      log.success("  ✓ Button component installed")
     } catch (error) {
-      warn("  ⚠ Warning: Failed to install button component:", error)
+      log.warning(`  ⚠ Warning: Failed to install button component: ${error.message}`)
     }
 
     try {
       await this.commandExecutor.execute("npx", ["shadcn@latest", "add", "label", "--yes", "--overwrite"], {
         cwd: this.projectPath
       })
-      log("  ✓ Label component installed")
+      log.success("  ✓ Label component installed")
     } catch (error) {
-      warn("  ⚠ Warning: Failed to install label component:", error)
+      log.warning(`  ⚠ Warning: Failed to install label component: ${error.message}`)
     }
   }
 
   logSuccess() {
-    log("\n✓ shadcn/ui configured successfully!")
-    log("\nDefault components installed:")
-    log("  - Button (components/ui/button.tsx)")
-    log("  - Label (components/ui/label.tsx)")
-    log("\nAdd more components:")
-    log("  npx shadcn@latest add <component-name>")
-    log("\nExample usage:")
-    log('  import { Button } from "@/components/ui/button"')
+    log.success("\n✓ shadcn/ui configured successfully!")
+    log.info("\nDefault components installed:")
+    log.info("  - Button (components/ui/button.tsx)")
+    log.info("  - Label (components/ui/label.tsx)")
+    log.info("\nAdd more components:")
+    log.info("  npx shadcn@latest add <component-name>")
+    log.info("\nExample usage:")
+    log.info('  import { Button } from "@/components/ui/button"')
   }
 
   logError() {
-    console.error("✗ Failed to setup shadcn/ui")
+    log.error("✗ Failed to setup shadcn/ui")
   }
 }
 
@@ -301,11 +301,11 @@ export class TailwindSetupCommand extends SetupCommand {
   }
 
   logSuccess() {
-    log("✓ Tailwind CSS configured successfully!")
+    log.success("✓ Tailwind CSS configured successfully!")
   }
 
   logError() {
-    console.error("✗ Failed to setup Tailwind CSS")
+    log.error("✗ Failed to setup Tailwind CSS")
   }
 }
 
@@ -346,21 +346,21 @@ export class HeroUISetupCommand extends SetupCommand {
   }
 
   logSuccess() {
-    log("\n✓ HeroUI configured successfully!")
-    log("\nConfiguration files created:")
-    log("  - hero.ts (HeroUI Tailwind plugin)")
-    log("  - app/globals.css (Updated with HeroUI imports)")
-    log("  - app/providers.tsx (HeroUIProvider component)")
-    log("  - app/layout.tsx (Root layout with HeroUIProvider)")
-    log("\nNext steps:")
-    log("  1. Install heroui CLI globally: npm install -g heroui-cli")
-    log("  2. Add components: heroui add button")
-    log('  3. Import components: import { Button } from "@heroui/react"')
-    log("\nThe HeroUIProvider is already configured in your layout!")
+    log.success("\n✓ HeroUI configured successfully!")
+    log.info("\nConfiguration files created:")
+    log.info("  - hero.ts (HeroUI Tailwind plugin)")
+    log.info("  - app/globals.css (Updated with HeroUI imports)")
+    log.info("  - app/providers.tsx (HeroUIProvider component)")
+    log.info("  - app/layout.tsx (Root layout with HeroUIProvider)")
+    log.info("\nNext steps:")
+    log.info("  1. Install heroui CLI globally: npm install -g heroui-cli")
+    log.info("  2. Add components: heroui add button")
+    log.info('  3. Import components: import { Button } from "@heroui/react"')
+    log.info("\nThe HeroUIProvider is already configured in your layout!")
   }
 
   logError() {
-    console.error("✗ Failed to setup HeroUI")
+    log.error("✗ Failed to setup HeroUI")
   }
 }
 
@@ -410,15 +410,15 @@ export class GitSetupCommand extends SetupCommand {
   }
 
   async setupAdditionalConfig() {
-    log("\n📦 Initializing Git repository...")
+    log.info("\n📦 Initializing Git repository...")
     await this.commandExecutor.execute("git", ["init"], {
       cwd: this.projectPath
     })
-    log("  ✓ Git repository initialized")
+    log.success("  ✓ Git repository initialized")
   }
 
   async postInstall() {
-    log("\n📦 Setting up Commitizen...")
+    log.info("\n📦 Setting up Commitizen...")
     await this.commandExecutor.execute(
       "npx",
       ["commitizen", "init", "cz-conventional-changelog", "--save-dev", "--save-exact"],
@@ -426,13 +426,13 @@ export class GitSetupCommand extends SetupCommand {
         cwd: this.projectPath
       }
     )
-    log("  ✓ Commitizen configured")
+    log.success("  ✓ Commitizen configured")
 
-    log("\n📦 Setting up Husky...")
+    log.info("\n📦 Setting up Husky...")
     await this.commandExecutor.execute("npx", ["husky", "init"], {
       cwd: this.projectPath
     })
-    log("  ✓ Husky initialized")
+    log.success("  ✓ Husky initialized")
 
     const commitMsgHook = `npx --no -- commitlint --edit \${1}`
     fs.writeFileSync(
@@ -446,7 +446,7 @@ export class GitSetupCommand extends SetupCommand {
       `#!/usr/bin/env sh\n. "$(dirname -- "$0")/_/husky.sh"\n\n${preCommitHook}\n`
     )
 
-    log("  ✓ Husky hooks configured (commit-msg, pre-commit)")
+    log.success("  ✓ Husky hooks configured (commit-msg, pre-commit)")
   }
 
   async execute() {
@@ -465,22 +465,22 @@ export class GitSetupCommand extends SetupCommand {
   }
 
   logSuccess() {
-    log("\n✓ Git setup completed successfully!")
-    log("\nConfigured tools:")
-    log("  - Git repository initialized")
-    log("  - Commitizen (conventional commits)")
-    log("  - Commitlint (commit message validation)")
-    log("  - Husky (Git hooks)")
-    log("  - Lint-staged (pre-commit linting)")
-    log("\nUsage:")
-    log("  - Make your changes and stage them: git add .")
-    log("  - Create a commit with Commitizen: npx cz")
-    log('  - Or use regular commit: git commit -m "feat: your message"')
-    log("  - Pre-commit hook will automatically format and lint your code")
+    log.success("\n✓ Git setup completed successfully!")
+    log.info("\nConfigured tools:")
+    log.info("  - Git repository initialized")
+    log.info("  - Commitizen (conventional commits)")
+    log.info("  - Commitlint (commit message validation)")
+    log.info("  - Husky (Git hooks)")
+    log.info("  - Lint-staged (pre-commit linting)")
+    log.info("\nUsage:")
+    log.info("  - Make your changes and stage them: git add .")
+    log.info("  - Create a commit with Commitizen: npx cz")
+    log.info('  - Or use regular commit: git commit -m "feat: your message"')
+    log.info("  - Pre-commit hook will automatically format and lint your code")
   }
 
   logError() {
-    console.error("✗ Failed to setup Git configuration")
+    log.error("✗ Failed to setup Git configuration")
   }
 }
 
