@@ -1,6 +1,7 @@
 import { log, note, outro } from "@clack/prompts"
 
 import { ActionsManager } from "../actions.js"
+import { ConfigManager } from "../core/ConfigManager.js"
 import { PackageManagerFactory } from "../core/PackageManagerStrategy.js"
 import { PromptsManager } from "../prompts.js"
 import { handleCancel } from "../utils.js"
@@ -59,6 +60,7 @@ export const builder = (yargs) => {
 export const handler = async (argv) => {
   const promptsManager = new PromptsManager()
   const actionsManager = new ActionsManager()
+  const configManager = new ConfigManager()
 
   try {
     promptsManager.showWelcome()
@@ -136,6 +138,20 @@ export const handler = async (argv) => {
     if (gitSetup) {
       await actionsManager.setupGit(packageManager, projectName, linterFormatter)
     }
+
+    const projectConfig = {
+      packageManager,
+      tailwind: useTailwind,
+      linterFormatter,
+      docker: dockerConfig,
+      uiLibrary,
+      gitSetup
+    }
+
+    const originalCwd = process.cwd()
+    process.chdir(projectName)
+    configManager.writeProjectConfig(projectConfig)
+    process.chdir(originalCwd)
 
     outro("✅ Project setup complete!")
 
