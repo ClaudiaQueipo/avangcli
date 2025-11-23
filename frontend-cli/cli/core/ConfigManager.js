@@ -6,7 +6,6 @@ export class ConfigManager {
   constructor() {
     this.globalConfigDir = path.join(os.homedir(), ".avangcli")
     this.globalConfigFile = path.join(this.globalConfigDir, "config.json")
-    this.projectConfigFile = path.join(process.cwd(), ".avangclirc.json")
   }
 
   ensureGlobalConfigDir() {
@@ -37,9 +36,10 @@ export class ConfigManager {
   }
 
   readProjectConfig() {
+    const projectConfigFile = path.join(process.cwd(), "avangclirc.json")
     try {
-      if (fs.existsSync(this.projectConfigFile)) {
-        const content = fs.readFileSync(this.projectConfigFile, "utf8")
+      if (fs.existsSync(projectConfigFile)) {
+        const content = fs.readFileSync(projectConfigFile, "utf8")
         return JSON.parse(content)
       }
     } catch (error) {
@@ -49,8 +49,9 @@ export class ConfigManager {
   }
 
   writeProjectConfig(config) {
+    const projectConfigFile = path.join(process.cwd(), "avangclirc.json")
     try {
-      fs.writeFileSync(this.projectConfigFile, JSON.stringify(config, null, 2), "utf8")
+      fs.writeFileSync(projectConfigFile, JSON.stringify(config, null, 2), "utf8")
     } catch (error) {
       console.warn("Failed to write project config:", error.message)
     }
@@ -95,7 +96,8 @@ export class ConfigManager {
   }
 
   hasProjectConfig() {
-    return fs.existsSync(this.projectConfigFile)
+    const projectConfigFile = path.join(process.cwd(), "avangclirc.json")
+    return fs.existsSync(projectConfigFile)
   }
 
   getPackageManager() {

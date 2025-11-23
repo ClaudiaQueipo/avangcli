@@ -40,16 +40,26 @@ yargs(hideBin(process.argv))
       launchFrontendCli(process.argv.slice(2))
     }
   )
-  .command(
-    'module <module-name>',
-    'Generate a new module in an existing Next.js application',
-    (yargs) => {
-      return yargs.help(false).version(false)
-    },
-    (argv) => {
-      launchFrontendCli(process.argv.slice(2))
-    }
-  )
+   .command(
+     'module <module-name>',
+     'Generate a new module in an existing Next.js application',
+     (yargs) => {
+       return yargs.help(false).version(false)
+     },
+     (argv) => {
+       launchFrontendCli(process.argv.slice(2))
+     }
+   )
+   .command(
+     'config',
+     'Regenerate avangclirc.json based on current project configuration',
+     (yargs) => {
+       return yargs.help(false).version(false)
+     },
+     (argv) => {
+       launchFrontendCli(process.argv.slice(2))
+     }
+   )
   .command(
     'frontend',
     'Launch frontend CLI',
