@@ -1,19 +1,33 @@
-import { FlatCompat } from '@eslint/eslintrc'
-import { dirname } from 'path'
-import { fileURLToPath } from 'url'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-
-const compat = new FlatCompat({
-	baseDirectory: __dirname,
-})
+import js from '@eslint/js'
+import globals from 'globals'
+import tsParser from '@typescript-eslint/parser'
+import ts from '@typescript-eslint/eslint-plugin'
+import react from 'eslint-plugin-react'
+import reactHooks from 'eslint-plugin-react-hooks'
 
 const eslintConfig = [
-	...compat.config({
-		extends: ['next/core-web-vitals', 'next/typescript', 'prettier'],
-	}),
+	js.configs.recommended,
 	{
+		files: ['**/*.{ts,tsx,js,jsx}'],
+		languageOptions: {
+			parser: tsParser,
+			parserOptions: {
+				ecmaVersion: 2020,
+				sourceType: 'module',
+				ecmaFeatures: {
+					jsx: true,
+				},
+			},
+			globals: {
+				...globals.browser,
+				...globals.node,
+			},
+		},
+		plugins: {
+			'@typescript-eslint': ts,
+			'react': react,
+			'react-hooks': reactHooks,
+		},
 		rules: {
 			'react/react-in-jsx-scope': 'off',
 			'react/prop-types': 'off',

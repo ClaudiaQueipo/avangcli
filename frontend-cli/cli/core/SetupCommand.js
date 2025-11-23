@@ -89,6 +89,25 @@ export class CreateNextAppCommand {
     ]
 
     await this.commandExecutor.executeWithOutput(createCmd, args)
+
+    await this.fixLayout()
     return this.projectName
+  }
+
+  async fixLayout() {
+    const layoutPath = join(this.projectName, "app", "layout.tsx")
+    try {
+      let content = await fs.readFile(layoutPath, "utf-8")
+      if (content.includes("children: React.ReactNode")) {
+        content = content.replace(
+          'import type { Metadata } from "next";',
+          'import type { Metadata } from "next";\nimport type { ReactNode } from "react";'
+        )
+        content = content.replace("children: React.ReactNode;", "children: ReactNode;")
+        await fs.writeFile(layoutPath, content, "utf-8")
+      }
+    } catch (error) {
+      console.error(error)
+    }
   }
 }
