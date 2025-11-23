@@ -1,5 +1,5 @@
 import { log } from "@clack/prompts"
-import fs from "fs"
+import { promises as fs } from "fs"
 import { dirname, join } from "path"
 import { fileURLToPath } from "url"
 
@@ -24,8 +24,12 @@ export class EslintPrettierSetupCommand extends SetupCommand {
       "eslint",
       "prettier",
       "eslint-config-prettier",
-      "@eslint/eslintrc",
       "@eslint/js",
+      "globals",
+      "@typescript-eslint/eslint-plugin",
+      "@typescript-eslint/parser",
+      "eslint-plugin-react",
+      "eslint-plugin-react-hooks",
       "eslint-config-next"
     ]
 
@@ -42,13 +46,28 @@ export class EslintPrettierSetupCommand extends SetupCommand {
     const templates = [
       { file: ".prettierrc", target: ".prettierrc" },
       { file: "eslint.config.mjs", target: "eslint.config.mjs" },
-      { file: ".eslintignore", target: ".eslintignore" },
       { file: ".prettierignore", target: ".prettierignore" }
     ]
 
     for (const { file, target } of templates) {
       await this.copyTemplate(join(templatesDir, file), join(this.projectPath, target))
     }
+
+    await this.updatePackageJson()
+  }
+
+  async updatePackageJson() {
+    const packageJsonPath = join(this.projectPath, "package.json")
+    const packageJson = JSON.parse(await fs.readFile(packageJsonPath, "utf-8"))
+
+    if (!packageJson.scripts) {
+      packageJson.scripts = {}
+    }
+
+    packageJson.scripts.format = "prettier --write ."
+    packageJson.scripts.lint = "eslint ."
+
+    await fs.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2))
   }
 
   logSuccess() {
@@ -91,6 +110,22 @@ export class BiomeSetupCommand extends SetupCommand {
     for (const { file, target } of templates) {
       await this.copyTemplate(join(templatesDir, file), join(this.projectPath, target))
     }
+
+    await this.updatePackageJson()
+  }
+
+  async updatePackageJson() {
+    const packageJsonPath = join(this.projectPath, "package.json")
+    const packageJson = JSON.parse(await fs.readFile(packageJsonPath, "utf-8"))
+
+    if (!packageJson.scripts) {
+      packageJson.scripts = {}
+    }
+
+    packageJson.scripts.format = "biome format --write ."
+    packageJson.scripts.lint = "biome check ."
+
+    await fs.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2))
   }
 
   logSuccess() {
@@ -407,6 +442,22 @@ export class GitSetupCommand extends SetupCommand {
         join(this.projectPath, "lint-staged.config.js")
       )
     }
+
+    await this.updatePackageJson()
+  }
+
+  async updatePackageJson() {
+    const packageJsonPath = join(this.projectPath, "package.json")
+    const packageJson = JSON.parse(await fs.readFile(packageJsonPath, "utf-8"))
+
+    if (!packageJson.scripts) {
+      packageJson.scripts = {}
+    }
+
+    packageJson.scripts.commit = "cz"
+    packageJson.type = "module"
+
+    await fs.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2))
   }
 
   async setupAdditionalConfig() {
@@ -435,16 +486,10 @@ export class GitSetupCommand extends SetupCommand {
     log.success("  ✓ Husky initialized")
 
     const commitMsgHook = `npx --no -- commitlint --edit \${1}`
-    fs.writeFileSync(
-      join(this.projectPath, ".husky", "commit-msg"),
-      `#!/usr/bin/env sh\n. "$(dirname -- "$0")/_/husky.sh"\n\n${commitMsgHook}\n`
-    )
+    await fs.writeFile(join(this.projectPath, ".husky", "commit-msg"), `#!/usr/bin/env sh\n${commitMsgHook}\n`)
 
     const preCommitHook = `npx lint-staged`
-    fs.writeFileSync(
-      join(this.projectPath, ".husky", "pre-commit"),
-      `#!/usr/bin/env sh\n. "$(dirname -- "$0")/_/husky.sh"\n\n${preCommitHook}\n`
-    )
+    await fs.writeFile(join(this.projectPath, ".husky", "pre-commit"), `#!/usr/bin/env sh\n${preCommitHook}\n`)
 
     log.success("  ✓ Husky hooks configured (commit-msg, pre-commit)")
   }
