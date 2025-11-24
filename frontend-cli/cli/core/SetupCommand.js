@@ -69,6 +69,7 @@ export class CreateNextAppCommand {
 
   async execute() {
     const createCmd = this.packageManagerStrategy.getCreateCommand()
+
     const baseArgs =
       this.packageManagerStrategy.name === "pnpm" || this.packageManagerStrategy.name === "yarn"
         ? ["create", "next-app"]
@@ -85,7 +86,8 @@ export class CreateNextAppCommand {
       "--app",
       "--import-alias",
       "@/*",
-      "--turbopack"
+      "--turbopack",
+      `--use-${this.packageManagerStrategy.name}`
     ]
 
     await this.commandExecutor.executeWithOutput(createCmd, args)
