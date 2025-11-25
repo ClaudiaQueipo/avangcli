@@ -13,26 +13,58 @@
     "install:frontend": "cd frontend-cli && bun install",
     "install:backend": "cd backend-cli && pip install -r requirements.txt",
     "install:all": "bun install && bun run install:frontend && bun run install:backend",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write \"**/*.{js,ts,tsx,jsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{js,ts,tsx,jsx,json,md}\"",
     "prepare": "husky",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["cli", "scaffolding", "nextjs", "fastapi", "fullstack"],
+  "keywords": [
+    "cli",
+    "scaffolding",
+    "nextjs",
+    "fastapi",
+    "fullstack"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "yargs": "^18.0.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@eslint/js": "^9.39.1",
+    "@types/node": "^22",
+    "eslint": "^9.39.1",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-plugin-unused-imports": "^4.3.0",
+    "globals": "^16.5.0",
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.6"
+    "lint-staged": "^16.2.6",
+    "prettier": "^3.6.2",
+    "typescript": "^5.3.3",
+    "typescript-eslint": "^8.46.4"
   },
   "lint-staged": {
     "frontend-cli/**/*.{js,ts}": [
-      "cd frontend-cli && eslint --fix",
-      "cd frontend-cli && prettier --write"
+      "eslint --fix",
+      "prettier --write"
     ],
     "frontend-cli/**/*.{json,md}": [
-      "cd frontend-cli && prettier --write"
+      "prettier --write"
+    ],
+    "web-docs/**/*.{js,ts,tsx,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "web-docs/**/*.{json,md}": [
+      "prettier --write"
+    ],
+    "*.{js,ts}": [
+      "eslint --fix",
+      "prettier --write"
     ]
   }
 }

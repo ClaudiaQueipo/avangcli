@@ -1,0 +1,52 @@
+import { Icon } from "@iconify/react"
+import { FileText } from "lucide-react"
+import Link from "next/link"
+import { useLocale, useTranslations } from "next-intl"
+
+import { constants } from "@/constants/global-constants"
+
+export default function FooterSection() {
+  const t = useTranslations("home.footer")
+  const locale = useLocale()
+  return (
+    <footer className="w-full bg-[#161616] border-t border-white/5 pt-12 pb-8 relative overflow-hidden">
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[200px] bg-lime-500/5 blur-[100px] rounded-full pointer-events-none z-0" />
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-8 md:gap-4">
+          <div className="flex items-center justify-center md:justify-start gap-3 md:flex-1">
+            <span className="font-bold text-lg text-white tracking-tight">AvangCLI</span>
+          </div>
+
+          <div className="flex items-center justify-center text-sm text-gray-500 font-medium md:flex-1">
+            © {new Date().getFullYear()} AvangCLI. {t("tagline")}
+          </div>
+
+          <div className="flex items-center justify-center md:justify-end gap-6 md:flex-1">
+            <Link
+              href={constants.repository_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-2 text-sm text-gray-400 hover:text-[#D4FC79] transition-colors duration-300"
+            >
+              <Icon
+                icon="simple-icons:github"
+                width="16"
+                height="16"
+                className="group-hover:scale-110 transition-transform"
+              />
+              <span className="hidden sm:inline">GitHub</span>
+            </Link>
+
+            <Link
+              href={`${locale}/docs`}
+              className="group flex items-center gap-2 text-sm text-gray-400 hover:text-[#D4FC79] transition-colors duration-300"
+            >
+              <FileText className="w-4 h-4 group-hover:scale-110 transition-transform" />
+              <span className="hidden sm:inline">Docs</span>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </footer>
+  )
+}

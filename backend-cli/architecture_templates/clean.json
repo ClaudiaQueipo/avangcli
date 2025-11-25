@@ -3,22 +3,22 @@
     "__init__.py": "",
     "settings.py": "",
     "domain": {
-        "__init__.py": "",
-        "models.py": ""
+      "__init__.py": "",
+      "models.py": ""
     },
     "use_cases": {
-        "__init__.py": "",
-        "use_cases.py": ""
+      "__init__.py": "",
+      "use_cases.py": ""
     },
     "infrastructure": {
-        "__init__.py": "",
-        "db.py": "",
-        "repositories.py": ""
+      "__init__.py": "",
+      "db.py": "",
+      "repositories.py": ""
     },
     "api": {
-        "__init__.py": "",
-        "serializers.py": "",
-        "api.py": ""
+      "__init__.py": "",
+      "serializers.py": "",
+      "api.py": ""
     }
   },
   "tests": {
