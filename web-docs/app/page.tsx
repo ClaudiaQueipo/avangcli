@@ -1,8 +1,5 @@
 'use client';
 
-import { useState, useEffect, useRef, useLayoutEffect } from 'react';
-import gsap from 'gsap';
-
 import { FeaturesSection } from '@/components/home/features-section';
 import { CtaSection } from '@/components/home/cta-section';
 import ScaffoldinSection from '@/components/home/scaffolding-section';
@@ -12,52 +9,14 @@ import HeroeSection from '@/components/home/heroe-section';
 import CreatorsSection from '@/components/home/creators-sections';
 import TopButton from '@/components/top-button';
 import LogoSkeleton from '@/components/logo-skeleton';
+import { useLoaderAnimation } from '@/hooks/use-loader-animation';
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true);
-  
-  const loaderContainerRef = useRef<HTMLDivElement>(null);
-  const logoRef = useRef<HTMLDivElement>(null);
-
-  useLayoutEffect(() => {
-  let ctx = gsap.context(() => {
-    const tl = gsap.timeline();
-
-    const animateOut = () => {
-      tl.to(logoRef.current, { 
-        y: -50, 
-        opacity: 0, 
-        duration: 0.8, 
-        ease: "power3.inOut" 
-      });
-      tl.to(loaderContainerRef.current, {
-        yPercent: -100,
-        duration: 1,
-        ease: "power4.inOut",
-        onComplete: () => setIsLoading(false)
-      }, "-=0.4");
-    };
-
-    const minDelayPromise = new Promise((resolve) => {
-      setTimeout(resolve, 3000);
-    });
-
-    const loadPromise = new Promise((resolve) => {
-      if (document.readyState === "complete") {
-        resolve(true);
-      } else {
-        window.addEventListener("load", () => resolve(true), { once: true });
-      }
-    });
-
-    Promise.all([minDelayPromise, loadPromise]).then(() => {
-      animateOut();
-    });
-
-  }, loaderContainerRef);
-
-  return () => ctx.revert();
-}, []);
+  const { isLoading, loaderContainerRef, logoRef } = useLoaderAnimation({
+    minDelay: 1000,
+    animationDuration: 0.8,
+    ease: 'power3.inOut',
+  });
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#161616] text-surf-crest">

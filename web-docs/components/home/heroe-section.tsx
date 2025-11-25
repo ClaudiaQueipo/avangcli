@@ -33,8 +33,7 @@ const HeroeSection = () => {
     return (
         <div className="min-h-screen bg-[#161616] p-2 flex flex-col" id='home'>
 
-            {/* SECCIÓN HEROE */}
-            <section className="relative w-full bg-[#252525] rounded-b-[2.5rem] rounded-t-xl overflow-hidden flex flex-col items-center pt-6 pb-20 shadow-2xl ring-1 ring-white/5 min-h-[98dvh]">
+            <section className="relative w-full bg-[#252525] rounded-b-[2.5rem] rounded-t-xl overflow-hidden flex flex-col items-center pt-6 pb-20 shadow-2xl ring-1 ring-white/5 min-h-[98vh]">
 
                 <div className="absolute left-20 top-1/2 space-y-6 hidden xl:block z-10 select-none pointer-events-none opacity-80">
                     <FloatingCard
@@ -87,7 +86,7 @@ const HeroeSection = () => {
                 </div>
 
                 {/* --- CONTENIDO PRINCIPAL --- */}
-                <div className="relative z-10 flex flex-col items-center justify-center px-4 w-full max-w-4xl mx-auto">
+                <div className="relative z-10 flex flex-col items-center justify-center px-4 w-full max-w-4xl mx-auto flex-1">
                     <h1 className="text-center text-white text-5xl md:text-7xl font-bold mb-8 leading-[1.1] tracking-tight">
                         Optimize your <br className="hidden md:block" />
                         <span className="inline-block text-lime-300 italic font-serif mt-2">
