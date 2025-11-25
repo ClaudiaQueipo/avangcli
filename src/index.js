@@ -1,103 +1,103 @@
 #!/usr/bin/env node
 
-import yargs from 'yargs'
-import { hideBin } from 'yargs/helpers'
-import { spawn } from 'child_process'
-import { dirname, join } from 'path'
-import { fileURLToPath } from 'url'
+import { spawn } from "child_process"
+import { dirname, join } from "path"
+import { fileURLToPath } from "url"
+import yargs from "yargs"
+import { hideBin } from "yargs/helpers"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
-const rootDir = join(__dirname, '..')
+const rootDir = join(__dirname, "..")
 
 function launchFrontendCli(args) {
-  const frontendCliPath = join(rootDir, 'frontend-cli', 'index.js')
+  const frontendCliPath = join(rootDir, "frontend-cli", "index.js")
 
-  const frontendCli = spawn('node', [frontendCliPath, ...args], {
-    stdio: 'inherit'
+  const frontendCli = spawn("node", [frontendCliPath, ...args], {
+    stdio: "inherit"
   })
 
-  frontendCli.on('exit', (code) => {
+  frontendCli.on("exit", (code) => {
     process.exit(code || 0)
   })
 
-  frontendCli.on('error', (err) => {
-    console.error('Failed to launch frontend CLI:', err)
+  frontendCli.on("error", (err) => {
+    console.error("Failed to launch frontend CLI:", err)
     process.exit(1)
   })
 }
 
 yargs(hideBin(process.argv))
-  .scriptName('avangcli')
-  .usage('Usage: $0 <command> [options]')
+  .scriptName("avangcli")
+  .usage("Usage: $0 <command> [options]")
   .command(
-    'init [project-name]',
-    'Initialize a new Next.js project',
+    "init [project-name]",
+    "Initialize a new Next.js project",
     (yargs) => {
       return yargs.help(false).version(false)
     },
-    (argv) => {
+    (_argv) => {
       launchFrontendCli(process.argv.slice(2))
     }
   )
-   .command(
-     'module <module-name>',
-     'Generate a new module in an existing Next.js application',
-     (yargs) => {
-       return yargs.help(false).version(false)
-     },
-     (argv) => {
-       launchFrontendCli(process.argv.slice(2))
-     }
-   )
-   .command(
-     'config',
-     'Regenerate avangclirc.json based on current project configuration',
-     (yargs) => {
-       return yargs.help(false).version(false)
-     },
-     (argv) => {
-       launchFrontendCli(process.argv.slice(2))
-     }
-   )
   .command(
-    'frontend',
-    'Launch frontend CLI',
+    "module <module-name>",
+    "Generate a new module in an existing Next.js application",
     (yargs) => {
       return yargs.help(false).version(false)
     },
-    (argv) => {
+    (_argv) => {
+      launchFrontendCli(process.argv.slice(2))
+    }
+  )
+  .command(
+    "config",
+    "Regenerate avangclirc.json based on current project configuration",
+    (yargs) => {
+      return yargs.help(false).version(false)
+    },
+    (_argv) => {
+      launchFrontendCli(process.argv.slice(2))
+    }
+  )
+  .command(
+    "frontend",
+    "Launch frontend CLI",
+    (yargs) => {
+      return yargs.help(false).version(false)
+    },
+    (_argv) => {
       launchFrontendCli(process.argv.slice(3))
     }
   )
   .command(
-    'backend',
-    'Launch backend CLI',
+    "backend",
+    "Launch backend CLI",
     (yargs) => {
       return yargs.help(false).version(false)
     },
-    (argv) => {
-      const backendCliPath = join(rootDir, 'backend-cli', 'generator.py')
+    (_argv) => {
+      const backendCliPath = join(rootDir, "backend-cli", "generator.py")
       const originalArgs = process.argv.slice(3)
 
-      const backendCli = spawn('python3', [backendCliPath, ...originalArgs], {
-        stdio: 'inherit'
+      const backendCli = spawn("python3", [backendCliPath, ...originalArgs], {
+        stdio: "inherit"
       })
 
-      backendCli.on('exit', (code) => {
+      backendCli.on("exit", (code) => {
         process.exit(code || 0)
       })
 
-      backendCli.on('error', (err) => {
-        console.error('Failed to launch backend CLI:', err)
+      backendCli.on("error", (err) => {
+        console.error("Failed to launch backend CLI:", err)
         process.exit(1)
       })
     }
   )
-  .demandCommand(1, 'You need to specify a command')
-  .help('h')
-  .alias('h', 'help')
-  .version('1.0.0')
-  .alias('v', 'version')
-  .epilogue('For more information, visit: https://github.com/avangenio/avangcli')
+  .demandCommand(1, "You need to specify a command")
+  .help("h")
+  .alias("h", "help")
+  .version("1.0.0")
+  .alias("v", "version")
+  .epilogue("For more information, visit: https://github.com/avangenio/avangcli")
   .parse()
