@@ -1,7 +1,9 @@
 # Fullstack Project Generator CLI Structure (npm Package)
 
 ## Overview
+
 This CLI tool generates fullstack projects with:
+
 - Frontend: Next.js (JavaScript)
 - Backend: FastAPI (Python)
 - Master CLI: JavaScript (Node.js) to coordinate FE and BE CLIs
@@ -72,6 +74,7 @@ Each CLI has its own dependencies:
 ## CLI Architecture
 
 ### Master CLI (JavaScript - npm Package)
+
 - **Purpose**: Orchestrates the creation of fullstack projects
 - **Framework**: Commander.js or Oclif for CLI interface
 - **npm Integration**:
@@ -85,6 +88,7 @@ Each CLI has its own dependencies:
   - Handle errors and provide unified output
 
 ### Frontend CLI (JavaScript)
+
 - **Purpose**: Generates Next.js projects
 - **Framework**: Node.js with file system operations
 - **Templates**:
@@ -93,6 +97,7 @@ Each CLI has its own dependencies:
   - Customizable components
 
 ### Backend CLI (Python)
+
 - **Purpose**: Generates FastAPI projects
 - **Framework**: Click or argparse for CLI
 - **Templates**:
@@ -102,19 +107,23 @@ Each CLI has its own dependencies:
 - **Note**: Requires Python runtime on user's system
 
 ## Interaction Model
+
 The master CLI coordinates the sub-CLIs by:
+
 1. Parsing global options
 2. Invoking FE CLI via subprocess (Node.js child_process)
 3. Invoking BE CLI via subprocess (Python subprocess)
 4. Providing unified progress reporting and error handling
 
 ## npm Package Considerations
+
 - **Dependencies**: Include Commander.js, fs-extra, etc. in package.json
 - **Python Dependency**: Document requirement for Python 3.8+ in README
 - **Cross-platform**: Ensure subprocess calls work on Windows/macOS/Linux
 - **Versioning**: Use semantic versioning for releases
 
 ## Documentation Structure
+
 - `doc/README.md`: Overview and getting started
 - `doc/cli-usage.md`: Detailed CLI commands and options
 - `doc/project-templates.md`: Description of available templates

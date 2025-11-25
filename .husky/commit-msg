@@ -1,8 +1,1 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
-# Only run commitlint if there are changes in frontend-cli directory
-if git diff --cached --name-only | grep -q "^frontend-cli/"; then
-  echo "Running commitlint for frontend-cli..."
-  cd frontend-cli && npx --no -- commitlint --edit $1
-fi
+npx --no -- commitlint --edit $1
