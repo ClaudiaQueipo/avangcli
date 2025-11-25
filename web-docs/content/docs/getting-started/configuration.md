@@ -12,7 +12,7 @@ Learn how to configure your application for different environments.
 
 Create a `.env.local` file in the root of your project:
 
-```env
+```bash
 NEXT_PUBLIC_API_URL=https://api.example.com
 DATABASE_URL=postgresql://user:password@localhost:5432/db
 ```
