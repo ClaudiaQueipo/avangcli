@@ -8,18 +8,12 @@ import { useLocale } from "next-intl"
 import React, { useEffect, useRef, useState } from "react"
 
 import { constants } from "@/constants/global-constants"
+import { useGitHubStars } from "@/hooks/use-github-api"
+import { formatStarCount } from "@/modules/shared/utils"
 
 import Logo from "./logo"
 
 const GITHUB_REPO_URL = constants.repository_url
-const GITHUB_API_URL = constants.repository_fetch_url
-
-const formatStarCount = (count: number): string => {
-  if (count >= 1000) {
-    return `${(count / 1000).toFixed(1)}k`
-  }
-  return count.toString()
-}
 
 const NAV_ITEMS = [
   { id: "home", label: "Home", href: "#home" },
@@ -32,37 +26,13 @@ const NAV_ITEMS = [
 
 const Navbar = () => {
   const locale = useLocale()
-  const [starCount, setStarCount] = useState<number | null>(null)
+  const { starCount, loading: loadingStars } = useGitHubStars(constants.github_owner, constants.github_repo)
   const [isScrolled, setIsScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState("home")
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 })
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const navRefs = useRef<(HTMLAnchorElement | null)[]>([])
   const mobileMenuRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    async function fetchStarCount() {
-      try {
-        const response = await fetch(GITHUB_API_URL, {
-          headers: { "User-Agent": "Next.js App" }
-        })
-
-        if (!response.ok) {
-          console.error("Error de red al obtener las estrellas de GitHub.")
-          setStarCount(0)
-          return
-        }
-
-        const data = await response.json()
-        setStarCount(data.stargazers_count)
-      } catch (error) {
-        console.error("No se pudo cargar el conteo de estrellas:", error)
-        setStarCount(0)
-      }
-    }
-
-    fetchStarCount()
-  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -234,10 +204,10 @@ const Navbar = () => {
 
               <span className="flex items-center gap-1 font-bold">
                 <Star className="w-4 h-4" />
-                {starCount !== null ? (
-                  formatStarCount(starCount)
-                ) : (
+                {loadingStars || starCount === null ? (
                   <span className="w-6 h-4 bg-lime-400/20 rounded animate-pulse"></span>
+                ) : (
+                  formatStarCount(starCount)
                 )}
               </span>
             </Link>
@@ -287,10 +257,10 @@ const Navbar = () => {
 
               <span className="flex items-center gap-1 font-bold">
                 <Star className="w-5 h-5" />
-                {starCount !== null ? (
-                  formatStarCount(starCount)
-                ) : (
+                {loadingStars || starCount === null ? (
                   <span className="w-6 h-4 bg-lime-400/20 rounded animate-pulse"></span>
+                ) : (
+                  formatStarCount(starCount)
                 )}
               </span>
             </Link>
