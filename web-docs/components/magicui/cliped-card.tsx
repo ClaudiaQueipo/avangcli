@@ -1,24 +1,30 @@
 import { ReactNode } from "react"
 
 interface ClippedCardProps {
-  width?: number
-  height?: number
+  width?: number | string
+  height?: number | string
   color?: string
   children?: ReactNode
   className?: string
   showVerticalLine?: boolean
+  fillContainer?: boolean
 }
 
 export default function ClippedCard({
-  width = 100,
-  height = 100,
+  width = "100%",
+  height = "100%",
   color = "#84cc16",
   children,
   className = "",
-  showVerticalLine = false
+  showVerticalLine = false,
+  fillContainer = false
 }: ClippedCardProps) {
+  const containerStyle = fillContainer 
+    ? { width: "100%", height: "100%" } 
+    : { width, height };
+
   return (
-    <div className={`relative ${className}`} style={{ width, height }}>
+    <div className={`relative ${className}`} style={containerStyle}>
       <svg xmlns="http://www.w3.org/2000/svg" className="block absolute" width="0" height="0">
         <defs>
           <clipPath id="clip-card" clipPathUnits="objectBoundingBox">

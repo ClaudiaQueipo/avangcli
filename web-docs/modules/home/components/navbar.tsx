@@ -161,7 +161,7 @@ const Navbar = () => {
     >
       <div
         className={`
-                    grid grid-cols-[20%_60%_20%]  items-center px-6
+                    grid grid-cols-[80%_20%] md:grid-cols-[20%_60%_20%]  items-center px-6
                     ${
                       isScrolled
                         ? "bg-[#1a1a1a]/80 backdrop-blur-xl border border-white/10 rounded-full py-3 shadow-[0_8px_30px_rgba(0,0,0,0.4)]"

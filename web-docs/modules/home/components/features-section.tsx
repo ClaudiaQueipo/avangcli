@@ -96,8 +96,8 @@ export function FeaturesSection() {
             }
           />
 
-          <div className="md:col-span-1 flex items-center justify-center group relative col-span-1 flex-col  overflow-hidden transition-all duration-300 hover:shadow-xl  hover:border-white/10 shadow-2xl">
-            <ClippedCard width={400} height={350} color="#BBF451" className="transition-transform duration-300">
+          <div className="md:col-span-1 flex items-center justify-center group relative col-span-1 flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-white/10 shadow-2xl w-full h-full">
+            <ClippedCard color="#BBF451" className="transition-transform duration-300" fillContainer={true}>
               <div className="text-left w-full">
                 <h3 className="text-2xl font-bold text-black mb-3">Stack Robusto</h3>
                 <p className="text-black/80 text-sm mb-6 font-medium">Docker, Linter, Hooks y más listos para usar.</p>
