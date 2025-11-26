@@ -1,8 +1,9 @@
-import fs from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
+import fs from "node:fs"
+import path from "node:path"
 
-const docsDirectory = path.join(process.cwd(), 'content/docs')
+import matter from "gray-matter"
+
+const docsDirectory = path.join(process.cwd(), "content/docs")
 
 export interface DocMetadata {
   title: string
@@ -20,14 +21,14 @@ export interface DocFile {
 export function getDocBySlug(category: string, slug: string): DocFile | null {
   try {
     const fullPath = path.join(docsDirectory, category, `${slug}.md`)
-    const fileContents = fs.readFileSync(fullPath, 'utf8')
+    const fileContents = fs.readFileSync(fullPath, "utf8")
     const { data, content } = matter(fileContents)
 
     return {
       slug,
       category,
       metadata: data as DocMetadata,
-      content,
+      content
     }
   } catch {
     return null
@@ -44,8 +45,8 @@ export function getAllDocs(): DocFile[] {
       const files = fs.readdirSync(categoryPath)
 
       files.forEach((file) => {
-        if (file.endsWith('.md')) {
-          const slug = file.replace(/\.md$/, '')
+        if (file.endsWith(".md")) {
+          const slug = file.replace(/\.md$/, "")
           const doc = getDocBySlug(category, slug)
           if (doc) {
             docs.push(doc)
@@ -69,8 +70,8 @@ export function getDocsByCategory(category: string): DocFile[] {
   const docs: DocFile[] = []
 
   files.forEach((file) => {
-    if (file.endsWith('.md')) {
-      const slug = file.replace(/\.md$/, '')
+    if (file.endsWith(".md")) {
+      const slug = file.replace(/\.md$/, "")
       const doc = getDocBySlug(category, slug)
       if (doc) {
         docs.push(doc)
@@ -78,7 +79,6 @@ export function getDocsByCategory(category: string): DocFile[] {
     }
   })
 
-  // Sort by order field
   return docs.sort((a, b) => {
     const orderA = a.metadata.order ?? 999
     const orderB = b.metadata.order ?? 999
@@ -95,9 +95,8 @@ export function getAllCategories(): string[] {
 }
 
 export function getCategoryTitle(category: string): string {
-  // Convert kebab-case to Title Case
   return category
-    .split('-')
+    .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ')
+    .join(" ")
 }

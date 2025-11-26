@@ -84,6 +84,7 @@ avangcli module my-module --skip-validation
 ```
 
 **Module features:**
+
 - Validates Next.js project structure
 - Creates consistent folder structure (components, containers, services, hooks, etc.)
 - Generates TypeScript boilerplate with best practices

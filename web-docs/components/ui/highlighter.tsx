@@ -1,19 +1,12 @@
 "use client"
 
-import { useEffect, useRef } from "react"
-import type React from "react"
 import { useInView } from "motion/react"
+import type React from "react"
+import { useEffect, useRef } from "react"
 import { annotate } from "rough-notation"
 import { type RoughAnnotation } from "rough-notation/lib/model"
 
-type AnnotationAction =
-  | "highlight"
-  | "underline"
-  | "box"
-  | "circle"
-  | "strike-through"
-  | "crossed-off"
-  | "bracket"
+type AnnotationAction = "highlight" | "underline" | "box" | "circle" | "strike-through" | "crossed-off" | "bracket"
 
 interface HighlighterProps {
   children: React.ReactNode
@@ -36,17 +29,16 @@ export function Highlighter({
   iterations = 2,
   padding = 2,
   multiline = true,
-  isView = false,
+  isView = false
 }: HighlighterProps) {
   const elementRef = useRef<HTMLSpanElement>(null)
   const annotationRef = useRef<RoughAnnotation | null>(null)
 
   const isInView = useInView(elementRef, {
     once: true,
-    margin: "-10%",
+    margin: "-10%"
   })
 
-  // If isView is false, always show. If isView is true, wait for inView
   const shouldShow = !isView || isInView
 
   useEffect(() => {
@@ -62,7 +54,7 @@ export function Highlighter({
       animationDuration,
       iterations,
       padding,
-      multiline,
+      multiline
     }
 
     const annotation = annotate(element, annotationConfig)
@@ -84,16 +76,7 @@ export function Highlighter({
         resizeObserver.disconnect()
       }
     }
-  }, [
-    shouldShow,
-    action,
-    color,
-    strokeWidth,
-    animationDuration,
-    iterations,
-    padding,
-    multiline,
-  ])
+  }, [shouldShow, action, color, strokeWidth, animationDuration, iterations, padding, multiline])
 
   return (
     <span ref={elementRef} className="relative inline-block bg-transparent">
