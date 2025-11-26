@@ -13,7 +13,7 @@ This guide covers the basic usage patterns of our platform.
 Here's how to create your first component:
 
 ```tsx
-import { Button } from '@/components/ui/button'
+import { Button } from "@/components/ui/button"
 
 export default function MyComponent() {
   return (
@@ -31,7 +31,7 @@ Fetch data using React Server Components:
 
 ```tsx
 async function getData() {
-  const res = await fetch('https://api.example.com/data')
+  const res = await fetch("https://api.example.com/data")
   return res.json()
 }
 

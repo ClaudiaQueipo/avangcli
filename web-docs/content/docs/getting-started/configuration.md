@@ -25,8 +25,8 @@ Edit `next.config.mjs`:
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['example.com'],
-  },
+    domains: ["example.com"]
+  }
 }
 
 export default nextConfig

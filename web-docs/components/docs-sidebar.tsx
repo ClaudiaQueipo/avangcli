@@ -1,10 +1,11 @@
-'use client'
+"use client"
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { cn } from '@/lib/utils'
-import { ChevronRight } from 'lucide-react'
-import { useState } from 'react'
+import { ChevronRight } from "lucide-react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { useState } from "react"
+
+import { cn } from "@/lib/utils"
 
 export interface DocSection {
   title: string
@@ -22,16 +23,10 @@ interface DocsSidebarProps {
 
 export function DocsSidebar({ sections }: DocsSidebarProps) {
   const pathname = usePathname()
-  const [expandedSections, setExpandedSections] = useState<string[]>(
-    sections.map((s) => s.title)
-  )
+  const [expandedSections, setExpandedSections] = useState<string[]>(sections.map((s) => s.title))
 
   const toggleSection = (title: string) => {
-    setExpandedSections((prev) =>
-      prev.includes(title)
-        ? prev.filter((t) => t !== title)
-        : [...prev, title]
-    )
+    setExpandedSections((prev) => (prev.includes(title) ? prev.filter((t) => t !== title) : [...prev, title]))
   }
 
   return (
@@ -48,12 +43,7 @@ export function DocsSidebar({ sections }: DocsSidebarProps) {
                   className="flex w-full items-center justify-between text-sm font-semibold text-foreground mb-2 hover:text-primary transition-colors"
                 >
                   <span>{section.title}</span>
-                  <ChevronRight
-                    className={cn(
-                      'h-4 w-4 transition-transform',
-                      isExpanded && 'rotate-90'
-                    )}
-                  />
+                  <ChevronRight className={cn("h-4 w-4 transition-transform", isExpanded && "rotate-90")} />
                 </button>
 
                 {isExpanded && (
@@ -66,10 +56,10 @@ export function DocsSidebar({ sections }: DocsSidebarProps) {
                           <Link
                             href={item.href}
                             className={cn(
-                              'block py-1.5 px-3 text-sm rounded-md transition-colors',
+                              "block py-1.5 px-3 text-sm rounded-md transition-colors",
                               isActive
-                                ? 'bg-primary/10 text-primary font-medium'
-                                : 'text-muted-foreground hover:text-foreground hover:bg-accent'
+                                ? "bg-primary/10 text-primary font-medium"
+                                : "text-muted-foreground hover:text-foreground hover:bg-accent"
                             )}
                           >
                             {item.title}

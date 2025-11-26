@@ -1,0 +1,22 @@
+{
+  "nav": {
+    "home": "Home",
+    "github": "GitHub"
+  },
+  "docs": {
+    "title": "Documentation",
+    "description": "Everything you need to know to get started with AvangCLI tools.",
+    "more": "more..."
+  },
+  "clis": {
+    "frontend": "Frontend CLI",
+    "backend": "Backend CLI"
+  },
+  "categories": {
+    "introduction": "Introduction",
+    "getting-started": "Getting Started",
+    "commands": "Commands",
+    "architecture": "Architecture",
+    "guides": "Guides"
+  }
+}

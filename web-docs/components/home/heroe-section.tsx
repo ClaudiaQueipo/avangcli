@@ -12,7 +12,7 @@ import {
     CheckCircle,
     Star
 } from 'lucide-react';
-import Navbar from '../navbar';
+import Navbar from '@/modules/home/components/navbar';
 
 interface LogoPlaceholderProps {
     text: string;

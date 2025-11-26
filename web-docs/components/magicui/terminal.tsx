@@ -1,17 +1,9 @@
-'use client';
+"use client"
 
-import {
-  Children,
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react"
 import { motion, MotionProps, useInView } from "motion/react"
-import { cn } from "@/lib/utils"
+import { Children, createContext, useContext, useEffect, useMemo, useRef, useState } from "react"
 
+import { cn } from "@/lib/utils"
 
 interface SequenceContextValue {
   completeItem: (index: number) => void
@@ -32,17 +24,11 @@ interface AnimatedSpanProps extends MotionProps {
   startOnView?: boolean
 }
 
-export const AnimatedSpan = ({
-  children,
-  delay = 0,
-  className,
-  startOnView = false,
-  ...props
-}: AnimatedSpanProps) => {
+export const AnimatedSpan = ({ children, delay = 0, className, startOnView = false, ...props }: AnimatedSpanProps) => {
   const elementRef = useRef<HTMLDivElement | null>(null)
   const isInView = useInView(elementRef as React.RefObject<Element>, {
     amount: 0.3,
-    once: true,
+    once: true
   })
 
   const sequence = useSequence()
@@ -104,7 +90,7 @@ export const TypingAnimation = ({
   const MotionComponent = useMemo(
     () =>
       motion.create(Component, {
-        forwardMotionProps: true,
+        forwardMotionProps: true
       }),
     [Component]
   )
@@ -114,7 +100,7 @@ export const TypingAnimation = ({
   const elementRef = useRef<HTMLElement | null>(null)
   const isInView = useInView(elementRef as React.RefObject<Element>, {
     amount: 0.3,
-    once: true,
+    once: true
   })
 
   const sequence = useSequence()
@@ -139,15 +125,7 @@ export const TypingAnimation = ({
 
     const startTimeout = setTimeout(() => setStarted(true), delay)
     return () => clearTimeout(startTimeout)
-  }, [
-    delay,
-    startOnView,
-    isInView,
-    started,
-    sequence?.activeIndex,
-    sequence?.sequenceStarted,
-    itemIndex,
-  ])
+  }, [delay, startOnView, isInView, started, sequence?.activeIndex, sequence?.sequenceStarted, itemIndex])
 
   useEffect(() => {
     if (!started) return
@@ -188,16 +166,11 @@ interface TerminalProps {
   startOnView?: boolean
 }
 
-export const Terminal = ({
-  children,
-  className,
-  sequence = true,
-  startOnView = true,
-}: TerminalProps) => {
+export const Terminal = ({ children, className, sequence = true, startOnView = true }: TerminalProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const isInView = useInView(containerRef as React.RefObject<Element>, {
     amount: 0.3,
-    once: true,
+    once: true
   })
 
   const [activeIndex, setActiveIndex] = useState(0)
@@ -210,7 +183,7 @@ export const Terminal = ({
         setActiveIndex((current) => (index === current ? current + 1 : current))
       },
       activeIndex,
-      sequenceStarted: sequenceHasStarted,
+      sequenceStarted: sequenceHasStarted
     }
   }, [sequence, activeIndex, sequenceHasStarted])
 
@@ -224,16 +197,13 @@ export const Terminal = ({
     ))
   }, [children, sequence])
 
-  const content =
+  const content = (
     <div
       ref={containerRef}
-      className={cn(
-        "h-full w-full rounded-xl relative overflow-hidden flex flex-col bg-[#1a1a1a]", 
-        className
-      )}
+      className={cn("h-full w-full rounded-xl relative overflow-hidden flex flex-col bg-[#1a1a1a]", className)}
     >
       <div className="absolute -bottom-[20%] right-0 w-[300px] h-[300px] bg-lime-500/10 rounded-full blur-[80px] pointer-events-none z-0" />
-      
+
       <div className="bg-[#2a2a2a]/50 backdrop-blur-md flex items-center gap-2 px-4 py-3 border-b border-white/5 relative z-10 shrink-0">
         <div className="h-3 w-3 rounded-full bg-[#FF5F56] border border-[#E0443E]/50"></div>
         <div className="h-3 w-3 rounded-full bg-[#FFBD2E] border border-[#DEA123]/50"></div>
@@ -243,21 +213,14 @@ export const Terminal = ({
         </div>
       </div>
 
-      <div className="p-6 font-mono text-sm leading-relaxed relative z-10 flex-1 overflow-auto"> 
-        <div className="grid gap-y-2">
-          {wrappedChildren}
-        </div>
-        {sequenceHasStarted && (
-          <div className="mt-2 h-4 w-2 bg-lime-500/70 animate-pulse" />
-        )}
+      <div className="p-6 font-mono text-sm leading-relaxed relative z-10 flex-1 overflow-auto">
+        <div className="grid gap-y-2">{wrappedChildren}</div>
+        {sequenceHasStarted && <div className="mt-2 h-4 w-2 bg-lime-500/70 animate-pulse" />}
       </div>
     </div>
+  )
 
   if (!sequence) return content
 
-  return (
-    <SequenceContext.Provider value={contextValue}>
-      {content}
-    </SequenceContext.Provider>
-  )
+  return <SequenceContext.Provider value={contextValue}>{content}</SequenceContext.Provider>
 }

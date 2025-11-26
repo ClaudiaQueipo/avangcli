@@ -1,0 +1,96 @@
+{
+  "categories": {
+    "introduction": {
+      "en": "01-introduction",
+      "es": "01-introduccion"
+    },
+    "getting-started": {
+      "en": "02-getting-started",
+      "es": "02-primeros-pasos"
+    },
+    "commands": {
+      "en": "03-commands",
+      "es": "03-comandos"
+    },
+    "architecture": {
+      "en": "04-architecture",
+      "es": "04-arquitectura"
+    },
+    "guides": {
+      "en": "08-guides",
+      "es": "08-guias"
+    }
+  },
+  "docs": {
+    "introduction": {
+      "overview": {
+        "en": "overview",
+        "es": "vision-general"
+      },
+      "when-to-use": {
+        "en": "when-to-use",
+        "es": "cuando-usar"
+      },
+      "why-use-this-tool": {
+        "en": "why-use-this-tool",
+        "es": "por-que-usar-esta-herramienta"
+      }
+    },
+    "getting-started": {
+      "configuration": {
+        "en": "configuration",
+        "es": "configuracion"
+      },
+      "installation": {
+        "en": "installation",
+        "es": "instalacion"
+      }
+    },
+    "commands": {
+      "config": {
+        "en": "config",
+        "es": "config"
+      },
+      "init": {
+        "en": "init",
+        "es": "init"
+      },
+      "module": {
+        "en": "module",
+        "es": "module"
+      },
+      "ui-library": {
+        "en": "ui-library",
+        "es": "ui-library"
+      }
+    },
+    "architecture": {
+      "core-modules": {
+        "en": "core-modules",
+        "es": "modulos-principales"
+      },
+      "overview": {
+        "en": "overview",
+        "es": "vision-general"
+      },
+      "screaming-architecture": {
+        "en": "screaming-architecture",
+        "es": "screaming-architecture"
+      }
+    },
+    "guides": {
+      "best-practices": {
+        "en": "best-practices",
+        "es": "mejores-practicas"
+      },
+      "complete-project-walkthrough": {
+        "en": "complete-project-walkthrough",
+        "es": "proyecto-completo-paso-a-paso"
+      },
+      "troubleshooting": {
+        "en": "troubleshooting",
+        "es": "solucion-de-problemas"
+      }
+    }
+  }
+}
