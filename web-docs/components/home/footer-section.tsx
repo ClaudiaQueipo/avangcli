@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Github, Twitter, FileText, Terminal } from "lucide-react";
+import { Github, Twitter, FileText } from "lucide-react";
 
 export default function FooterSection() {
   return (
@@ -7,15 +7,15 @@ export default function FooterSection() {
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[200px] bg-lime-500/5 blur-[100px] rounded-full pointer-events-none z-0" />
       <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-center gap-8 md:gap-4">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center md:justify-start gap-3 md:flex-1">
             <span className="font-bold text-lg text-white tracking-tight">AvangCLI</span>
           </div>
 
-          <div className="text-sm text-gray-500 font-medium">
+          <div className="flex items-center justify-center text-sm text-gray-500 font-medium md:flex-1">
             © {new Date().getFullYear()} AvangCLI. Built for builders.
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center justify-center md:justify-end gap-6 md:flex-1">
             <Link 
                 href="#" 
                 className="group flex items-center gap-2 text-sm text-gray-400 hover:text-[#D4FC79] transition-colors duration-300"
