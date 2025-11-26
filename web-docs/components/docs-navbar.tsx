@@ -2,9 +2,11 @@
 
 import { Github } from "lucide-react"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 import { constants } from "@/constants/global-constants"
+import { useGitHubStars } from "@/hooks/use-github-api"
+import { formatStarCount } from "@/modules/shared/utils"
 
 const translations = {
   es: {
@@ -19,31 +21,7 @@ const translations = {
 
 export function DocsNavbar() {
   const [language, setLanguage] = useState<"es" | "en">("es")
-  const [stars, setStars] = useState<string>("0")
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const fetchStars = async () => {
-      try {
-        const response = await fetch(constants.repository_fetch_url)
-        const data = await response.json()
-
-        const count = data.stargazers_count || 0
-        if (count >= 1000) {
-          setStars(`${(count / 1000).toFixed(count % 1000 === 0 ? 0 : 1)}k`)
-        } else {
-          setStars(count.toString())
-        }
-      } catch (error) {
-        console.warn("[v0] Error fetching GitHub stars:", error)
-        setStars("0")
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchStars()
-  }, [])
+  const { starCount, loading } = useGitHubStars(constants.github_owner, constants.github_repo)
 
   const t = translations[language]
 
@@ -103,7 +81,11 @@ export function DocsNavbar() {
             >
               <Github className="w-5 h-5 text-surf-crest group-hover:text-green-yellow transition-colors" />
               <span className="text-sm font-medium text-surf-crest group-hover:text-green-yellow transition-colors">
-                {loading ? "..." : stars}
+                {loading || starCount === null ? (
+                  <span className="w-6 h-4 bg-green-yellow/20 rounded animate-pulse inline-block"></span>
+                ) : (
+                  formatStarCount(starCount)
+                )}
               </span>
             </a>
           </div>

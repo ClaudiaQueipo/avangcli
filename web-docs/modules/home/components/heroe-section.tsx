@@ -3,6 +3,7 @@
 import { Icon } from "@iconify/react"
 import { ArrowRight, Box, CheckCircle, Star } from "lucide-react"
 import Link from "next/link"
+import { useLocale } from "next-intl"
 import React from "react"
 
 import { FlipWords } from "@/components/ui/flip-words"
@@ -25,7 +26,7 @@ interface FloatingCardProps {
 
 const HeroeSection = () => {
   const words = ["Next.js projects", "FastAPI backends", "full-stack apps"]
-
+  const locale = useLocale()
   return (
     <div className="min-h-screen bg-[#161616] p-2 flex flex-col" id="home">
       <section className="relative w-full bg-[#252525] rounded-b-[2.5rem] rounded-t-xl overflow-hidden flex flex-col pt-6 pb-20 shadow-2xl ring-1 ring-white/5 h-[98vh]">
@@ -163,7 +164,7 @@ const HeroeSection = () => {
 
           <div className="flex flex-col sm:flex-row gap-5 w-full justify-center mb-10">
             <Link
-              href="/docs/getting-started/installation"
+              href={`/${locale}/docs/frontend-cli/getting-started`}
               className="px-8 py-4 rounded-full bg-white text-black font-bold hover:bg-lime-300 transition-all shadow-[0_0_30px_rgba(163,230,53,0.2)] flex items-center justify-center gap-2 group transform hover:-translate-y-1"
             >
               Get Started
@@ -171,10 +172,10 @@ const HeroeSection = () => {
             </Link>
 
             <Link
-              href="/docs/guides/basic-usage"
+              href={`/${locale}/docs/frontend-cli/guides`}
               className="px-8 py-4 rounded-full border-lime-400/50 text-lime-400 hover:bg-lime-400 hover:text-black font-semibold border transition-colors text-center flex items-center justify-center gap-2"
             >
-              Ver Demo
+              Read Guides
             </Link>
           </div>
         </div> */}

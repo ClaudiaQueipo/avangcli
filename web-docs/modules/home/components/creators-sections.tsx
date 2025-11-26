@@ -1,20 +1,14 @@
 "use client"
 
 import Link from "next/link"
-import React, { useEffect, useState } from "react"
+import React from "react"
 
 import ClippedShape from "@/components/magicui/cliped-shape"
+import { type GitHubUser, useGitHubUsers } from "@/hooks/use-github-api"
 
 const CREATORS_USERNAMES = ["ClaudiaQueipo", "solyfaby", "ppit890819", "IronBeardX", "luislicea1"]
 
-interface CreatorData {
-  login: string
-  name: string | null
-  avatar_url: string
-  html_url: string
-}
-
-const CreatorCard = ({ creator }: { creator: CreatorData }) => (
+const CreatorCard = ({ creator }: { creator: GitHubUser }) => (
   <Link
     href={creator.html_url}
     target="_blank"
@@ -37,40 +31,7 @@ const CreatorCard = ({ creator }: { creator: CreatorData }) => (
 )
 
 const CreatorsSection = () => {
-  const [creatorsData, setCreatorsData] = useState<CreatorData[] | null>(null)
-
-  useEffect(() => {
-    const fetchCreators = async () => {
-      const promises = CREATORS_USERNAMES.map(async (username) => {
-        try {
-          const response = await fetch(`https://api.github.com/users/${username}`, {
-            headers: { "User-Agent": "Next.js App" }
-          })
-
-          if (!response.ok) {
-            console.warn(`[GitHub API] No se pudo obtener el perfil de ${username}.`)
-            return null
-          }
-
-          const data = await response.json()
-          return {
-            login: data.login,
-            name: data.name,
-            avatar_url: data.avatar_url,
-            html_url: data.html_url
-          } as CreatorData
-        } catch (error) {
-          console.error(`Error al hacer fetch para ${username}:`, error)
-          return null
-        }
-      })
-
-      const results = (await Promise.all(promises)).filter((creator): creator is CreatorData => creator !== null)
-      setCreatorsData(results)
-    }
-
-    fetchCreators()
-  }, [])
+  const { data: creatorsData, loading } = useGitHubUsers(CREATORS_USERNAMES)
 
   return (
     <section id="creators" className="w-full py-20 px-6 bg-[#161616]">
@@ -84,10 +45,9 @@ const CreatorsSection = () => {
         </p>
 
         <div className="flex flex-wrap justify-center gap-8">
-          {creatorsData
-            ? creatorsData.map((creator) => <CreatorCard key={creator.login} creator={creator} />)
-            : CREATORS_USERNAMES.map((_, index) => (
-                <div key={index} className="animate-pulse">
+          {loading || !creatorsData
+            ? CREATORS_USERNAMES.map((username) => (
+                <div key={username} className="animate-pulse">
                   <ClippedShape
                     width={200}
                     height={200}
@@ -100,7 +60,8 @@ const CreatorsSection = () => {
                     </div>
                   </ClippedShape>
                 </div>
-              ))}
+              ))
+            : creatorsData.map((creator) => <CreatorCard key={creator.login} creator={creator} />)}
         </div>
       </div>
     </section>

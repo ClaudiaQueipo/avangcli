@@ -3,6 +3,8 @@
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { ArrowRight, Check, Copy, Terminal } from "lucide-react"
+import Link from "next/link"
+import { useLocale } from "next-intl"
 import { useEffect, useRef, useState } from "react"
 
 import { Button } from "@/components/ui/button"
@@ -20,6 +22,8 @@ export function CtaSection() {
   const commandBoxRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const footerRef = useRef<HTMLParagraphElement>(null)
+
+  const locale = useLocale()
 
   const handleCopy = () => {
     navigator.clipboard.writeText(command)
@@ -52,7 +56,6 @@ export function CtaSection() {
         y: 30
       })
 
-      // Timeline para la animación secuencial del contenido
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -123,7 +126,6 @@ export function CtaSection() {
     return () => ctx.revert()
   }, [])
 
-  // Hover effects separados (sin GSAP para evitar conflictos)
   const handleCommandMouseEnter = () => {
     if (commandBoxRef.current) {
       gsap.to(commandBoxRef.current, {
@@ -213,18 +215,20 @@ export function CtaSection() {
             </Button>
           </div>
 
-          <Button
-            ref={buttonRef}
-            onMouseEnter={handleButtonMouseEnter}
-            onMouseLeave={handleButtonMouseLeave}
-            size="lg"
-            className="group relative bg-[#D4FC79] hover:bg-[#c2ed56] text-black font-bold h-14 px-10 text-lg rounded-full shadow-[0_0_20px_rgba(212,252,121,0.3)] hover:shadow-[0_0_35px_rgba(212,252,121,0.5)] transition-all duration-300 overflow-hidden"
-          >
-            <span className="relative z-10 flex items-center gap-2">
-              Empezar ahora
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </span>
-          </Button>
+          <Link href={`/${locale}/docs/frontend-cli/getting-started`} className="inline-block">
+            <Button
+              ref={buttonRef}
+              onMouseEnter={handleButtonMouseEnter}
+              onMouseLeave={handleButtonMouseLeave}
+              size="lg"
+              className="group relative bg-[#D4FC79] hover:bg-[#c2ed56] text-black font-bold h-14 px-10 text-lg rounded-full shadow-[0_0_20px_rgba(212,252,121,0.3)] hover:shadow-[0_0_35px_rgba(212,252,121,0.5)] transition-all duration-300 overflow-hidden"
+            >
+              <span className="relative z-10 flex items-center gap-2">
+                Empezar ahora
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </span>
+            </Button>
+          </Link>
 
           <p ref={footerRef} className="text-sm text-gray-600">
             Open Source • MIT License • No credit card required
