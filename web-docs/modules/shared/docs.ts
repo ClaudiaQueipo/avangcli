@@ -43,8 +43,8 @@ const config: Config = {
       es: "04-arquitectura"
     },
     guides: {
-      en: "08-guides",
-      es: "08-guias"
+      en: "05-guides",
+      es: "05-guias"
     }
   },
   docs: {
