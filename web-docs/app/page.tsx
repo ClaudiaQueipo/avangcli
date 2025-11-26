@@ -68,7 +68,7 @@ export default function Home() {
           className="fixed inset-0 z-50 flex items-center justify-center bg-[#161616]"
         >
           <div ref={logoRef} className="w-full h-full flex items-center justify-center">
-            <LogoSkeleton className="w-100 h-48 " fill="#E5E7EB" />
+            <LogoSkeleton className="w-100 h-48 " />
           </div>
         </div>
       )}
