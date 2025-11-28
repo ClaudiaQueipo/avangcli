@@ -1,6 +1,61 @@
-# Avangcli
+<style>
+  .container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .container-logo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 3rem;
+    width: 100%;
+  }
+  .logo{
+    width: 360px;
+    height: 130px;
+    position: relative;
+    display: flex;
+    align-items: start;
+    justify-content: start;
+  }
+  .logo h1{
+    font-size: 5rem;
+    font-weight: 700;
+    position: absolute;
+    left: 8rem;
+    top: 1rem;
+    border: none; 
+  }
+  .logo img{
+    width: 230px;
+    height: 120px;
+    border: none;  
+  }
+  .container-description{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+  }
+</style>
 
-A powerful CLI tool for scaffolding fullstack projects with Next.js (frontend) and FastAPI (backend).
+<div class="container" >
+  <div class="container-logo">
+    <div class="logo">
+      <img src="./logo.svg" alt="Avangcli Logo">
+      <h1>vangcli</h1>
+    </div>
+  </div>
+  <div class="container-description">
+    <p>A powerful CLI tool for scaffolding fullstack projects with Next.js (frontend) and FastAPI (backend).</p>
+  </div>
+  
+</div>
 
 **Website & Documentation:** [https://avangcli.vercel.app](https://avangcli.vercel.app)
 

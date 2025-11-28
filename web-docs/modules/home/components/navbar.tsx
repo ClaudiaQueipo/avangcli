@@ -147,19 +147,21 @@ const Navbar = () => {
         <div className="hidden md:flex justify-center">
           <div
             className={`
-                            inline-flex items-center gap-2 p-1 rounded-full backdrop-blur-md border relative
-                            ${isScrolled ? "bg-[#252525]/50 border-white/5" : "bg-[#1a1a1a]/50 border-white/5"}
+                            inline-flex items-center gap-2 relative
+                            ${isScrolled ? "" : "p-1 rounded-full backdrop-blur-md border bg-[#1a1a1a]/50 border-white/5"}
                         `}
           >
-            <div
-              className="absolute bg-[#333] rounded-full shadow-sm transition-all duration-300 ease-out pointer-events-none"
-              style={{
-                left: `${indicatorStyle.left}px`,
-                width: `${indicatorStyle.width}px`,
-                height: "calc(100% - 8px)",
-                top: "4px"
-              }}
-            />
+            {!isScrolled && (
+              <div
+                className="absolute bg-[#333] rounded-full shadow-sm transition-all duration-300 ease-out pointer-events-none"
+                style={{
+                  left: `${indicatorStyle.left}px`,
+                  width: `${indicatorStyle.width}px`,
+                  height: "calc(100% - 8px)",
+                  top: "4px"
+                }}
+              />
+            )}
 
             {NAV_ITEMS.map((item, index) => (
               <a

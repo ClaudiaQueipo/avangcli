@@ -3,7 +3,6 @@
 import { Icon } from "@iconify/react"
 import { ArrowRight, Box, CheckCircle, Star } from "lucide-react"
 import Link from "next/link"
-import { useLocale } from "next-intl"
 import React from "react"
 
 import { FlipWords } from "@/components/ui/flip-words"
@@ -26,7 +25,6 @@ interface FloatingCardProps {
 
 const HeroeSection = () => {
   const words = ["Next.js projects", "FastAPI backends", "full-stack apps"]
-  const locale = useLocale()
   return (
     <div className="min-h-screen bg-[#161616] p-2 flex flex-col" id="home">
       <section className="relative w-full bg-[#252525] rounded-b-[2.5rem] rounded-t-xl overflow-hidden flex flex-col pt-6 pb-20 shadow-2xl ring-1 ring-white/5 h-[98vh]">
@@ -134,51 +132,6 @@ const HeroeSection = () => {
             </div>
           </div>
         </div>
-
-        {/* <div className="relative z-10 flex flex-col items-center justify-center px-4 w-full max-w-4xl mx-auto h-full bg-amber-500">
-          <h1 className="text-center text-white text-5xl md:text-7xl font-bold mb-8 leading-[1.1] tracking-tight">
-            Optimize your <br className="hidden md:block" />
-            <span className="inline-block text-lime-300 italic font-serif mt-2">
-              <FlipWords
-                words={words}
-                className="text-lime-300 drop-shadow-[0_0_25px_rgba(132,204,22,0.4)] flex flex-col text-center md:flex-row md:text-left"
-              />
-            </span>
-          </h1>
-
-          <p className="text-center text-gray-400 text-lg md:text-xl max-w-2xl mb-12 leading-relaxed font-light">
-            AvangCLI genera proyectos{" "}
-            <Highlighter action="underline" color="#a3e635" strokeWidth={2} isView>
-              full-stack
-            </Highlighter>{" "}
-            preconfigurados con{" "}
-            <Highlighter action="underline" color="#bef264" strokeWidth={2} isView>
-              Next.js
-            </Highlighter>{" "}
-            y{" "}
-            <Highlighter action="underline" color="#bef264" strokeWidth={2} isView>
-              FastAPI
-            </Highlighter>
-            . Despliega en segundos con Docker y CI/CD integrado.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-5 w-full justify-center mb-10">
-            <Link
-              href={`/${locale}/docs/frontend-cli/getting-started`}
-              className="px-8 py-4 rounded-full bg-white text-black font-bold hover:bg-lime-300 transition-all shadow-[0_0_30px_rgba(163,230,53,0.2)] flex items-center justify-center gap-2 group transform hover:-translate-y-1"
-            >
-              Get Started
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-
-            <Link
-              href={`/${locale}/docs/frontend-cli/guides`}
-              className="px-8 py-4 rounded-full border-lime-400/50 text-lime-400 hover:bg-lime-400 hover:text-black font-semibold border transition-colors text-center flex items-center justify-center gap-2"
-            >
-              Read Guides
-            </Link>
-          </div>
-        </div> */}
       </section>
 
       <div className="w-full py-12 px-6">
