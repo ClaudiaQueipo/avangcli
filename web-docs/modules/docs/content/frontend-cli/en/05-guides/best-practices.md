@@ -2,6 +2,8 @@
 
 ## Project Organization
 
+In this module, the best practices for developing modules with AvangCLI will be explained. The correct and incorrect approaches for each case will be shown.
+
 ### 1. Module Structure
 
 #### ✅ GOOD: Organize by Feature
@@ -106,7 +108,7 @@ shared/
 
 ### 1. When to Use Zustand vs Redux
 
-#### Use Zustand If:
+#### Use Zustand If
 
 - ✅ Small to medium project
 - ✅ Simple state
@@ -117,7 +119,7 @@ shared/
 avangcli module user-profile --store zustand -p
 ```
 
-#### Use Redux If:
+#### Use Redux If
 
 - ✅ Large/complex project
 - ✅ Complex state with many interactions
@@ -268,7 +270,7 @@ export const UserProfileView = ({ data }: UserProfileViewProps) => {
 
 ### 2. Props vs Store
 
-#### Use Props For:
+#### Use Props For
 
 - ✅ Data coming from parent
 - ✅ Callbacks and events
@@ -282,7 +284,7 @@ export const UserProfileView = ({ data }: UserProfileViewProps) => {
 />
 ```
 
-#### Use Store For:
+#### Use Store For
 
 - ✅ State shared between modules
 - ✅ Global app state

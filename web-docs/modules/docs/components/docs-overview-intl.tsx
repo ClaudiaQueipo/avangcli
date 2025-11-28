@@ -57,7 +57,7 @@ export function DocsOverviewIntl({ cliData }: DocsOverviewIntlProps) {
                         {category.title}
                         <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                       </CardTitle>
-                      <CardDescription>{firstDoc.description}</CardDescription>
+                      <CardDescription>{`${firstDoc.description}...`}</CardDescription>
                       <div className="pt-4">
                         <ul className="space-y-2 text-sm text-muted-foreground">
                           {category.docs.slice(0, 3).map((doc) => (
