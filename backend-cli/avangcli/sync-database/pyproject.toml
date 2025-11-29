@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "sync-database"
+version = "0.1.0"
+description = "Migrations for SQLAlchemy"
+authors = [
+  "Pedro Infante <ppit890819@gmail.com>",
+]
+readme = "README.md"
+include = []
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.12"
+urllib3 = ">=1.26.19"
+alembic = "^1.13.1"
+zipp = ">=3.19.1"
+
+
+[tool.poetry.group.dev.dependencies]
+core = { path = "./../core/", develop = true }
+
+[tool.poetry.group.aws.dependencies]
+# Only dependencies use in aws environment
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = [
+  "poetry-core",
+]
+
+[tool.coverage.run]
+relative_files = true
