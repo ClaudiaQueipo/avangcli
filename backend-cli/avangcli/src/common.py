@@ -1,7 +1,8 @@
 
 from pathlib import Path
 
-from src.scaffolding_crud.files_content_logic.models import generate_model_class_content
+from avangcli.src.scaffolding_crud.files_content_logic.domain.models import generate_model_class_content
+
 
 CONTENT_GENERATOR = {
     "models.py": generate_model_class_content

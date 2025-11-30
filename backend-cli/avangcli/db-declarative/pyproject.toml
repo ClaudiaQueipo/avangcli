@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "db-declarative"
+version = "0.1.0"
+description = "Module to create database structure"
+authors = [
+  "Pedro Infante <infante@avangenio.com>",
+]
+readme = "README.md"
+packages = [{ include = "db_declarative", format = "sdist" }]
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = [
+  "poetry-core",
+]
+
+[tool.coverage.run]
+relative_files = true
