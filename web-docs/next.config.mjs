@@ -10,6 +10,11 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  compiler: {
+    removeConsole: {
+      exclude: ['error', 'warn'],
+    },
+  },
 }
 
 export default withNextIntl(nextConfig)
