@@ -2,6 +2,8 @@ import argparse
 
 __version__ = "0.1.0"
 
+from avangcli.src.scaffolding.general.service import create_project
+
 
 def main():
     parser = argparse.ArgumentParser(description="Avang CLI Tool")
@@ -13,12 +15,19 @@ def main():
 
     # Subcomand 'version'
     subparsers.add_parser("version", help="Show version information")
+
+    scaffolding_parser = subparsers.add_parser("create_project", help="Create scaffolding of a new project")
+    scaffolding_parser.add_argument("--name", required=True)
+
     args = parser.parse_args()
 
     if args.command == "hello":
         print(f"Hello, {args.name}!")
     elif args.command == "version":
         print(f"Avang CLI v{__version__}")
+    elif args.command == "create_project":
+        print("Creating scaffolding...")
+        create_project(args.name)
     else:
         parser.print_help()
 

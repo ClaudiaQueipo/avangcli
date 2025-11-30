@@ -3,10 +3,13 @@ name = "sync-database"
 version = "0.1.0"
 description = "Migrations for SQLAlchemy"
 authors = [
-  "Pedro Infante <ppit890819@gmail.com>",
+  "Pedro Infante <infante@avangenio.com>",
 ]
 readme = "README.md"
-include = []
+include = [
+    { path = "sync_database", format = "sdist" },
+]
+
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.12"
@@ -16,7 +19,8 @@ zipp = ">=3.19.1"
 
 
 [tool.poetry.group.dev.dependencies]
-core = { path = "./../core/", develop = true }
+core = { path = "../core/", develop = false }
+db_declarative = { path = "../db-declarative/", develop = false }
 
 [tool.poetry.group.aws.dependencies]
 # Only dependencies use in aws environment

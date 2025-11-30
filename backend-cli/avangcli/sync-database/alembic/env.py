@@ -5,7 +5,8 @@ from decouple import config as env_config
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
-from core.infrastructure.orm.tables import BaseTable
+# from core.infrastructure.orm.tables import BaseTable
+from db_declarative.sqalchemy.infrastructure.orm.tables import BaseTable
 from core.infrastructure.orm.utils import EXCLUDE_EXTERNAL_TABLES
 
 
