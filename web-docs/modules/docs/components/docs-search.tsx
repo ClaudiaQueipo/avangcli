@@ -95,6 +95,7 @@ export function DocsSearch() {
     <>
       {/* NOTE: Search trigger button */}
       <button
+        aria-label="Search in documentation"
         onClick={() => setOpen(true)}
         className="flex items-center gap-2 w-full max-w-sm px-3 py-2 text-sm text-muted-foreground bg-background border rounded-md hover:border-primary/50 transition-colors"
       >

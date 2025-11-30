@@ -135,6 +135,7 @@ function CalendarDayButton({ className, day, modifiers, ...props }: React.Compon
 
   return (
     <Button
+      aria-label="calendar"
       ref={ref}
       variant="ghost"
       size="icon"

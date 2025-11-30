@@ -234,6 +234,7 @@ function SidebarTrigger({ className, onClick, ...props }: React.ComponentProps<t
 
   return (
     <Button
+      aria-label="sidebar trigger"
       data-sidebar="trigger"
       data-slot="sidebar-trigger"
       variant="ghost"

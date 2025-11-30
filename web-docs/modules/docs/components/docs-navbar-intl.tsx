@@ -59,6 +59,7 @@ export function DocsNavbar() {
           <div className="flex items-center gap-6 shrink-0">
             <div className="relative" ref={dropdownRef}>
               <button
+                aria-label="select language"
                 onClick={() => setIsOpen(!isOpen)}
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium border transition-all duration-300 ${
                   isOpen
@@ -82,6 +83,7 @@ export function DocsNavbar() {
                     const isActive = locale === lang.code
                     return (
                       <button
+                        aria-label={lang.code}
                         key={lang.code}
                         onClick={() => handleLanguageChange(lang.code)}
                         className={`flex items-center justify-between w-full px-3 py-2 text-sm rounded-md transition-colors duration-200 ${

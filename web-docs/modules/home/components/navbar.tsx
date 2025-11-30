@@ -183,7 +183,11 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center justify-end gap-3 ">
-          <button className="md:hidden flex items-center justify-center text-white" onClick={toggleMenu}>
+          <button
+            aria-label="Menu"
+            className="md:hidden flex items-center justify-center text-white"
+            onClick={toggleMenu}
+          >
             <Icon icon={isMenuOpen ? "mdi:close" : "mdi:menu"} className="w-6 h-6" />
           </button>
 

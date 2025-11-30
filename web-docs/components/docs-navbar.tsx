@@ -51,6 +51,7 @@ export function DocsNavbar() {
               />
 
               <button
+                aria-label="Set language spanish"
                 onClick={() => setLanguage("es")}
                 className={`relative z-10 px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-300 ${
                   language === "es"
@@ -62,6 +63,7 @@ export function DocsNavbar() {
               </button>
 
               <button
+                aria-label="Set language english"
                 onClick={() => setLanguage("en")}
                 className={`relative z-10 px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-300 ${
                   language === "en"

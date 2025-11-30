@@ -163,6 +163,7 @@ function CarouselPrevious({
 
   return (
     <Button
+      aria-label="carousel previous"
       data-slot="carousel-previous"
       variant={variant}
       size={size}
@@ -193,6 +194,7 @@ function CarouselNext({
 
   return (
     <Button
+      aria-label="carrousel next"
       data-slot="carousel-next"
       variant={variant}
       size={size}

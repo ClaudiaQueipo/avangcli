@@ -96,6 +96,7 @@ function InputGroupButton({
 }: Omit<React.ComponentProps<typeof Button>, "size"> & VariantProps<typeof inputGroupButtonVariants>) {
   return (
     <Button
+      aria-label={`Input group ${type}`}
       type={type}
       data-size={size}
       variant={variant}

@@ -114,6 +114,7 @@ export function DocsRightSidebar({ content }: DocsRightSidebarProps) {
           {headings.map((heading) => (
             <li key={heading.id} style={{ paddingLeft: `${(heading.level - 2) * 12}px` }}>
               <button
+                aria-label={heading.text}
                 onClick={() => scrollToHeading(heading.id)}
                 className={cn(
                   "block w-full text-left py-1 px-2 text-sm rounded-md transition-colors hover:bg-accent hover:text-accent-foreground",

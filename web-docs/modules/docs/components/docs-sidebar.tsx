@@ -67,6 +67,7 @@ export function DocsSidebar({ sections, currentCli = "frontend-cli", currentLang
               return (
                 <div key={section.title}>
                   <button
+                    aria-label={section.title}
                     onClick={() => toggleSection(section.title)}
                     className="flex w-full items-center justify-between text-sm font-semibold text-foreground mb-2 hover:text-primary transition-colors"
                   >

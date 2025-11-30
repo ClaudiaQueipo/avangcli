@@ -199,6 +199,7 @@ export function CtaSection() {
             </code>
 
             <Button
+              aria-label="Copy command"
               size="icon"
               variant="ghost"
               onClick={handleCopy}
@@ -217,6 +218,7 @@ export function CtaSection() {
 
           <Link href={`/${locale}/docs/frontend-cli/getting-started`} className="inline-block">
             <Button
+              aria-label="Empezar ahora"
               ref={buttonRef}
               onMouseEnter={handleButtonMouseEnter}
               onMouseLeave={handleButtonMouseLeave}
