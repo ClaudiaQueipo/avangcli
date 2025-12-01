@@ -24,29 +24,29 @@ interface FloatingCardProps {
 }
 
 const HeroeSection = () => {
-  const words = ["Next.js projects", "FastAPI backends", "full-stack apps"]
+  const words = ["Next.js projects", "FastAPI backends", "Full-Stack apps"]
   return (
     <div className="min-h-screen bg-[#161616] p-2 flex flex-col" id="home">
       <section className="relative w-full bg-[#252525] rounded-b-[2.5rem] rounded-t-xl overflow-hidden flex flex-col pt-6 pb-20 shadow-2xl ring-1 ring-white/5 h-[98vh]">
         <div className="absolute left-20 top-1/2 space-y-6 hidden xl:block z-10 select-none pointer-events-none opacity-80">
           <FloatingCard
-            name="Deploy Success"
+            name="Project Generated"
             time="Just now"
-            amount="v2.0"
+            amount="Next.js"
             icon={<CheckCircle className="text-black w-6 h-6" />}
             rotation="-rotate-6"
           />
           <FloatingCard
-            name="Docker Image"
-            time="24s ago"
-            amount="Built"
+            name="Scaffold Complete"
+            time="15s ago"
+            amount="FastAPI"
             icon={<Box className="text-black w-6 h-6" />}
             rotation="rotate-3 ml-12"
           />
           <FloatingCard
-            name="New Star"
-            time="1min ago"
-            amount="+1"
+            name="Docker Ready"
+            time="30s ago"
+            amount="3 services"
             icon={<Star className="text-black w-6 h-6" />}
             rotation="-rotate-3"
           />
@@ -60,23 +60,18 @@ const HeroeSection = () => {
             </div>
             <div className="space-y-2 font-mono text-xs text-gray-300">
               <div className="flex items-center gap-2 text-white">
-                <span className="text-lime-400">📂</span> /apps
+                <span className="text-lime-400">📂</span> /demo
               </div>
               <div className="pl-4 flex items-center gap-2 border-l border-white/10 ml-1">
-                <span className="text-blue-400">⚛️</span> web-nextjs
+                <span className="text-yellow-400">⚡</span> backend/
               </div>
               <div className="pl-4 flex items-center gap-2 border-l border-white/10 ml-1">
-                <span className="text-yellow-400">⚡</span> api-fastapi
+                <span className="text-sky-400">🗎</span> docs/
               </div>
               <div className="pl-4 flex items-center gap-2 border-l border-white/10 ml-1">
-                <span className="text-sky-400">🐳</span> docker-compose
+                <span className="text-blue-400">⚛️</span> frontend/
               </div>
             </div>
-          </div>
-
-          <div className="absolute -bottom-6 -left-6 bg-[#1a1a1a] border border-lime-500/30 p-3 rounded-lg shadow-xl flex items-center gap-3 -rotate-6 ">
-            <div className="h-2 w-2 rounded-full bg-lime-500 animate-pulse"></div>
-            <span className="text-xs font-bold text-white">Ready to deploy</span>
           </div>
         </div>
 
@@ -89,7 +84,7 @@ const HeroeSection = () => {
         <div className="w-full h-full absolute flex justify-center items-center">
           <div className="relative z-10 flex flex-col items-center justify-center px-4 w-full max-w-4xl mx-auto h-full ">
             <h1 className="text-center text-white text-5xl md:text-7xl font-bold mb-8 leading-[1.1] tracking-tight">
-              Optimize your <br className="hidden md:block" />
+              Create your <br className="hidden md:block" />
               <span className="inline-block text-lime-300 italic font-serif mt-2">
                 <FlipWords
                   words={words}

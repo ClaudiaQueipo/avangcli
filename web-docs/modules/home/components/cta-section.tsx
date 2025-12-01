@@ -181,7 +181,7 @@ export function CtaSection() {
         </h2>
 
         <p ref={subtitleRef} className="text-xl text-gray-400 mb-12 max-w-2xl font-light leading-relaxed">
-          Deja de configurar entornos y empieza a desarrollar. Un solo comando te separa de una arquitectura full-stack
+          Deja de configurar entornos y empieza a desarrollar. Dos comandos te separa de una arquitectura full-stack
           escalable con Next.js y FastAPI.
         </p>
 
@@ -195,7 +195,37 @@ export function CtaSection() {
             <Terminal className="w-5 h-5 text-gray-500 group-hover:text-lime-400 transition-colors" />
 
             <code className="flex-1 text-left font-mono text-sm md:text-base text-gray-300">
-              <span className="text-lime-400">npx</span> avang-cli init my-app
+              <span className="text-lime-400">npx</span> avangcli init // Frontend
+            </code>
+
+            <Button
+              aria-label="Copy command"
+              size="icon"
+              variant="ghost"
+              onClick={handleCopy}
+              className="relative text-gray-400 hover:text-white hover:bg-white/5 rounded-xl h-10 w-10 shrink-0 transition-all"
+            >
+              <div className={`transition-all duration-300 ${copied ? "scale-0 opacity-0" : "scale-100 opacity-100"}`}>
+                <Copy className="w-4 h-4" />
+              </div>
+              <div
+                className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${copied ? "scale-100 opacity-100 text-lime-400" : "scale-0 opacity-0"}`}
+              >
+                <Check className="w-4 h-4" />
+              </div>
+            </Button>
+          </div>
+
+          <div
+            ref={commandBoxRef}
+            onMouseEnter={handleCommandMouseEnter}
+            onMouseLeave={handleCommandMouseLeave}
+            className="group relative flex items-center gap-3 bg-[#1a1a1a] border border-white/10 hover:border-lime-500/30 rounded-2xl p-2 pl-6 pr-2 shadow-2xl transition-colors duration-300 w-full max-w-md"
+          >
+            <Terminal className="w-5 h-5 text-gray-500 group-hover:text-lime-400 transition-colors" />
+
+            <code className="flex-1 text-left font-mono text-sm md:text-base text-gray-300">
+              <span className="text-lime-400">avang-cli</span> init // Backend
             </code>
 
             <Button
@@ -233,7 +263,7 @@ export function CtaSection() {
           </Link>
 
           <p ref={footerRef} className="text-sm text-gray-600">
-            Open Source • MIT License • No credit card required
+            Open Source
           </p>
         </div>
       </div>

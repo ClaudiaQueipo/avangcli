@@ -199,11 +199,11 @@ export default function RoadmapSection() {
                   <div className="absolute -bottom-[40%] left-1/2 -translate-x-1/2 w-[120%] h-[100px] bg-blue-500/10 rounded-[100%] blur-2xl pointer-events-none" />
 
                   <h3 className="text-xl font-bold mb-2 flex items-center md:justify-end gap-2 text-white">
-                    Cloud Deployments <Cloud className="w-5 h-5 text-blue-400" />
+                    TypeScript Generation <Cloud className="w-5 h-5 text-blue-400" />
                   </h3>
                   <p className="text-gray-400 text-sm leading-relaxed">
-                    Despliegue automático a AWS, Vercel y DigitalOcean con configuración de Terraform generada
-                    automáticamente.
+                    Generación automática de interfaces, types y services de TypeScript desde tu backend FastAPI. Mantén
+                    tu código type-safe sin duplicación.
                   </p>
                 </div>
               </div>
@@ -222,7 +222,7 @@ export default function RoadmapSection() {
             <div className="roadmap-item relative flex flex-col md:flex-row gap-8 items-start md:items-center group">
               <div className="md:w-1/2 md:text-right order-2 md:order-1 hidden md:block pr-12">
                 <span className="text-sm font-mono font-bold text-gray-500 group-hover:text-purple-400 transition-colors">
-                  Q4 2024
+                  TBD
                 </span>
               </div>
 
@@ -235,14 +235,15 @@ export default function RoadmapSection() {
                   <div className="absolute -bottom-[40%] left-1/2 -translate-x-1/2 w-[120%] h-[100px] bg-purple-500/10 rounded-[100%] blur-2xl pointer-events-none" />
 
                   <h3 className="text-xl font-bold mb-2 flex items-center gap-2 text-white">
-                    <Plug className="w-5 h-5 text-purple-400" /> Plugin System
+                    <Plug className="w-5 h-5 text-purple-400" /> ¿Qué sigue?
                   </h3>
                   <p className="text-gray-400 text-sm leading-relaxed">
-                    API pública para que la comunidad pueda crear sus propios generadores, módulos y templates.
+                    El roadmap sigue evolucionando. ¿Tienes ideas? Compártelas en nuestro repositorio de GitHub y
+                    ayúdanos a definir el futuro de AvangCLI.
                   </p>
                 </div>
                 <div className="md:hidden mt-2">
-                  <span className="text-sm font-mono font-bold text-gray-500">Q4 2024</span>
+                  <span className="text-sm font-mono font-bold text-gray-500">TBD</span>
                 </div>
               </div>
             </div>

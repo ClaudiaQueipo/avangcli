@@ -117,10 +117,10 @@ export function FeaturesSection() {
 
           <BentoCard
             Icon={BookOpen}
-            name="Documentación Viva"
-            description="Guías paso a paso y ejemplos listos para desplegar."
+            name="Arquitectura Clara"
+            description="Estructura modular que escala con tu proyecto. Carpetas organizadas por features, no por tipos de archivos."
             href="#"
-            cta="Leer docs"
+            cta="Ver arquitectura"
             className="md:col-span-1 group"
             variant="dark"
             background={

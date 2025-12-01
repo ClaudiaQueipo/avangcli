@@ -61,7 +61,7 @@ export default async function CategoryPage({ params }: Readonly<CategoryPageProp
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {docs.map((doc) => (
-          <Link key={doc.slug} href={`docs/${cli}/${category}/${doc.slug}`} className="group">
+          <Link key={doc.slug} href={`/docs/${cli}/${category}/${doc.slug}`} className="group">
             <Card className="h-full transition-all hover:shadow-lg hover:border-primary/50">
               <CardHeader>
                 <div className="flex items-start justify-between gap-2">
