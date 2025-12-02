@@ -22,11 +22,11 @@ jobs:
           bun-version: latest
 
       - name: Install root dependencies
-        run: bun install --frozen-lockfile
+        run: bun install
 
       - name: Install frontend dependencies
         working-directory: frontend-cli
-        run: bun install --frozen-lockfile
+        run: bun install
 
       - name: Validate PR commits
         working-directory: frontend-cli
