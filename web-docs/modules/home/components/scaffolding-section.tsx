@@ -3,6 +3,7 @@
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { Code2, Database, FileCode, Folder, Layers } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
 
 if (typeof window !== "undefined") {
@@ -10,6 +11,7 @@ if (typeof window !== "undefined") {
 }
 
 export default function ScaffoldingSection() {
+  const t = useTranslations("home.scaffolding")
   const sectionRef = useRef<HTMLDivElement>(null)
   const headerRef = useRef<HTMLDivElement>(null)
   const terminalRef = useRef<HTMLDivElement>(null)
@@ -97,15 +99,12 @@ export default function ScaffoldingSection() {
       <div className="container mx-auto px-6 max-w-7xl relative z-10">
         <div ref={headerRef} className="text-center mb-20">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white tracking-tight">
-            Scaffolding{" "}
+            {t("title")}{" "}
             <span className="text-[#BBF451] italic font-serif drop-shadow-[0_0_25px_rgba(132,204,22,0.4)]">
-              Inteligente
+              {t("titleHighlight")}
             </span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto font-light leading-relaxed">
-            Genera automáticamente la estructura completa de módulos para Next.js. Mantén tu código organizado,
-            predecible y escalable desde el primer commit.
-          </p>
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto font-light leading-relaxed">{t("description")}</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -193,12 +192,9 @@ export default function ScaffoldingSection() {
               </div>
               <div>
                 <h3 className="text-xl font-bold mb-2 text-white group-hover:text-lime-300 transition-colors">
-                  Estructura Modular
+                  {t("item1.title")}
                 </h3>
-                <p className="text-gray-400 leading-relaxed">
-                  Olvídate del "spaghetti code". Cada funcionalidad vive en su propio módulo aislado, encapsulando su
-                  lógica, UI, estado y tipos.
-                </p>
+                <p className="text-gray-400 leading-relaxed">{t("item1.description")}</p>
               </div>
             </div>
 
@@ -208,12 +204,9 @@ export default function ScaffoldingSection() {
               </div>
               <div>
                 <h3 className="text-xl font-bold mb-2 text-white group-hover:text-lime-300 transition-colors">
-                  Archivos Boilerplate
+                  {t("item2.title")}
                 </h3>
-                <p className="text-gray-400 leading-relaxed">
-                  Se generan automáticamente los archivos base necesarios. No pierdas tiempo copiando y pegando
-                  estructuras de carpetas vacías.
-                </p>
+                <p className="text-gray-400 leading-relaxed">{t("item2.description")}</p>
               </div>
             </div>
 
@@ -223,13 +216,9 @@ export default function ScaffoldingSection() {
               </div>
               <div>
                 <h3 className="text-xl font-bold mb-2 text-white group-hover:text-lime-300 transition-colors">
-                  Barrel Exports
+                  {t("item3.title")}
                 </h3>
-                <p className="text-gray-400 leading-relaxed">
-                  Configuración automática de <code className="text-lime-400 bg-white/5 px-1 rounded">index.ts</code>{" "}
-                  para mantener tus importaciones limpias en todo el proyecto:{" "}
-                  <span className="text-gray-500 italic">import {"{ Auth }"} from '@/modules'</span>.
-                </p>
+                <p className="text-gray-400 leading-relaxed">{t("item3.description")}</p>
               </div>
             </div>
           </div>

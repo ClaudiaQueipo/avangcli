@@ -2,11 +2,11 @@
 
 import { Icon } from "@iconify/react"
 import { ArrowRight, Box, CheckCircle, Star } from "lucide-react"
-import Link from "next/link"
+import { useTranslations } from "next-intl"
 import React from "react"
 
 import { FlipWords } from "@/components/ui/flip-words"
-import { Highlighter } from "@/components/ui/highlighter"
+import { Link } from "@/i18n/routing"
 
 import Navbar from "./navbar"
 
@@ -24,29 +24,34 @@ interface FloatingCardProps {
 }
 
 const HeroeSection = () => {
-  const words = ["Next.js projects", "FastAPI backends", "Full-Stack apps"]
+  const t = useTranslations("home.hero")
+  const tFloating = useTranslations("home.floatingCards")
+  const tStructure = useTranslations("home.projectStructure")
+
+  const words = [t("word1"), t("word2"), t("word3")]
+
   return (
     <div className="min-h-screen bg-[#161616] p-2 flex flex-col" id="home">
       <section className="relative w-full bg-[#252525] rounded-b-[2.5rem] rounded-t-xl overflow-hidden flex flex-col pt-6 pb-20 shadow-2xl ring-1 ring-white/5 h-[98vh]">
         <div className="absolute left-20 top-1/2 space-y-6 hidden xl:block z-10 select-none pointer-events-none opacity-80">
           <FloatingCard
-            name="Project Generated"
-            time="Just now"
-            amount="Next.js"
+            name={tFloating("projectGenerated.name")}
+            time={tFloating("projectGenerated.time")}
+            amount={tFloating("projectGenerated.amount")}
             icon={<CheckCircle className="text-black w-6 h-6" />}
             rotation="-rotate-6"
           />
           <FloatingCard
-            name="Scaffold Complete"
-            time="15s ago"
-            amount="FastAPI"
+            name={tFloating("scaffoldComplete.name")}
+            time={tFloating("scaffoldComplete.time")}
+            amount={tFloating("scaffoldComplete.amount")}
             icon={<Box className="text-black w-6 h-6" />}
             rotation="rotate-3 ml-12"
           />
           <FloatingCard
-            name="Docker Ready"
-            time="30s ago"
-            amount="3 services"
+            name={tFloating("dockerReady.name")}
+            time={tFloating("dockerReady.time")}
+            amount={tFloating("dockerReady.amount")}
             icon={<Star className="text-black w-6 h-6" />}
             rotation="-rotate-3"
           />
@@ -55,7 +60,7 @@ const HeroeSection = () => {
         <div className="absolute right-16 top-1/2 -translate-y-1/2 hidden xl:flex flex-col gap-4 z-10 pointer-events-none">
           <div className="relative bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-2xl w-72 shadow-[0_0_40px_rgba(0,0,0,0.3)] rotate-3 hover:rotate-0 transition-transform duration-500">
             <div className="flex items-center justify-between mb-4 border-b border-white/10 pb-2">
-              <span className="text-lime-400 font-bold text-sm">Project Structure</span>
+              <span className="text-lime-400 font-bold text-sm">{tStructure("title")}</span>
               <Box size={16} className="text-gray-400" />
             </div>
             <div className="space-y-2 font-mono text-xs text-gray-300">
@@ -84,7 +89,7 @@ const HeroeSection = () => {
         <div className="w-full h-full absolute flex justify-center items-center">
           <div className="relative z-10 flex flex-col items-center justify-center px-4 w-full max-w-4xl mx-auto h-full ">
             <h1 className="text-center text-white text-5xl md:text-7xl font-bold mb-8 leading-[1.1] tracking-tight">
-              Create your <br className="hidden md:block" />
+              {t("title")} <br className="hidden md:block" />
               <span className="inline-block text-lime-300 italic font-serif mt-2">
                 <FlipWords
                   words={words}
@@ -94,19 +99,7 @@ const HeroeSection = () => {
             </h1>
 
             <p className="text-center text-gray-400 text-lg md:text-xl max-w-2xl mb-12 leading-relaxed font-light">
-              AvangCLI genera proyectos{" "}
-              <Highlighter action="underline" color="#a3e635" strokeWidth={2} isView>
-                full-stack
-              </Highlighter>{" "}
-              preconfigurados con{" "}
-              <Highlighter action="underline" color="#bef264" strokeWidth={2} isView>
-                Next.js
-              </Highlighter>{" "}
-              y{" "}
-              <Highlighter action="underline" color="#bef264" strokeWidth={2} isView>
-                FastAPI
-              </Highlighter>
-              . Despliega en segundos con Docker y CI/CD integrado.
+              {t("description")}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-5 w-full justify-center mb-10">
@@ -114,7 +107,7 @@ const HeroeSection = () => {
                 href="/docs/getting-started/installation"
                 className="px-8 py-4 rounded-full bg-white text-black font-bold hover:bg-lime-300 transition-all shadow-[0_0_30px_rgba(163,230,53,0.2)] flex items-center justify-center gap-2 group transform hover:-translate-y-1"
               >
-                Get Started
+                {t("getStarted")}
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
 
@@ -122,7 +115,7 @@ const HeroeSection = () => {
                 href="/docs/guides/basic-usage"
                 className="px-8 py-4 rounded-full border-lime-400/50 text-lime-400 hover:bg-lime-400 hover:text-black font-semibold border transition-colors text-center flex items-center justify-center gap-2"
               >
-                Ver Demo
+                {t("viewDemo")}
               </Link>
             </div>
           </div>

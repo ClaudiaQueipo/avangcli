@@ -2,6 +2,7 @@
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { BookOpen } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
 
 import { AnimatedChecklist } from "@/components/magicui/animated-checklist"
@@ -15,6 +16,7 @@ if (typeof window !== "undefined") {
 }
 
 export function FeaturesSection() {
+  const t = useTranslations("home.features")
   const sectionRef = useRef<HTMLDivElement>(null)
   const headerRef = useRef<HTMLDivElement>(null)
   const gridRef = useRef<HTMLDivElement>(null)
@@ -74,15 +76,12 @@ export function FeaturesSection() {
     <section ref={sectionRef} className="px-4 py-24 max-w-7xl mx-auto bg-[#161616]" id="features">
       <div ref={headerRef} className="text-center mb-20">
         <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white tracking-tight">
-          Potencia tu{" "}
+          {t("title")}{" "}
           <span className="text-[#BBF451] italic font-serif drop-shadow-[0_0_25px_rgba(132,204,22,0.4)]">
-            flujo de trabajo
+            {t("titleHighlight")}
           </span>
         </h2>
-        <p className="text-gray-400 text-lg max-w-2xl mx-auto font-light leading-relaxed">
-          Todo lo que necesitas para escalar tus aplicaciones full-stack desde el primer día, automatizado y
-          estandarizado.
-        </p>
+        <p className="text-gray-400 text-lg max-w-2xl mx-auto font-light leading-relaxed">{t("description")}</p>
       </div>
 
       <div ref={gridRef}>
@@ -99,15 +98,15 @@ export function FeaturesSection() {
           <div className="md:col-span-1 flex items-center justify-center group relative col-span-1 flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-white/10 shadow-2xl w-full h-full">
             <ClippedCard color="#BBF451" className="transition-transform duration-300" fillContainer={true}>
               <div className="text-left w-full">
-                <h3 className="text-2xl font-bold text-black mb-3">Stack Robusto</h3>
-                <p className="text-black/80 text-sm mb-6 font-medium">Docker, Linter, Hooks y más listos para usar.</p>
+                <h3 className="text-2xl font-bold text-black mb-3">{t("robustStack.title")}</h3>
+                <p className="text-black/80 text-sm mb-6 font-medium">{t("robustStack.description")}</p>
                 <div className="mt-4">
                   <AnimatedChecklist
                     items={[
-                      { name: "Docker Compose" },
-                      { name: "ESLint & Prettier" },
-                      { name: "Husky Git Hooks" },
-                      { name: "CI/CD Pipelines" }
+                      { name: t("robustStack.items.docker") },
+                      { name: t("robustStack.items.eslint") },
+                      { name: t("robustStack.items.husky") },
+                      { name: t("robustStack.items.cicd") }
                     ]}
                   />
                 </div>
@@ -117,10 +116,10 @@ export function FeaturesSection() {
 
           <BentoCard
             Icon={BookOpen}
-            name="Arquitectura Clara"
-            description="Estructura modular que escala con tu proyecto. Carpetas organizadas por features, no por tipos de archivos."
+            name={t("architecture.title")}
+            description={t("architecture.description")}
             href="#"
-            cta="Ver arquitectura"
+            cta={t("architecture.cta")}
             className="md:col-span-1 group"
             variant="dark"
             background={

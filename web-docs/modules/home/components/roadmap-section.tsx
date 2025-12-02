@@ -3,6 +3,7 @@
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { Check, Cloud, GitBranch, Plug } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
 
 if (typeof window !== "undefined") {
@@ -10,6 +11,7 @@ if (typeof window !== "undefined") {
 }
 
 export default function RoadmapSection() {
+  const t = useTranslations("home.roadmap")
   const sectionRef = useRef<HTMLDivElement>(null)
   const headerRef = useRef<HTMLDivElement>(null)
   const timelineRef = useRef<HTMLDivElement>(null)
@@ -117,14 +119,12 @@ export default function RoadmapSection() {
       <div className="container mx-auto max-w-5xl relative z-10 px-6">
         <div ref={headerRef} className="text-center mb-24">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white tracking-tight">
-            El futuro de{" "}
+            {t("title")}{" "}
             <span className="text-[#BBF451] drop-shadow-[0_0_25px_rgba(132,204,22,0.4)] italic font-serif">
-              AvangCLI
+              {t("titleHighlight")}
             </span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto font-light leading-relaxed">
-            Estamos construyendo la herramienta definitiva para desarrolladores full-stack, paso a paso.
-          </p>
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto font-light leading-relaxed">{t("description")}</p>
         </div>
 
         <div ref={timelineRef} className="relative">
@@ -140,28 +140,27 @@ export default function RoadmapSection() {
                   <div className="absolute -bottom-[40%] left-1/2 -translate-x-1/2 w-[120%] h-[100px] bg-lime-500/20 rounded-[100%] blur-2xl pointer-events-none" />
 
                   <h3 className="text-xl font-bold mb-2 flex items-center md:justify-end gap-2 text-white">
-                    Next.js Scaffolding
+                    {t("items.nextjs.title")}
                     <span className="status-badge flex items-center justify-center w-5 h-5 rounded-full bg-lime-400/20 text-lime-400">
                       <Check className="w-3 h-3" strokeWidth={3} />
                     </span>
                   </h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">
-                    Generación completa de proyectos Next.js con TypeScript, Tailwind CSS configurado y estructura de
-                    carpetas optimizada.
-                  </p>
+                  <p className="text-gray-400 text-sm leading-relaxed">{t("items.nextjs.description")}</p>
                 </div>
               </div>
               <div className="timeline-dot absolute left-6 md:left-1/2 -translate-x-[7px] md:-translate-x-1/2 flex items-center justify-center z-10 order-1 md:order-2">
                 <div className="w-4 h-4 rounded-full bg-[#161616] border-2 border-lime-400 shadow-[0_0_15px_rgba(163,230,53,0.5)]" />
               </div>
               <div className="md:w-1/2 pl-12 md:pl-12 order-3 md:order-3">
-                <span className="text-sm font-mono font-bold text-lime-400 opacity-80">Q1 2024</span>
+                <span className="text-sm font-mono font-bold text-lime-400 opacity-80">
+                  {t("items.nextjs.quarter")}
+                </span>
               </div>
             </div>
 
             <div className="roadmap-item relative flex flex-col md:flex-row gap-8 items-start md:items-center group">
               <div className="md:w-1/2 md:text-right order-2 md:order-1 hidden md:block pr-12">
-                <span className="text-sm font-mono font-bold text-yellow-400">Q2 2024</span>
+                <span className="text-sm font-mono font-bold text-yellow-400">{t("items.fastapi.quarter")}</span>
               </div>
 
               <div className="timeline-dot absolute left-6 md:left-1/2 -translate-x-[7px] md:-translate-x-1/2 flex items-center justify-center z-10 order-1 md:order-2">
@@ -176,19 +175,16 @@ export default function RoadmapSection() {
                   <div className="flex items-center justify-between mb-3">
                     <h3 className="text-xl font-bold flex items-center gap-2 text-white">
                       <GitBranch className="w-5 h-5 text-yellow-400" />
-                      FastAPI Integration
+                      {t("items.fastapi.title")}
                     </h3>
                     <span className="status-badge px-2 py-0.5 rounded text-[10px] font-bold bg-yellow-400/10 text-yellow-400 border border-yellow-400/20 uppercase tracking-wide">
-                      En desarrollo
+                      {t("items.fastapi.status")}
                     </span>
                   </div>
-                  <p className="text-gray-400 text-sm leading-relaxed">
-                    Soporte nativo para backend con Python/FastAPI. Incluye autenticación JWT, configuración de CORS y
-                    conexión a base de datos.
-                  </p>
+                  <p className="text-gray-400 text-sm leading-relaxed">{t("items.fastapi.description")}</p>
                 </div>
                 <div className="md:hidden mt-2">
-                  <span className="text-sm font-mono font-bold text-yellow-400">Q2 2024</span>
+                  <span className="text-sm font-mono font-bold text-yellow-400">{t("items.fastapi.quarter")}</span>
                 </div>
               </div>
             </div>
@@ -199,12 +195,9 @@ export default function RoadmapSection() {
                   <div className="absolute -bottom-[40%] left-1/2 -translate-x-1/2 w-[120%] h-[100px] bg-blue-500/10 rounded-[100%] blur-2xl pointer-events-none" />
 
                   <h3 className="text-xl font-bold mb-2 flex items-center md:justify-end gap-2 text-white">
-                    TypeScript Generation <Cloud className="w-5 h-5 text-blue-400" />
+                    {t("items.typescript.title")} <Cloud className="w-5 h-5 text-blue-400" />
                   </h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">
-                    Generación automática de interfaces, types y services de TypeScript desde tu backend FastAPI. Mantén
-                    tu código type-safe sin duplicación.
-                  </p>
+                  <p className="text-gray-400 text-sm leading-relaxed">{t("items.typescript.description")}</p>
                 </div>
               </div>
 
@@ -214,7 +207,7 @@ export default function RoadmapSection() {
 
               <div className="md:w-1/2 pl-12 md:pl-12 order-3 md:order-3">
                 <span className="text-sm font-mono font-bold text-gray-500 group-hover:text-blue-400 transition-colors">
-                  Q3 2024
+                  {t("items.typescript.quarter")}
                 </span>
               </div>
             </div>
@@ -222,7 +215,7 @@ export default function RoadmapSection() {
             <div className="roadmap-item relative flex flex-col md:flex-row gap-8 items-start md:items-center group">
               <div className="md:w-1/2 md:text-right order-2 md:order-1 hidden md:block pr-12">
                 <span className="text-sm font-mono font-bold text-gray-500 group-hover:text-purple-400 transition-colors">
-                  TBD
+                  {t("items.future.quarter")}
                 </span>
               </div>
 
@@ -235,15 +228,12 @@ export default function RoadmapSection() {
                   <div className="absolute -bottom-[40%] left-1/2 -translate-x-1/2 w-[120%] h-[100px] bg-purple-500/10 rounded-[100%] blur-2xl pointer-events-none" />
 
                   <h3 className="text-xl font-bold mb-2 flex items-center gap-2 text-white">
-                    <Plug className="w-5 h-5 text-purple-400" /> ¿Qué sigue?
+                    <Plug className="w-5 h-5 text-purple-400" /> {t("items.future.title")}
                   </h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">
-                    El roadmap sigue evolucionando. ¿Tienes ideas? Compártelas en nuestro repositorio de GitHub y
-                    ayúdanos a definir el futuro de AvangCLI.
-                  </p>
+                  <p className="text-gray-400 text-sm leading-relaxed">{t("items.future.description")}</p>
                 </div>
                 <div className="md:hidden mt-2">
-                  <span className="text-sm font-mono font-bold text-gray-500">TBD</span>
+                  <span className="text-sm font-mono font-bold text-gray-500">{t("items.future.quarter")}</span>
                 </div>
               </div>
             </div>

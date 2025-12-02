@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { useTranslations } from "next-intl"
 import React from "react"
 
 import ClippedShape from "@/components/magicui/cliped-shape"
@@ -31,18 +32,19 @@ const CreatorCard = ({ creator }: { creator: GitHubUser }) => (
 )
 
 const CreatorsSection = () => {
+  const t = useTranslations("home.creators")
   const { data: creatorsData, loading } = useGitHubUsers(CREATORS_USERNAMES)
 
   return (
     <section id="creators" className="w-full py-20 px-6 bg-[#161616]">
       <div className="max-w-7xl mx-auto text-center">
         <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 flex items-center justify-center gap-3">
-          Meet the{" "}
-          <span className="text-[#BBF451] italic font-serif drop-shadow-[0_0_25px_rgba(132,204,22,0.4)]">Creators</span>
+          {t("title")}{" "}
+          <span className="text-[#BBF451] italic font-serif drop-shadow-[0_0_25px_rgba(132,204,22,0.4)]">
+            {t("titleHighlight")}
+          </span>
         </h2>
-        <p className="text-gray-400 text-lg mb-12 max-w-2xl mx-auto">
-          Este proyecto es el resultado del esfuerzo y la dedicación de un equipo de desarrolladores apasionados.
-        </p>
+        <p className="text-gray-400 text-lg mb-12 max-w-2xl mx-auto">{t("description")}</p>
 
         <div className="flex flex-wrap justify-center gap-8">
           {loading || !creatorsData

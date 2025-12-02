@@ -2,37 +2,47 @@
 
 import { Icon } from "@iconify/react"
 import gsap from "gsap"
-import { BookOpen, Star } from "lucide-react"
-import Link from "next/link"
-import { useLocale } from "next-intl"
+import { BookOpen, Check, ChevronDown, Github, Star } from "lucide-react"
+import { useLocale, useTranslations } from "next-intl"
 import React, { useEffect, useRef, useState } from "react"
 
 import { constants } from "@/constants/global-constants"
 import { useGitHubStars } from "@/hooks/use-github-api"
+import { Link, usePathname, useRouter } from "@/i18n/routing"
 import { formatStarCount } from "@/modules/shared/utils"
 
 import Logo from "./logo"
 
 const GITHUB_REPO_URL = constants.repository_url
 
-const NAV_ITEMS = [
-  { id: "home", label: "Home", href: "#home" },
-  { id: "features", label: "Features", href: "#features" },
-  { id: "scaffolding", label: "Scaffolding", href: "#scaffolding" },
-  { id: "roadmap", label: "Roadmap", href: "#roadmap" },
-  { id: "creators", label: "Creators", href: "#creators" },
-  { id: "cta", label: "Start project", href: "#cta" }
-]
-
 const Navbar = () => {
   const locale = useLocale()
+  const t = useTranslations("nav")
+  const router = useRouter()
+  const pathname = usePathname()
   const { starCount, loading: loadingStars } = useGitHubStars(constants.github_owner, constants.github_repo)
   const [isScrolled, setIsScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState("home")
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 })
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isLangOpen, setIsLangOpen] = useState(false)
   const navRefs = useRef<(HTMLAnchorElement | null)[]>([])
   const mobileMenuRef = useRef<HTMLDivElement>(null)
+  const langDropdownRef = useRef<HTMLDivElement>(null)
+
+  const NAV_ITEMS = [
+    { id: "home", label: t("home"), href: "#home" },
+    { id: "features", label: t("features"), href: "#features" },
+    { id: "scaffolding", label: t("scaffolding"), href: "#scaffolding" },
+    { id: "roadmap", label: t("roadmap"), href: "#roadmap" },
+    { id: "creators", label: t("creators"), href: "#creators" },
+    { id: "cta", label: t("startProject"), href: "#cta" }
+  ]
+
+  const languages = [
+    { code: "es", label: "ES" },
+    { code: "en", label: "EN" }
+  ] as const
 
   useEffect(() => {
     const handleScroll = () => {
@@ -97,6 +107,21 @@ const Navbar = () => {
     }
   }, [isMenuOpen])
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (langDropdownRef.current && !langDropdownRef.current.contains(event.target as Node)) {
+        setIsLangOpen(false)
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
+
+  const handleLanguageChange = (newLang: "es" | "en") => {
+    setIsLangOpen(false)
+    router.replace(pathname, { locale: newLang })
+  }
+
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault()
     const targetId = href.replace("#", "")
@@ -131,7 +156,7 @@ const Navbar = () => {
     >
       <div
         className={`
-                    grid grid-cols-[80%_20%] md:grid-cols-[20%_60%_20%]  items-center px-6
+                    grid grid-cols-[80%_20%] md:grid-cols-[1fr_auto_1fr]  items-center px-6 md:px-8
                     ${
                       isScrolled
                         ? "bg-[#1a1a1a]/80 backdrop-blur-xl border border-white/10 rounded-full py-3 shadow-[0_8px_30px_rgba(0,0,0,0.4)]"
@@ -182,7 +207,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="flex items-center justify-end gap-3 ">
+        <div className="flex items-center justify-end gap-3 md:gap-4">
           <button
             aria-label="Menu"
             className="md:hidden flex items-center justify-center text-white"
@@ -191,22 +216,67 @@ const Navbar = () => {
             <Icon icon={isMenuOpen ? "mdi:close" : "mdi:menu"} className="w-6 h-6" />
           </button>
 
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-3 md:gap-4">
+            <div className="relative" ref={langDropdownRef}>
+              <button
+                aria-label="select language"
+                onClick={() => setIsLangOpen(!isLangOpen)}
+                className={`flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium border transition-all duration-300 ${
+                  isLangOpen
+                    ? "bg-[#1a1a1a] border-lime-400 text-lime-400 shadow-[0_0_10px_rgba(163,230,53,0.2)]"
+                    : "bg-[#1a1a1a]/40 border-white/10 text-gray-300 hover:text-lime-400 hover:border-lime-400/50"
+                }`}
+              >
+                <span>{locale.toUpperCase()}</span>
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform duration-300 ${isLangOpen ? "rotate-180" : "rotate-0"}`}
+                />
+              </button>
+
+              <div
+                className={`absolute right-0 top-full mt-2 w-24 bg-[#1a1a1a] border border-white/10 rounded-xl shadow-xl overflow-hidden backdrop-blur-md transition-all duration-200 origin-top z-100 ${
+                  isLangOpen
+                    ? "opacity-100 translate-y-0 scale-100 visible"
+                    : "opacity-0 -translate-y-2 scale-95 invisible"
+                }`}
+              >
+                <div className="p-1 flex flex-col gap-0.5">
+                  {languages.map((lang) => {
+                    const isActive = locale === lang.code
+                    return (
+                      <button
+                        aria-label={lang.code}
+                        key={lang.code}
+                        onClick={() => handleLanguageChange(lang.code)}
+                        className={`flex items-center justify-between w-full px-3 py-2 text-sm rounded-lg transition-colors duration-200 ${
+                          isActive ? "bg-lime-400/10 text-lime-400" : "text-gray-400 hover:bg-white/5 hover:text-white"
+                        }`}
+                      >
+                        {lang.label}
+                        {isActive && <Check className="w-3.5 h-3.5" />}
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+            </div>
+
             <Link
-              href={`/${locale}/docs`}
+              href="/docs"
               className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-white/10 text-gray-300 hover:bg-white/5 hover:text-white transition-all text-sm font-medium"
             >
               <BookOpen className="w-4 h-4" />
-              <span>Docs</span>
+              <span>{t("docs")}</span>
             </Link>
 
-            <Link
+            <a
               href={GITHUB_REPO_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-lime-400/50 text-lime-400 hover:bg-lime-400 hover:text-black transition-all text-sm font-medium"
             >
-              <span className="flex items-center gap-1.5 border-r border-lime-400/50 pr-3">GitHub</span>
+              <Github className="w-4 h-4" />
+              {/* <span className="flex items-center gap-1.5 border-r border-lime-400/50 pr-3">GitHub</span> */}
 
               <span className="flex items-center gap-1 font-bold">
                 <Star className="w-4 h-4" />
@@ -216,7 +286,7 @@ const Navbar = () => {
                   formatStarCount(starCount)
                 )}
               </span>
-            </Link>
+            </a>
           </div>
         </div>
       </div>
@@ -245,15 +315,35 @@ const Navbar = () => {
           ))}
 
           <div className="flex flex-col gap-3 mt-2 pt-3 border-t border-white/10">
+            <div className="flex items-center gap-2 px-4">
+              {languages.map((lang) => {
+                const isActive = locale === lang.code
+                return (
+                  <button
+                    aria-label={lang.code}
+                    key={lang.code}
+                    onClick={() => handleLanguageChange(lang.code)}
+                    className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                      isActive
+                        ? "bg-lime-400/10 text-lime-400 border border-lime-400/50"
+                        : "bg-white/5 text-gray-400 border border-white/10 hover:text-white hover:border-white/20"
+                    }`}
+                  >
+                    {lang.label}
+                  </button>
+                )
+              })}
+            </div>
+
             <Link
               href="/docs"
               className="flex items-center gap-2 px-4 py-3 rounded-xl border border-white/10 text-gray-300 hover:bg-white/5 hover:text-white transition-all text-base font-medium"
             >
               <BookOpen className="w-5 h-5" />
-              <span>Docs</span>
+              <span>{t("docs")}</span>
             </Link>
 
-            <Link
+            <a
               href={GITHUB_REPO_URL}
               target="_blank"
               rel="noopener noreferrer"
@@ -269,7 +359,7 @@ const Navbar = () => {
                   formatStarCount(starCount)
                 )}
               </span>
-            </Link>
+            </a>
           </div>
         </div>
       </div>

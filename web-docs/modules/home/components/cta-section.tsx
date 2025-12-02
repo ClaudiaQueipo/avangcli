@@ -4,7 +4,7 @@ import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { ArrowRight, Check, Copy, Terminal } from "lucide-react"
 import Link from "next/link"
-import { useLocale } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { useEffect, useRef, useState } from "react"
 
 import { Button } from "@/components/ui/button"
@@ -14,6 +14,7 @@ if (typeof window !== "undefined") {
 }
 
 export function CtaSection() {
+  const t = useTranslations("home.cta")
   const [copied, setCopied] = useState(false)
   const command = "npx avang-cli init my-app"
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -176,13 +177,12 @@ export function CtaSection() {
 
       <div className="container mx-auto max-w-4xl relative z-10 flex flex-col items-center">
         <h2 ref={titleRef} className="text-4xl md:text-6xl font-bold mb-6 text-white tracking-tight leading-[1.1]">
-          ¿Listo para crear tu <br />
-          <span className="font-serif italic text-[#BBF451]">próximo gran proyecto?</span>
+          {t("title")} <br />
+          <span className="font-serif italic text-[#BBF451]">{t("titleHighlight")}</span>
         </h2>
 
         <p ref={subtitleRef} className="text-xl text-gray-400 mb-12 max-w-2xl font-light leading-relaxed">
-          Deja de configurar entornos y empieza a desarrollar. Dos comandos te separa de una arquitectura full-stack
-          escalable con Next.js y FastAPI.
+          {t("description")}
         </p>
 
         <div className="flex flex-col items-center gap-8 w-full">
@@ -216,39 +216,9 @@ export function CtaSection() {
             </Button>
           </div>
 
-          <div
-            ref={commandBoxRef}
-            onMouseEnter={handleCommandMouseEnter}
-            onMouseLeave={handleCommandMouseLeave}
-            className="group relative flex items-center gap-3 bg-[#1a1a1a] border border-white/10 hover:border-lime-500/30 rounded-2xl p-2 pl-6 pr-2 shadow-2xl transition-colors duration-300 w-full max-w-md"
-          >
-            <Terminal className="w-5 h-5 text-gray-500 group-hover:text-lime-400 transition-colors" />
-
-            <code className="flex-1 text-left font-mono text-sm md:text-base text-gray-300">
-              <span className="text-lime-400">avang-cli</span> init // Backend
-            </code>
-
-            <Button
-              aria-label="Copy command"
-              size="icon"
-              variant="ghost"
-              onClick={handleCopy}
-              className="relative text-gray-400 hover:text-white hover:bg-white/5 rounded-xl h-10 w-10 shrink-0 transition-all"
-            >
-              <div className={`transition-all duration-300 ${copied ? "scale-0 opacity-0" : "scale-100 opacity-100"}`}>
-                <Copy className="w-4 h-4" />
-              </div>
-              <div
-                className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${copied ? "scale-100 opacity-100 text-lime-400" : "scale-0 opacity-0"}`}
-              >
-                <Check className="w-4 h-4" />
-              </div>
-            </Button>
-          </div>
-
           <Link href={`/${locale}/docs/frontend-cli/getting-started`} className="inline-block">
             <Button
-              aria-label="Empezar ahora"
+              aria-label={t("startNow")}
               ref={buttonRef}
               onMouseEnter={handleButtonMouseEnter}
               onMouseLeave={handleButtonMouseLeave}
@@ -256,14 +226,14 @@ export function CtaSection() {
               className="group relative bg-[#D4FC79] hover:bg-[#c2ed56] text-black font-bold h-14 px-10 text-lg rounded-full shadow-[0_0_20px_rgba(212,252,121,0.3)] hover:shadow-[0_0_35px_rgba(212,252,121,0.5)] transition-all duration-300 overflow-hidden"
             >
               <span className="relative z-10 flex items-center gap-2">
-                Empezar ahora
+                {t("startNow")}
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </span>
             </Button>
           </Link>
 
           <p ref={footerRef} className="text-sm text-gray-600">
-            Open Source
+            {t("openSource")}
           </p>
         </div>
       </div>

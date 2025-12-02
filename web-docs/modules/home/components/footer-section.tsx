@@ -1,11 +1,12 @@
 import { Icon } from "@iconify/react"
 import { FileText } from "lucide-react"
 import Link from "next/link"
-import { useLocale } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 
 import { constants } from "@/constants/global-constants"
 
 export default function FooterSection() {
+  const t = useTranslations("home.footer")
   const locale = useLocale()
   return (
     <footer className="w-full bg-[#161616] border-t border-white/5 pt-12 pb-8 relative overflow-hidden">
@@ -17,7 +18,7 @@ export default function FooterSection() {
           </div>
 
           <div className="flex items-center justify-center text-sm text-gray-500 font-medium md:flex-1">
-            © {new Date().getFullYear()} AvangCLI. Built for builders.
+            © {new Date().getFullYear()} AvangCLI. {t("tagline")}
           </div>
 
           <div className="flex items-center justify-center md:justify-end gap-6 md:flex-1">

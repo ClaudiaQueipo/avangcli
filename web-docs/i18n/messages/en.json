@@ -1,7 +1,13 @@
 {
   "nav": {
     "home": "Home",
-    "github": "GitHub"
+    "github": "GitHub",
+    "features": "Features",
+    "scaffolding": "Scaffolding",
+    "roadmap": "Roadmap",
+    "creators": "Creators",
+    "startProject": "Start project",
+    "docs": "Docs"
   },
   "docs": {
     "title": "Documentation",
@@ -18,5 +24,116 @@
     "commands": "Commands",
     "architecture": "Architecture",
     "guides": "Guides"
+  },
+  "home": {
+    "hero": {
+      "title": "Create your",
+      "word1": "Next.js projects",
+      "word2": "FastAPI backends",
+      "word3": "Full-Stack apps",
+      "description": "AvangCLI generates pre-configured full-stack projects with Next.js and FastAPI. Deploy in seconds with integrated Docker and CI/CD.",
+      "getStarted": "Get Started",
+      "viewDemo": "View Demo"
+    },
+    "features": {
+      "title": "Power up your",
+      "titleHighlight": "workflow",
+      "description": "Everything you need to scale your full-stack applications from day one, automated and standardized.",
+      "robustStack": {
+        "title": "Robust Stack",
+        "description": "Docker, Linter, Hooks and more ready to use.",
+        "items": {
+          "docker": "Docker Compose",
+          "eslint": "ESLint & Prettier",
+          "husky": "Husky Git Hooks",
+          "cicd": "CI/CD Pipelines"
+        }
+      },
+      "architecture": {
+        "title": "Clear Architecture",
+        "description": "Modular structure that scales with your project. Folders organized by features, not by file types.",
+        "cta": "View architecture"
+      }
+    },
+    "scaffolding": {
+      "title": "Intelligent",
+      "titleHighlight": "Scaffolding",
+      "description": "Automatically generates the complete module structure for Next.js. Keep your code organized, predictable and scalable from the first commit.",
+      "item1": {
+        "title": "Modular Structure",
+        "description": "Forget about 'spaghetti code'. Each functionality lives in its own isolated module, encapsulating its logic, UI, state and types."
+      },
+      "item2": {
+        "title": "Boilerplate Files",
+        "description": "Base files are automatically generated. Don't waste time copying and pasting empty folder structures."
+      },
+      "item3": {
+        "title": "Barrel Exports",
+        "description": "Automatic configuration of index.ts to keep your imports clean throughout the project: import '{'Auth'}' from '@/modules'."
+      }
+    },
+    "roadmap": {
+      "title": "The future of",
+      "titleHighlight": "AvangCLI",
+      "description": "We are building the ultimate tool for full-stack developers, step by step.",
+      "items": {
+        "nextjs": {
+          "title": "Next.js Scaffolding",
+          "description": "Complete generation of Next.js projects with TypeScript, configured Tailwind CSS and optimized folder structure.",
+          "quarter": "Q1 2024"
+        },
+        "fastapi": {
+          "title": "FastAPI Integration",
+          "description": "Native backend support with Python/FastAPI. Includes JWT authentication, CORS configuration and database connection.",
+          "quarter": "Q2 2024",
+          "status": "In development"
+        },
+        "typescript": {
+          "title": "TypeScript Generation",
+          "description": "Automatic generation of TypeScript interfaces, types and services from your FastAPI backend. Keep your code type-safe without duplication.",
+          "quarter": "Q3 2024"
+        },
+        "future": {
+          "title": "What's next?",
+          "description": "The roadmap continues to evolve. Have ideas? Share them in our GitHub repository and help us define the future of AvangCLI.",
+          "quarter": "TBD"
+        }
+      }
+    },
+    "creators": {
+      "title": "Meet the",
+      "titleHighlight": "Creators",
+      "description": "This project is the result of the effort and dedication of a team of passionate developers."
+    },
+    "cta": {
+      "title": "Ready to create your",
+      "titleHighlight": "next big project?",
+      "description": "Stop setting up environments and start developing. Two commands separate you from a scalable full-stack architecture with Next.js and FastAPI.",
+      "startNow": "Start now",
+      "openSource": "Open Source"
+    },
+    "footer": {
+      "tagline": "Built for builders."
+    },
+    "floatingCards": {
+      "projectGenerated": {
+        "name": "Project Generated",
+        "time": "Just now",
+        "amount": "Next.js"
+      },
+      "scaffoldComplete": {
+        "name": "Scaffold Complete",
+        "time": "15s ago",
+        "amount": "FastAPI"
+      },
+      "dockerReady": {
+        "name": "Docker Ready",
+        "time": "30s ago",
+        "amount": "3 services"
+      }
+    },
+    "projectStructure": {
+      "title": "Project Structure"
+    }
   }
 }
