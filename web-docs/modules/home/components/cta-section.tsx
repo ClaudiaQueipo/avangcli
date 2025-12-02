@@ -195,7 +195,7 @@ export function CtaSection() {
             <Terminal className="w-5 h-5 text-gray-500 group-hover:text-lime-400 transition-colors" />
 
             <code className="flex-1 text-left font-mono text-sm md:text-base text-gray-300">
-              <span className="text-lime-400">npx</span> avangcli init // Frontend
+              <span className="text-lime-400">npx</span> avangcli init
             </code>
 
             <Button

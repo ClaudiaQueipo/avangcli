@@ -16,7 +16,7 @@
   },
   "clis": {
     "frontend": "Frontend CLI",
-    "backend": "Backend CLI"
+    "backend": "Backend CLI (Soon)"
   },
   "categories": {
     "introduction": "Introduction",
@@ -29,9 +29,9 @@
     "hero": {
       "title": "Create your",
       "word1": "Next.js projects",
-      "word2": "FastAPI backends",
+      "word2": "Powerfull apps",
       "word3": "Full-Stack apps",
-      "description": "AvangCLI generates pre-configured full-stack projects with Next.js and FastAPI. Deploy in seconds with integrated Docker and CI/CD.",
+      "description": "AvangCLI generates pre-configured full-stack projects with Next.js. Deploy in seconds with integrated Docker and CI/CD.",
       "getStarted": "Get Started",
       "viewDemo": "View Demo"
     },
@@ -122,9 +122,9 @@
         "amount": "Next.js"
       },
       "scaffoldComplete": {
-        "name": "Scaffold Complete",
+        "name": "Module Generated",
         "time": "15s ago",
-        "amount": "FastAPI"
+        "amount": "Next.js"
       },
       "dockerReady": {
         "name": "Docker Ready",

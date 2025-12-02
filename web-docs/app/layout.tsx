@@ -25,20 +25,8 @@ export const metadata: Metadata = {
     template: "%s | AvangCLI"
   },
   description:
-    "Powerful CLI tools for scaffolding and managing Next.js (Frontend) and FastAPI (Backend) projects with best practices built-in. Available in English and Spanish.",
-  keywords: [
-    "CLI",
-    "Next.js",
-    "FastAPI",
-    "Frontend",
-    "Backend",
-    "Fullstack",
-    "TypeScript",
-    "Python",
-    "Developer Tools",
-    "Scaffolding",
-    "Screaming Architecture"
-  ],
+    "Powerful CLI tools for scaffolding and managing Next.js (Frontend) projects with best practices built-in. Available in English and Spanish.",
+  keywords: ["CLI", "Next.js", "Frontend", "TypeScript", "Developer Tools", "Scaffolding", "Screaming Architecture"],
   authors: [{ name: "AvangCLI Team", url: constants.repository_url }],
   creator: "AvangCLI Team",
   publisher: "AvangCLI Team",
@@ -48,13 +36,13 @@ export const metadata: Metadata = {
     alternateLocale: ["es_ES"],
     url: "/",
     title: "AvangCLI - Modern CLI Tools for Fullstack Development",
-    description: "Powerful CLI tools for scaffolding Next.js and FastAPI projects",
+    description: "Powerful CLI tools for scaffolding Next.js projects",
     siteName: "AvangCLI"
   },
   twitter: {
     card: "summary_large_image",
     title: "AvangCLI - Modern CLI Tools",
-    description: "Powerful CLI tools for scaffolding Next.js and FastAPI projects",
+    description: "Powerful CLI tools for scaffolding Next.js projects",
     creator: "@AvangCLI Team"
   },
   robots: {

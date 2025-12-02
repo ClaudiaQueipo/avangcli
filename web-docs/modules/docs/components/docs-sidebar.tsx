@@ -55,7 +55,9 @@ export function DocsSidebar({ sections, currentCli = "frontend-cli", currentLang
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="frontend-cli">Frontend CLI</SelectItem>
-                <SelectItem value="backend-cli">Backend CLI</SelectItem>
+                <SelectItem disabled value="backend-cli">
+                  Backend CLI (Soon)
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
