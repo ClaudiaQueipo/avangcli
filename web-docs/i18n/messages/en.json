@@ -39,6 +39,15 @@
       "title": "Power up your",
       "titleHighlight": "workflow",
       "description": "Everything you need to scale your full-stack applications from day one, automated and standardized.",
+      "generateTypes": {
+        "title": "Generate Types & Services",
+        "description": "Instantly generate TypeScript types and services from your FastAPI backend. Keep your code type-safe without duplication.",
+        "items": {
+          "openapi": "OpenAPI Support",
+          "speed": "Blazing Fast with Custom Algorithm",
+          "configurable": "Configurable Paths"
+        }
+      },
       "robustStack": {
         "title": "Robust Stack",
         "description": "Docker, Linter, Hooks and more ready to use.",

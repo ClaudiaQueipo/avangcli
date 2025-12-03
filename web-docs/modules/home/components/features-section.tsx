@@ -4,12 +4,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { BookOpen } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
-
 import { AnimatedChecklist } from "@/components/magicui/animated-checklist"
 import { BentoCard, BentoGrid } from "@/components/magicui/bento-grid"
 import { CatCLI } from "@/components/magicui/cat-cli"
 import ClippedCard from "@/components/magicui/cliped-card"
 import { Terminal } from "@/components/magicui/terminal"
+import GlowingLogo from "./glowing-logo"
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger)
@@ -85,30 +85,62 @@ export function FeaturesSection() {
       </div>
 
       <div ref={gridRef}>
-        <BentoGrid className="w-full">
-          <BentoCard
-            className="md:col-span-2 shadow-[0_0_50px_-12px_rgba(132,204,22,0.1)]"
-            background={
-              <Terminal className="max-w-full h-full bg-[#1a1a1a] border-none" sequence={false} startOnView={true}>
-                <CatCLI mode="cli" className="pl-6 pt-6" />
-              </Terminal>
-            }
-          />
+        <BentoGrid className="w-full" firstRowHeight="394px">
+          <div className="md:col-span-2 h-full flex items-center justify-between group relative col-span-1 overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-white/10 w-full border border-white/5 p-8 rounded-2xl shadow-lg bg-[#1a1a1a]">
+            <div className="flex-1 max-w-lg relative z-10">
+              <div className="flex items-center gap-3 mb-4">
+                <h3 className="text-2xl md:text-xl font-bold text-white">
+                  {t("generateTypes.title")}
+                </h3>
+              </div>
+              <p className="text-gray-400 mb-8 text-base leading-relaxed">
+                {t("generateTypes.description")}
+              </p>
+              <div className="space-y-3">
+                <div className="flex items-center justify-start space-x-3">
+                  <svg className="w-5 h-5 text-[#BBF451]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span className="text-white text-base">{t("generateTypes.items.openapi")}</span>
+                </div>
+                <div className="flex items-center justify-start space-x-3">
+                  <svg className="w-5 h-5 text-[#BBF451]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span className="text-white text-base">{t("generateTypes.items.speed")}</span>
+                </div>
+                <div className="flex items-center justify-start space-x-3">
+                  <svg className="w-5 h-5 text-[#BBF451]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span className="text-white text-base">{t("generateTypes.items.configurable")}</span>
+                </div>
+              </div>
+            </div>
 
-          <div className="md:col-span-1 flex items-center justify-center group relative col-span-1 flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-white/10 shadow-2xl w-full h-full">
-            <ClippedCard color="#BBF451" className="transition-transform duration-300" fillContainer={true}>
-              <div className="text-left w-full">
-                <h3 className="text-2xl font-bold text-black mb-3">{t("robustStack.title")}</h3>
-                <p className="text-black/80 text-sm mb-6 font-medium">{t("robustStack.description")}</p>
-                <div className="mt-4">
-                  <AnimatedChecklist
-                    items={[
-                      { name: t("robustStack.items.docker") },
-                      { name: t("robustStack.items.eslint") },
-                      { name: t("robustStack.items.husky") },
-                      { name: t("robustStack.items.cicd") }
-                    ]}
-                  />
+            <GlowingLogo className="absolute z-0 w-[250px] right-10 hidden md:block"></GlowingLogo>
+            <div className="hidden md:block border-2 border-[#2C2C2C] rounded-2xl w-[250px] h-[250px] absolute right-10 z-[-1]"></div>
+            <div className="hidden md:block border-2 border-[#2C2C2C] rounded-[4rem] w-[250px] h-[250px] absolute right-10 z-[-1]"></div>
+            <div className="hidden md:block border-2 border-[#2C2C2C] rounded-[6rem] w-[250px] h-[250px] absolute right-10 z-[-1]"></div>
+            <div className="hidden md:block border-2 border-[#2C2C2C] rounded-full w-[250px] h-[250px] absolute right-10 z-[-1]"></div>
+          </div>
+
+          <div className="md:col-span-1 h-full flex items-center justify-center group relative col-span-1 flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-white/10 shadow-2xl w-full">
+            <ClippedCard color="#BBF451" className="transition-transform duration-300 h-full" fillContainer={true}>
+              <div className="text-left w-full h-full flex flex-col justify-center">
+                <div className="p-0">
+                  <h3 className="text-2xl font-bold text-black mb-3">{t("robustStack.title")}</h3>
+                  <p className="text-black/80 text-sm mb-6 font-medium">{t("robustStack.description")}</p>
+                  <div className="mt-4">
+                    <AnimatedChecklist
+                      items={[
+                        { name: t("robustStack.items.docker") },
+                        { name: t("robustStack.items.eslint") },
+                        { name: t("robustStack.items.husky") },
+                        { name: t("robustStack.items.cicd") }
+                      ]}
+                    />
+                  </div>
                 </div>
               </div>
             </ClippedCard>
@@ -120,7 +152,7 @@ export function FeaturesSection() {
             description={t("architecture.description")}
             href="#"
             cta={t("architecture.cta")}
-            className="md:col-span-1 group"
+            className="md:col-span-1 group md:h-[354px]"
             variant="dark"
             background={
               <div className="h-full w-full flex items-center justify-center relative overflow-hidden">
@@ -143,7 +175,7 @@ export function FeaturesSection() {
             className="md:col-span-2"
             background={
               <Terminal className="max-w-full h-full bg-[#1a1a1a] border-none" sequence={false} startOnView={true}>
-                <CatCLI mode="help" className="pl-6 pt-6" />
+                <CatCLI mode="cli" className="pl-6 pt-6" />
               </Terminal>
             }
           />

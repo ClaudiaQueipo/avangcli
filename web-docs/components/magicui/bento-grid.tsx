@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils"
 export interface BentoGridProps {
   children: ReactNode
   className?: string
+  firstRowHeight?: string
 }
 
 export interface BentoCardProps {
@@ -20,8 +21,21 @@ export interface BentoCardProps {
   variant?: "dark" | "light"
 }
 
-export const BentoGrid = ({ children, className }: BentoGridProps) => {
-  return <div className={cn("grid auto-rows-[22rem] grid-cols-1 md:grid-cols-3 gap-4", className)}>{children}</div>
+export const BentoGrid = ({ children, className, firstRowHeight = "22rem" }: BentoGridProps) => {
+  return (
+    <div 
+      className={cn(
+        "grid grid-cols-1 md:grid-cols-3 gap-4",
+        className
+      )}
+      style={{
+        gridTemplateRows: firstRowHeight,
+        gridAutoRows: "22rem"
+      }}
+    >
+      {children}
+    </div>
+  )
 }
 
 export const BentoCard = ({
