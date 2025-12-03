@@ -1,10 +1,12 @@
-## 1.0.3 (2025-12-03)
+## 1.0.4 (2025-12-03)
+
 
 ### Bug Fixes
 
 * **frontend-cli:** completely remove lint-staged config ([b6b0129](https://github.com/ClaudiaQueipo/avangcli/commit/b6b0129ad55ceee77491dafe812cd0e1f5a18ea5))
 * **frontend-cli:** remove lint-staged config to use root config ([e3844c3](https://github.com/ClaudiaQueipo/avangcli/commit/e3844c3e2974fc15764e62fd382147e8a112576d))
 * **ToolSetupCommands:** removed incorrect warn import ([2665a53](https://github.com/ClaudiaQueipo/avangcli/commit/2665a535b8497442f8bad5f6e4952f63b50b10de))
+
 
 ### Features
 
@@ -21,3 +23,6 @@
 * **web-docs:** create glowing-logo component, modify features-section,top-button and bento-grid ([66d6115](https://github.com/ClaudiaQueipo/avangcli/commit/66d6115c580adf87b15be4415b31aba291bd4527))
 * **web-docs:** fix navbar responsive, change colors in roadmap ([0d351cb](https://github.com/ClaudiaQueipo/avangcli/commit/0d351cb710e0254a1ad81a853829e570a62283cd))
 * **web-docs:** landing and documentation website implemented ([1dedb78](https://github.com/ClaudiaQueipo/avangcli/commit/1dedb78029718f5e89b5adfc683d33d77475a0c6))
+
+
+
