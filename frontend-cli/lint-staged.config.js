@@ -1,4 +1,3 @@
-export default {
-  "*.{js,jsx,ts,tsx}": ["eslint --fix", "prettier --write"],
-  "*.{json,md,yml,yaml}": ["prettier --write"]
-}
+// NOTE: Lint-staged is handled by the root project configuration
+// NOTE: This file exists to prevent lint-staged from throwing errors
+export default {}
