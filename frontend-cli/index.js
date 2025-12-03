@@ -4,6 +4,7 @@ import yargs from "yargs"
 import { hideBin } from "yargs/helpers"
 
 import * as configCommand from "./cli/commands/config.js"
+import * as generateCommand from "./cli/commands/generate.js"
 import * as initCommand from "./cli/commands/init.js"
 import * as moduleCommand from "./cli/commands/module.js"
 import * as uiLibraryCommand from "./cli/commands/ui-library.js"
@@ -13,6 +14,7 @@ yargs(hideBin(process.argv))
   .usage("Usage: $0 <command> [options]")
   .command(initCommand)
   .command(configCommand)
+  .command(generateCommand)
   .command(moduleCommand)
   .command(uiLibraryCommand)
   .demandCommand(1, "You need to specify a command")

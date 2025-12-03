@@ -114,4 +114,12 @@ export class PromptFactory {
       { value: false, label: "No" }
     ])
   }
+
+  static createOpenAPIDocsDirPrompt() {
+    return new TextPrompt("OpenAPI docs directory:", "docs", null)
+  }
+
+  static createOpenAPIOutputDirPrompt() {
+    return new TextPrompt("Generated clients output directory:", "generated", null)
+  }
 }
