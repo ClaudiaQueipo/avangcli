@@ -77,6 +77,10 @@ const config: Config = {
         en: "config",
         es: "config"
       },
+      generate: {
+        en: "generate",
+        es: "generate"
+      },
       init: {
         en: "init",
         es: "init"
