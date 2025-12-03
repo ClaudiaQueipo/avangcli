@@ -207,7 +207,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="flex items-center justify-end gap-3 md:gap-4">
+        <div className="flex items-center justify-end gap-3 md:gap-4 w-full pl-3">
           <button
             aria-label="Menu"
             className="md:hidden flex items-center justify-center text-white"
@@ -216,7 +216,7 @@ const Navbar = () => {
             <Icon icon={isMenuOpen ? "mdi:close" : "mdi:menu"} className="w-6 h-6" />
           </button>
 
-          <div className="hidden md:flex items-center gap-3 md:gap-4">
+          <div className="hidden md:flex items-center gap-3 md:gap-2">
             <div className="relative" ref={langDropdownRef}>
               <button
                 aria-label="select language"
