@@ -1,6 +1,6 @@
 # AvangCLI
 
-A powerful CLI tool for scaffolding fullstack projects with Next.js (frontend) and FastAPI (backend).
+A powerful CLI tool for scaffolding fullstack projects with Next.js.
 
 **Website & Documentation:** [https://avangcli.vercel.app](https://avangcli.vercel.app)
 
@@ -20,7 +20,7 @@ The main objectives of Avangcli are:
 
 4. **Maintain Consistency**: Generate consistent project structures and module architectures across teams and projects.
 
-5. **Support Modern Tech Stack**: Integrate the latest versions of Next.js, FastAPI, and modern development tools with customizable configurations.
+5. **Support Modern Tech Stack**: Integrate the latest versions of Next.js and modern development tools with customizable configurations.
 
 6. **Enable Scalability**: Create modular architectures that support the growth of applications from MVP to production-scale systems.
 
