@@ -89,13 +89,31 @@ export const handler = async (_argv) => {
       (packageJson.devDependencies && packageJson.devDependencies.husky) ||
       fs.existsSync(path.join(process.cwd(), "commitlint.config.js"))
 
+    const currentConfig = configManager.readProjectConfig()
+    let openapiDocsDir = currentConfig.openapiDocsDir || "docs"
+    let openapiOutputDir = currentConfig.openapiOutputDir || "generated"
+
+    if (!currentConfig.openapiDocsDir) {
+      if (fs.existsSync(path.join(process.cwd(), "api-docs"))) {
+        openapiDocsDir = "api-docs"
+      }
+    }
+
+    if (!currentConfig.openapiOutputDir) {
+      if (fs.existsSync(path.join(process.cwd(), "src/generated"))) {
+        openapiOutputDir = "src/generated"
+      }
+    }
+
     const projectConfig = {
       packageManager,
       tailwind: hasTailwind,
       linterFormatter,
       docker,
       uiLibrary,
-      gitSetup: hasGitSetup
+      gitSetup: hasGitSetup,
+      openapiDocsDir,
+      openapiOutputDir
     }
 
     configManager.writeProjectConfig(projectConfig)

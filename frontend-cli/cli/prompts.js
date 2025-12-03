@@ -52,6 +52,16 @@ export class PromptsManager {
     const prompt = PromptFactory.createGitSetupPrompt()
     return await prompt.ask()
   }
+
+  async askOpenAPIDocsDir() {
+    const prompt = PromptFactory.createOpenAPIDocsDirPrompt()
+    return await prompt.ask()
+  }
+
+  async askOpenAPIOutputDir() {
+    const prompt = PromptFactory.createOpenAPIOutputDirPrompt()
+    return await prompt.ask()
+  }
 }
 
 export const promptsManager = new PromptsManager()

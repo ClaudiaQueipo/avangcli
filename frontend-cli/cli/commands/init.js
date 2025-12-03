@@ -49,6 +49,14 @@ export const builder = (yargs) => {
       describe: "Setup Git with Commitizen, Commitlint, Husky & Lint-staged",
       type: "boolean"
     })
+    .option("openapi-docs-dir", {
+      describe: "OpenAPI docs directory for generate command",
+      type: "string"
+    })
+    .option("openapi-output-dir", {
+      describe: "Output directory for generated TypeScript clients",
+      type: "string"
+    })
     .example("$0 init", "Initialize a new project with interactive prompts")
     .example("$0 init my-app --pm bun --tailwind", "Create a project with Tailwind CSS")
     .example("$0 init my-app --pm npm --lf biome --docker dev", "Create a fully configured project")
@@ -139,13 +147,27 @@ export const handler = async (argv) => {
       await actionsManager.setupGit(packageManager, projectName, linterFormatter)
     }
 
+    let openapiDocsDir = argv["openapi-docs-dir"]
+    if (!openapiDocsDir) {
+      openapiDocsDir = await promptsManager.askOpenAPIDocsDir()
+      handleCancel(openapiDocsDir)
+    }
+
+    let openapiOutputDir = argv["openapi-output-dir"]
+    if (!openapiOutputDir) {
+      openapiOutputDir = await promptsManager.askOpenAPIOutputDir()
+      handleCancel(openapiOutputDir)
+    }
+
     const projectConfig = {
       packageManager,
       tailwind: useTailwind,
       linterFormatter,
       docker: dockerConfig,
       uiLibrary,
-      gitSetup
+      gitSetup,
+      openapiDocsDir,
+      openapiOutputDir
     }
 
     const originalCwd = process.cwd()
