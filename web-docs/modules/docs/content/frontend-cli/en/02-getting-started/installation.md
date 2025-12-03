@@ -44,10 +44,9 @@ cd frontend-cli && bun install && cd ..
 bun run install:all
 ```
 
-### Option 2: Global Installation (Coming Soon)
+### Global Installation (Recommended)
 
 ```bash
-# When available on npm
 npm install -g avangcli
 ```
 
@@ -129,7 +128,7 @@ bun install
 cd frontend-cli && bun install
 ```
 
-### Update Global Installation (When Available)
+### Update Global Installation
 
 ```bash
 npm update -g avangcli
