@@ -20,7 +20,7 @@ yargs(hideBin(process.argv))
   .demandCommand(1, "You need to specify a command")
   .help("h")
   .alias("h", "help")
-  .version("1.0.0")
+  .version("1.0.4")
   .alias("v", "version")
   // TODO: change the repo url
   .epilogue("For more information, visit: https://github.com/repourl")
