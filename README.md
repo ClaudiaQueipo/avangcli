@@ -1,61 +1,6 @@
-<style>
-  .container{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .container-logo{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    margin-bottom: 3rem;
-    width: 100%;
-  }
-  .logo{
-    width: 360px;
-    height: 130px;
-    position: relative;
-    display: flex;
-    align-items: start;
-    justify-content: start;
-  }
-  .logo h1{
-    font-size: 5rem;
-    font-weight: 700;
-    position: absolute;
-    left: 8rem;
-    top: 1rem;
-    border: none; 
-  }
-  .logo img{
-    width: 230px;
-    height: 120px;
-    border: none;  
-  }
-  .container-description{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    text-align: center;
-  }
-</style>
+# AvangCLI
 
-<div class="container" >
-  <div class="container-logo">
-    <div class="logo">
-      <img src="./logo.svg" alt="Avangcli Logo">
-      <h1>vangcli</h1>
-    </div>
-  </div>
-  <div class="container-description">
-    <p>A powerful CLI tool for scaffolding fullstack projects with Next.js (frontend) and FastAPI (backend).</p>
-  </div>
-  
-</div>
+A powerful CLI tool for scaffolding fullstack projects with Next.js (frontend) and FastAPI (backend).
 
 **Website & Documentation:** [https://avangcli.vercel.app](https://avangcli.vercel.app)
 
@@ -203,6 +148,45 @@ avangcli module my-module --skip-validation
 - Automatic detection of src/ directory
 
 See [Module Command Documentation](docs/module-command.md) for detailed usage.
+
+#### Regenerate project configuration
+
+```bash
+# Regenerate avangclirc.json based on current project setup
+avangcli config
+```
+
+**Config features:**
+
+- Detects package manager (npm, yarn, pnpm, bun)
+- Identifies Tailwind CSS usage
+- Detects linter/formatter setup (ESLint + Prettier, Biome)
+- Checks Docker configuration (dev, prod, both)
+- Identifies UI library (MUI, Shadcn, HeroUI)
+- Detects Git setup (Husky, Commitlint)
+- Configures OpenAPI docs and output directories
+
+#### Generate TypeScript clients from OpenAPI specs
+
+```bash
+# Generate clients using project configuration
+avangcli generate
+
+# With custom directories
+avangcli generate --docs-dir ./api-docs --output-dir ./src/generated
+
+# Options:
+#   --docs-dir, -d    Directory containing OpenAPI JSON files
+#   --output-dir, -o  Output directory for generated clients
+```
+
+**Generate features:**
+
+- Scans for OpenAPI JSON files in specified directory
+- Generates TypeScript clients automatically
+- Supports multiple API specifications
+- Integrates with project configuration
+- Runs config command if no configuration exists
 
 ### Backend CLI (coming soon)
 
