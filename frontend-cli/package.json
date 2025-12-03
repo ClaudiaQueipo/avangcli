@@ -4,6 +4,9 @@
   "description": "Frontend CLI for scaffolding Next.js projects",
   "type": "module",
   "main": "index.js",
+  "bin": {
+    "avangcli": "./index.js"
+  },
   "scripts": {
     "commit": "cz",
     "dev": "node index.js",
