@@ -80,18 +80,18 @@
         "nextjs": {
           "title": "Next.js Scaffolding",
           "description": "Generación completa de proyectos Next.js con TypeScript, Tailwind CSS configurado y estructura de carpetas optimizada.",
-          "quarter": "Q1 2024"
+          "quarter": "Noviembre 2025"
         },
         "fastapi": {
           "title": "FastAPI Integration",
           "description": "Soporte nativo para backend con Python/FastAPI. Incluye autenticación JWT, configuración de CORS y conexión a base de datos.",
-          "quarter": "Q2 2024",
+          "quarter": "Diciembre 2025",
           "status": "En desarrollo"
         },
         "typescript": {
           "title": "TypeScript Generation",
           "description": "Generación automática de interfaces, types y services de TypeScript desde tu backend FastAPI. Mantén tu código type-safe sin duplicación.",
-          "quarter": "Q3 2024"
+          "quarter": "Noviembre 2025"
         },
         "future": {
           "title": "¿Qué sigue?",
