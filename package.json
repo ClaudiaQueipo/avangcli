@@ -1,7 +1,7 @@
 {
   "name": "avangcli",
-  "version": "1.0.0",
-  "description": "Master CLI for scaffolding fullstack projects with Next.js and FastAPI",
+  "version": "1.0.1",
+  "description": "Master CLI for scaffolding fullstack projects with Next.js",
   "type": "module",
   "bin": {
     "avangcli": "./bin/avangcli"
@@ -24,7 +24,6 @@
     "cli",
     "scaffolding",
     "nextjs",
-    "fastapi",
     "fullstack"
   ],
   "author": "",
