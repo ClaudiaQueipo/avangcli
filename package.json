@@ -7,7 +7,7 @@
     "avangcli": "./bin/avangcli"
   },
   "scripts": {
-    "dev": "node src/index.js",
+    "dev": "node bin/avangcli",
     "dev:frontend": "cd frontend-cli && node index.js",
     "dev:backend": "cd backend-cli && python3 generator.py",
     "install:frontend": "cd frontend-cli && bun install",
