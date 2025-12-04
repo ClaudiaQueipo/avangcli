@@ -52,14 +52,12 @@ This project is developed and maintained by:
 Before installing Avangcli, ensure you have the following installed on your system:
 
 - **Node.js 20+** - Required for frontend CLI and master CLI
-- **Python 3.8+** - Required for backend CLI (coming soon)
 - **Bun** (recommended) or npm/yarn/pnpm - Package manager
 
 You can verify your installations with:
 
 ```bash
 node --version  # Should be 20.x or higher
-python3 --version  # Should be 3.8 or higher
 bun --version  # Or your preferred package manager
 ```
 
@@ -82,7 +80,7 @@ cd frontend-cli && bun install && cd ..
 bun run install:all
 ```
 
-### Global Installation (Coming Soon)
+### Global Installation
 
 ```bash
 npm install -g avangcli
