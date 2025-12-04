@@ -4,11 +4,13 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { BookOpen } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
+
 import { AnimatedChecklist } from "@/components/magicui/animated-checklist"
 import { BentoCard, BentoGrid } from "@/components/magicui/bento-grid"
-import { CatCLI } from "@/components/magicui/cat-cli"
+import { CLIHelp } from "@/components/magicui/cli-help"
 import ClippedCard from "@/components/magicui/cliped-card"
 import { Terminal } from "@/components/magicui/terminal"
+
 import GlowingLogo from "./glowing-logo"
 
 if (typeof window !== "undefined") {
@@ -89,13 +91,9 @@ export function FeaturesSection() {
           <div className="md:col-span-2 h-full flex items-center justify-between group relative col-span-1 overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-white/10 w-full border border-white/5 p-8 rounded-2xl shadow-lg bg-[#1a1a1a]">
             <div className="flex-1 max-w-lg relative z-10">
               <div className="flex items-center gap-3 mb-4">
-                <h3 className="text-2xl md:text-xl font-bold text-white">
-                  {t("generateTypes.title")}
-                </h3>
+                <h3 className="text-2xl md:text-xl font-bold text-white">{t("generateTypes.title")}</h3>
               </div>
-              <p className="text-gray-400 mb-8 text-base leading-relaxed">
-                {t("generateTypes.description")}
-              </p>
+              <p className="text-gray-400 mb-8 text-base leading-relaxed">{t("generateTypes.description")}</p>
               <div className="space-y-3">
                 <div className="flex items-center justify-start space-x-3">
                   <svg className="w-5 h-5 text-[#BBF451]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -175,7 +173,7 @@ export function FeaturesSection() {
             className="md:col-span-2"
             background={
               <Terminal className="max-w-full h-full bg-[#1a1a1a] border-none" sequence={false} startOnView={true}>
-                <CatCLI mode="cli" className="pl-6 pt-6" />
+                <CLIHelp className="pl-6 pt-6" />
               </Terminal>
             }
           />
