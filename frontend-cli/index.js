@@ -22,6 +22,5 @@ yargs(hideBin(process.argv))
   .alias("h", "help")
   .version("1.0.4")
   .alias("v", "version")
-  // TODO: change the repo url
-  .epilogue("For more information, visit: https://github.com/repourl")
+  .epilogue("For more information, visit: https://github.com/ClaudiaQueipo/avangcli")
   .parse()
