@@ -99,7 +99,7 @@
         },
         "typescript": {
           "title": "TypeScript Generation",
-          "description": "Generación automática de interfaces, types y services de TypeScript desde tu backend FastAPI. Mantén tu código type-safe sin duplicación.",
+          "description": "Generación automática de interfaces, types y services de TypeScript desde openapi.json spec. Mantén tu código type-safe sin duplicación.",
           "quarter": "Noviembre 2025"
         },
         "future": {

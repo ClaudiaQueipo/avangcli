@@ -93,7 +93,7 @@ export default async function DocPage({ params }: DocPageProps) {
       name: "AvangCLI Team",
       logo: {
         "@type": "ImageObject",
-        url: `${baseUrl}/icon.svg`
+        url: `${baseUrl}/avangcli2.svg`
       }
     },
     datePublished: new Date().toISOString(),
