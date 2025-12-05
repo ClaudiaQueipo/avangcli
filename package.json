@@ -1,6 +1,6 @@
 {
   "name": "avangcli",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Master CLI for scaffolding fullstack projects with Next.js",
   "type": "module",
   "bin": {
@@ -32,6 +32,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@clack/prompts": "^0.7.0",
     "yargs": "^18.0.0"
   },
   "devDependencies": {
