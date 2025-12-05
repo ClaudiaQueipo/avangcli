@@ -94,7 +94,7 @@ export const handler = async (argv) => {
     await actionsManager.runCreateNextApp(packageManager, projectName, useTailwind)
 
     let linterFormatter = argv["linter-formatter"] || argv.lf
-    if (!linterFormatter) {
+    if (linterFormatter === undefined) {
       linterFormatter = await promptsManager.askLinterFormatter()
       handleCancel(linterFormatter)
     }
@@ -106,7 +106,7 @@ export const handler = async (argv) => {
     }
 
     let dockerConfig = argv.docker || argv.d
-    if (!dockerConfig) {
+    if (dockerConfig === undefined) {
       dockerConfig = await promptsManager.askDockerConfig()
       handleCancel(dockerConfig)
     }
@@ -116,7 +116,7 @@ export const handler = async (argv) => {
     }
 
     let uiLibrary = argv["ui-library"] || argv.ui
-    if (!uiLibrary) {
+    if (uiLibrary === undefined) {
       uiLibrary = await promptsManager.askUILibrary()
       handleCancel(uiLibrary)
     }
@@ -150,13 +150,13 @@ export const handler = async (argv) => {
     }
 
     let openapiDocsDir = argv["openapi-docs-dir"]
-    if (!openapiDocsDir) {
+    if (openapiDocsDir === undefined) {
       openapiDocsDir = await promptsManager.askOpenAPIDocsDir()
       handleCancel(openapiDocsDir)
     }
 
     let openapiOutputDir = argv["openapi-output-dir"]
-    if (!openapiOutputDir) {
+    if (openapiOutputDir === undefined) {
       openapiOutputDir = await promptsManager.askOpenAPIOutputDir()
       handleCancel(openapiOutputDir)
     }
