@@ -65,6 +65,9 @@ export const handler = async (argv) => {
       if (!hasTailwind) {
         log.warning("\n⚠️  shadcn/ui requires Tailwind CSS. Installing Tailwind CSS first...")
         await actionsManager.setupTailwind(packageManager, process.cwd())
+
+        const currentConfig = configManager.readProjectConfig()
+        configManager.writeProjectConfig({ ...currentConfig, tailwind: true })
       }
       await actionsManager.setupShadcn(packageManager, process.cwd())
     } else if (library === "heroui") {
@@ -72,6 +75,9 @@ export const handler = async (argv) => {
       if (!hasTailwind) {
         log.warning("\n⚠️  HeroUI requires Tailwind CSS. Installing Tailwind CSS first...")
         await actionsManager.setupTailwind(packageManager, process.cwd())
+
+        const currentConfig = configManager.readProjectConfig()
+        configManager.writeProjectConfig({ ...currentConfig, tailwind: true })
       }
       await actionsManager.setupHeroUI(packageManager, process.cwd())
     }

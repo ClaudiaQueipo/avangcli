@@ -127,12 +127,14 @@ export const handler = async (argv) => {
       if (!useTailwind) {
         log.warning("\n⚠️  shadcn/ui requires Tailwind CSS. Installing Tailwind CSS first...")
         await actionsManager.setupTailwind(packageManager, projectName)
+        useTailwind = true
       }
       await actionsManager.setupShadcn(packageManager, projectName)
     } else if (uiLibrary === "heroui") {
       if (!useTailwind) {
         log.warning("\n⚠️  HeroUI requires Tailwind CSS. Installing Tailwind CSS first...")
         await actionsManager.setupTailwind(packageManager, projectName)
+        useTailwind = true
       }
       await actionsManager.setupHeroUI(packageManager, projectName)
     }
