@@ -1,4 +1,4 @@
-## 1.0.5 (2025-12-05)
+## [1.0.7](https://github.com/ClaudiaQueipo/avangcli/compare/76ab323217670672a61a19427d270b1628d51dcd...v1.0.7) (2025-12-05)
 
 
 ### Bug Fixes
@@ -6,7 +6,9 @@
 * **frontend-cli:** completely remove lint-staged config ([5c2658f](https://github.com/ClaudiaQueipo/avangcli/commit/5c2658f5b27dfe88af83f1ccc44ef9b550bf7b14))
 * **frontend-cli:** remove lint-staged config to use root config ([6769011](https://github.com/ClaudiaQueipo/avangcli/commit/6769011a97cb3b29969c6caa6a6f0a78f5438620))
 * **root:** added automatic versioning, also removed unused icons in web docs ([c0e2091](https://github.com/ClaudiaQueipo/avangcli/commit/c0e2091042d9a894d40e26c23d1327d5197379ae))
+* **root:** biome config and added frontend cli to bin in package json ([f8fb59a](https://github.com/ClaudiaQueipo/avangcli/commit/f8fb59a9b8d40dc9d1a8ed301362aefe34f18db9))
 * **root:** package epilogue fixed ([abfd50a](https://github.com/ClaudiaQueipo/avangcli/commit/abfd50a5d4398c6b75cd2d836ab159c4000244b8))
+* **root:** package json updated and changelog too ([05d6f8b](https://github.com/ClaudiaQueipo/avangcli/commit/05d6f8b343a7a265ae4a435f025aaa1782cfad8f))
 * **root:** readme md updated with be feature ([d197588](https://github.com/ClaudiaQueipo/avangcli/commit/d197588ea7ed4f348eb4bc82339945543254bb51))
 * **root:** removed duplicated cli entrypoint ([6b98e7d](https://github.com/ClaudiaQueipo/avangcli/commit/6b98e7d503c10014a9d848265494b452e884f7cf))
 * **root:** removed duplicated eslint rule and fix import sorting in features-section of web-docs ([d8e9f61](https://github.com/ClaudiaQueipo/avangcli/commit/d8e9f614cdf516853fc487ebdf07012f549dc616))
