@@ -281,16 +281,8 @@ Please ensure your code passes all linting and formatting checks before submitti
 ### Support & Resources
 
 - **Website**: [https://avangcli.vercel.app](https://avangcli.vercel.app)
-- **Documentation**: See the `/docs` folder for detailed guides
+- **Documentation**: See the [https://avangcli.vercel.app/en/docs](https://avangcli.vercel.app/en/docs) website for detailed guides
 - **Issues**: Report bugs or request features via GitHub Issues
-
-## Documentation
-
-- [CLI Usage Guide](docs/cli-usage.md)
-- [Module Command](docs/module-command.md) - **Detailed guide for module scaffolding**
-- [Project Templates](docs/project-templates.md)
-- [Architecture](docs/architecture.md)
-- [API Reference](docs/api-reference.md)
 
 ## License
 
