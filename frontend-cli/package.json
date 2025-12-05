@@ -7,6 +7,11 @@
   "bin": {
     "avangcli": "./index.js"
   },
+  "files": [
+    "index.js",
+    "cli",
+    "templates"
+  ],
   "scripts": {
     "commit": "cz",
     "dev": "node index.js",
