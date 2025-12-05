@@ -1,13 +1,23 @@
-## [1.0.8](https://github.com/ClaudiaQueipo/avangcli/compare/76ab323217670672a61a19427d270b1628d51dcd...v1.0.8) (2025-12-05)
+## [1.0.11](https://github.com/ClaudiaQueipo/avangcli/compare/v1.0.10...v1.0.11) (2025-12-05)
 
 
 ### Bug Fixes
 
-* **frontend-cli:** added tailwind config in true when it is automatically installed ([acbe125](https://github.com/ClaudiaQueipo/avangcli/commit/acbe1250a4b93ec6cc3f867666bce0de8ca3a609))
+* **frontend-cli:** corrected the flags condition ([1c23ae0](https://github.com/ClaudiaQueipo/avangcli/commit/1c23ae08a8c29a55b6225fc5288c5f380346cc76))
+
+
+
+## [1.0.10](https://github.com/ClaudiaQueipo/avangcli/compare/76ab323217670672a61a19427d270b1628d51dcd...v1.0.10) (2025-12-05)
+
+
+### Bug Fixes
+
+* **frontend-cli:** added tailwind config in true when it is automatically installed ([2c7f1cd](https://github.com/ClaudiaQueipo/avangcli/commit/2c7f1cd7ea137f7f1f4c9bbf39c6513b1466ce37))
+* **frontend-cli:** added tailwind config in true when it is automatically installed ([bb364a2](https://github.com/ClaudiaQueipo/avangcli/commit/bb364a23f625d51a34fe127a4a3e615de8e75f29))
 * **frontend-cli:** completely remove lint-staged config ([5c2658f](https://github.com/ClaudiaQueipo/avangcli/commit/5c2658f5b27dfe88af83f1ccc44ef9b550bf7b14))
 * **frontend-cli:** remove lint-staged config to use root config ([6769011](https://github.com/ClaudiaQueipo/avangcli/commit/6769011a97cb3b29969c6caa6a6f0a78f5438620))
 * **root:** added automatic versioning, also removed unused icons in web docs ([c0e2091](https://github.com/ClaudiaQueipo/avangcli/commit/c0e2091042d9a894d40e26c23d1327d5197379ae))
-* **root:** biome config and added frontend cli to bin in package json ([f8fb59a](https://github.com/ClaudiaQueipo/avangcli/commit/f8fb59a9b8d40dc9d1a8ed301362aefe34f18db9))
+* **root:** biome config and added frontend cli to bin in package json ([a7a8b69](https://github.com/ClaudiaQueipo/avangcli/commit/a7a8b691c79d212c777f34fd46120b392a4be8eb))
 * **root:** package epilogue fixed ([abfd50a](https://github.com/ClaudiaQueipo/avangcli/commit/abfd50a5d4398c6b75cd2d836ab159c4000244b8))
 * **root:** package json updated and changelog too ([05d6f8b](https://github.com/ClaudiaQueipo/avangcli/commit/05d6f8b343a7a265ae4a435f025aaa1782cfad8f))
 * **root:** readme md updated with be feature ([d197588](https://github.com/ClaudiaQueipo/avangcli/commit/d197588ea7ed4f348eb4bc82339945543254bb51))
