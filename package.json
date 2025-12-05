@@ -6,6 +6,10 @@
   "bin": {
     "avangcli": "./bin/avangcli"
   },
+  "files": [
+    "bin",
+    "frontend-cli"
+  ],
   "scripts": {
     "dev": "node bin/avangcli",
     "dev:frontend": "cd frontend-cli && node index.js",
