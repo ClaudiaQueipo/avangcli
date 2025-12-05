@@ -1,8 +1,9 @@
-## [1.0.7](https://github.com/ClaudiaQueipo/avangcli/compare/76ab323217670672a61a19427d270b1628d51dcd...v1.0.7) (2025-12-05)
+## [1.0.8](https://github.com/ClaudiaQueipo/avangcli/compare/76ab323217670672a61a19427d270b1628d51dcd...v1.0.8) (2025-12-05)
 
 
 ### Bug Fixes
 
+* **frontend-cli:** added tailwind config in true when it is automatically installed ([acbe125](https://github.com/ClaudiaQueipo/avangcli/commit/acbe1250a4b93ec6cc3f867666bce0de8ca3a609))
 * **frontend-cli:** completely remove lint-staged config ([5c2658f](https://github.com/ClaudiaQueipo/avangcli/commit/5c2658f5b27dfe88af83f1ccc44ef9b550bf7b14))
 * **frontend-cli:** remove lint-staged config to use root config ([6769011](https://github.com/ClaudiaQueipo/avangcli/commit/6769011a97cb3b29969c6caa6a6f0a78f5438620))
 * **root:** added automatic versioning, also removed unused icons in web docs ([c0e2091](https://github.com/ClaudiaQueipo/avangcli/commit/c0e2091042d9a894d40e26c23d1327d5197379ae))
