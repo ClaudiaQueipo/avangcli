@@ -149,13 +149,13 @@ export const handler = async (argv) => {
       await actionsManager.setupGit(packageManager, projectName, linterFormatter)
     }
 
-    let openapiDocsDir = argv["openapi-docs-dir"]
+    let openapiDocsDir = argv["openapi-docs-dir"] || argv.openapiDocsDir
     if (openapiDocsDir === undefined) {
       openapiDocsDir = await promptsManager.askOpenAPIDocsDir()
       handleCancel(openapiDocsDir)
     }
 
-    let openapiOutputDir = argv["openapi-output-dir"]
+    let openapiOutputDir = argv["openapi-output-dir"] || argv.openapiOutputDir
     if (openapiOutputDir === undefined) {
       openapiOutputDir = await promptsManager.askOpenAPIOutputDir()
       handleCancel(openapiOutputDir)
