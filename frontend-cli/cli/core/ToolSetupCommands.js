@@ -239,7 +239,7 @@ export class ShadcnSetupCommand extends SetupCommand {
       cwd: this.projectPath
     })
 
-    const devDependencies = ["@types/node", "tailwindcss-animate"]
+    const devDependencies = ["@types/node", "tw-animate-css"]
 
     await this.commandExecutor.execute(cmd, [...args, "-D", ...devDependencies], {
       cwd: this.projectPath
