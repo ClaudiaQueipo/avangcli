@@ -2,31 +2,15 @@
 
 ## Introduction
 
-AvangCLI allows you to configure global and per-project preferences to automate common decisions and speed up your workflow. This guide explains all available configuration options.
+AvangCLI allows you to configure per-project preferences to automate common decisions and speed up your workflow. This guide explains all available configuration options.
 
 ## Configuration Files
-
-### Global: `~/.avangcli/config.json`
-
-**Location:** User's home directory
-
-**Purpose:** Shared configuration across all projects
-
-**Example:**
-
-```json
-{
-  "defaultPackageManager": "bun",
-  "defaultStoreManager": "zustand",
-  "defaultLinterFormatter": "eslint-prettier"
-}
-```
 
 ### Project: `avangclirc.json`
 
 **Location:** Project root
 
-**Purpose:** Project-specific configuration (overrides global)
+**Purpose:** Project-specific configuration
 
 **Example:**
 
@@ -51,18 +35,6 @@ AvangCLI allows you to configure global and per-project preferences to automate 
 
 **Default:** `npm`
 
-**Set globally:**
-
-```bash
-# Option 1: During project creation
-avangcli init my-app --pm bun
-
-# Option 2: Manually edit ~/.avangcli/config.json
-{
-  "defaultPackageManager": "bun"
-}
-```
-
 **Set per project:**
 
 ```bash
@@ -79,9 +51,9 @@ avangcli init my-app --pm bun
 avangcli init my-app
 # → Asks which package manager to use
 
-# With global configuration
+# With project configuration
 avangcli init my-app
-# → Uses bun automatically
+# → Uses configured package manager automatically
 ```
 
 ### Store Manager
@@ -91,18 +63,6 @@ avangcli init my-app
 **Values:** `zustand` | `redux` | `none`
 
 **Default:** Asks interactively
-
-**Set globally:**
-
-```bash
-# During module creation
-avangcli module users --store zustand -g
-
-# Or manually
-{
-  "defaultStoreManager": "zustand"
-}
-```
 
 **Set per project:**
 
@@ -125,11 +85,7 @@ avangcli module products
 
 # With project configuration
 avangcli module products
-# → Uses redux automatically (from project)
-
-# With global configuration
-avangcli module products
-# → Uses zustand automatically (global)
+# → Uses configured store manager automatically
 ```
 
 ### Linter/Formatter
@@ -170,19 +126,12 @@ When there are multiple configuration sources, AvangCLI applies them in this ord
 
 1. **CLI Arguments** - `--pm bun`
 2. **Project Configuration** - `avangclirc.json`
-3. **Global Configuration** - `~/.avangcli/config.json`
-4. **System Defaults**
-5. **Interactive Mode**
+3. **System Defaults**
+4. **Interactive Mode**
 
 ### Example
 
 ```bash
-# ~/.avangcli/config.json
-{
-  "defaultPackageManager": "npm",
-  "defaultStoreManager": "zustand"
-}
-
 # project/avangclirc.json
 {
   "packageManager": "pnpm",
@@ -199,8 +148,6 @@ avangcli module products --pm bun
 
 ## Initial Setup
 
-### First Setup
-
 ```bash
 # 1. Create first project
 avangcli init my-app --pm bun --ui shadcn
@@ -214,29 +161,11 @@ avangcli module products  # → uses zustand
 avangcli module cart      # → uses zustand
 ```
 
-### Global Setup
-
-```bash
-# Create global configuration manually
-mkdir -p ~/.avangcli
-cat > ~/.avangcli/config.json << 'EOF'
-{
-  "defaultPackageManager": "bun",
-  "defaultStoreManager": "zustand",
-  "defaultLinterFormatter": "biome",
-  "defaultUiLibrary": "shadcn"
-}
-EOF
-```
-
 ## Configuration Commands
 
 ### View Current Configuration
 
 ```bash
-# View global configuration
-cat ~/.avangcli/config.json
-
 # View project configuration
 cat avangclirc.json
 ```
@@ -244,9 +173,6 @@ cat avangclirc.json
 ### Edit Configuration
 
 ```bash
-# Global
-code ~/.avangcli/config.json
-
 # Project
 code avangclirc.json
 ```
@@ -254,9 +180,6 @@ code avangclirc.json
 ### Reset Configuration
 
 ```bash
-# Global
-rm ~/.avangcli/config.json
-
 # Project
 rm avangclirc.json
 ```
@@ -526,15 +449,14 @@ services:
 
 ```bash
 # Verify JSON syntax
-cat ~/.avangcli/config.json | jq .
+cat avangclirc.json | jq .
 
 # Check permissions
-ls -la ~/.avangcli/config.json
+ls -la avangclirc.json
 
 # Recreate file
-rm ~/.avangcli/config.json
-mkdir -p ~/.avangcli
-echo '{}' > ~/.avangcli/config.json
+rm avangclirc.json
+avangcli config
 ```
 
 ### Configuration Conflicts
@@ -547,11 +469,9 @@ echo '{}' > ~/.avangcli/config.json
 # View precedence:
 # 1. CLI args
 # 2. avangclirc.json (project)
-# 3. ~/.avangcli/config.json (global)
 
-# Check both
+# Check project configuration
 cat avangclirc.json
-cat ~/.avangcli/config.json
 ```
 
 ## Additional Resources
