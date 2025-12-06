@@ -41,7 +41,7 @@
       "description": "Todo lo que necesitas para escalar tus aplicaciones full-stack desde el primer día, automatizado y estandarizado.",
       "generateTypes": {
         "title": "Genera Types y Servicios",
-        "description": "Genera al instante tipos y servicios de TypeScript desde tu backend FastAPI. Mantén tu código type-safe sin duplicación.",
+        "description": "Genera al instante tipos y servicios de TypeScript desde tu openapi.json. Mantén tu código type-safe sin duplicación.",
         "items": {
           "openapi": "Soporte OpenAPI",
           "speed": "Velocidad increíble con algoritmo propio",
@@ -117,7 +117,7 @@
     "cta": {
       "title": "¿Listo para crear tu",
       "titleHighlight": "próximo gran proyecto?",
-      "description": "Deja de configurar entornos y empieza a desarrollar. Dos comandos te separa de una arquitectura full-stack escalable con Next.js y FastAPI.",
+      "description": "Deja de configurar entornos y empieza a desarrollar. Un comando te separa de una arquitectura full-stack escalable con Next.js.",
       "startNow": "Empezar ahora",
       "openSource": "Open Source"
     },
