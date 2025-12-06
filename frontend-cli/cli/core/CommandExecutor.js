@@ -5,7 +5,7 @@ export class CommandExecutor {
     return new Promise((resolve, reject) => {
       const child = spawn(command, args, {
         stdio: "inherit",
-        shell: false,
+        shell: process.platform === "win32",
         ...options
       })
 
@@ -30,7 +30,7 @@ export class CommandExecutor {
 
       const child = spawn(command, args, {
         stdio: "inherit",
-        shell: false,
+        shell: process.platform === "win32",
         ...options
       })
 

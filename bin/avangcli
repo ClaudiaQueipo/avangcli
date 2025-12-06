@@ -115,13 +115,42 @@ yargs(hideBin(process.argv))
     }
   )
   .command(
-    "frontend",
-    "Launch frontend CLI",
+    "generate",
+    "Generate TypeScript clients from OpenAPI specifications",
     (yargs) => {
-      return yargs.help(false).version(false)
+      return yargs
+        .option("docs-dir", {
+          alias: "d",
+          describe: "Directory containing OpenAPI JSON files",
+          type: "string"
+        })
+        .option("output-dir", {
+          alias: "o",
+          describe: "Output directory for generated clients",
+          type: "string"
+        })
+        .help(false)
+        .version(false)
     },
     (_argv) => {
-      launchFrontendCli(process.argv.slice(3))
+      launchFrontendCli(process.argv.slice(2))
+    }
+  )
+  .command(
+    "ui-library [library]",
+    "Add a UI component library to your Next.js project",
+    (yargs) => {
+      return yargs
+        .positional("library", {
+          describe: "UI library to install (mui, shadcn, heroui)",
+          type: "string",
+          choices: ["mui", "shadcn", "heroui"]
+        })
+        .help(false)
+        .version(false)
+    },
+    (_argv) => {
+      launchFrontendCli(process.argv.slice(2))
     }
   )
   .demandCommand(1, "You need to specify a command")
