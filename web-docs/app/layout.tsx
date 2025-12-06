@@ -83,6 +83,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta name="google-site-verification" content={process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION} />
+      </head>
       <body className={`${nunito.variable} ${montserrat.variable} font-sans antialiased`}>
         {children}
         <Analytics />
