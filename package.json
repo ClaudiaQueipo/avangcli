@@ -1,6 +1,6 @@
 {
   "name": "avangcli",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Master CLI for scaffolding fullstack projects with Next.js",
   "type": "module",
   "bin": {
