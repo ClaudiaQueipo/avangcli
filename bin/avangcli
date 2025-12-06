@@ -40,7 +40,55 @@ yargs(hideBin(process.argv))
     "init [project-name]",
     "Initialize a new Next.js project",
     (yargs) => {
-      return yargs.help(false).version(false)
+      return yargs
+        .positional("project-name", {
+          describe: "Name of the project to create",
+          type: "string"
+        })
+        .option("package-manager", {
+          alias: "pm",
+          describe: "Package manager to use (npm, yarn, pnpm, bun)",
+          type: "string",
+          choices: ["npm", "yarn", "pnpm", "bun"]
+        })
+        .option("tailwind", {
+          alias: "t",
+          describe: "Use Tailwind CSS",
+          type: "boolean"
+        })
+        .option("linter-formatter", {
+          alias: "lf",
+          describe: "Linter and formatter setup",
+          type: "string",
+          choices: ["eslint-prettier", "biome", "none"]
+        })
+        .option("docker", {
+          alias: "d",
+          describe: "Docker configuration",
+          type: "string",
+          choices: ["dev", "prod", "both", "none"]
+        })
+        .option("ui-library", {
+          alias: "ui",
+          describe: "UI component library",
+          type: "string",
+          choices: ["mui", "shadcn", "heroui", "none"]
+        })
+        .option("git-setup", {
+          alias: "git",
+          describe: "Setup Git with Commitizen, Commitlint, Husky & Lint-staged",
+          type: "boolean"
+        })
+        .option("openapi-docs-dir", {
+          describe: "OpenAPI docs directory for generate command",
+          type: "string"
+        })
+        .option("openapi-output-dir", {
+          describe: "Output directory for generated TypeScript clients",
+          type: "string"
+        })
+        .help(false)
+        .version(false)
     },
     (_argv) => {
       launchFrontendCli(process.argv.slice(2))
