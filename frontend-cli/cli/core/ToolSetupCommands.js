@@ -189,12 +189,18 @@ export class MaterialUISetupCommand extends SetupCommand {
   }
 
   startSpinner() {
-    this.spinner.start("Installing Material UI dependencies...")
+    this.spinner.start("Installing Material UI and Vercel Speed Insights dependencies...")
   }
 
   async installDependencies() {
     const { cmd, args } = this.packageManagerStrategy.getInstallCommand()
-    const dependencies = ["@mui/material", "@mui/icons-material", "@emotion/react", "@emotion/styled"]
+    const dependencies = [
+      "@mui/material",
+      "@mui/icons-material",
+      "@emotion/react",
+      "@emotion/styled",
+      "@vercel/speed-insights"
+    ]
 
     this.spinner.stop()
 
@@ -226,12 +232,12 @@ export class ShadcnSetupCommand extends SetupCommand {
   }
 
   startSpinner() {
-    this.spinner.start("Installing shadcn/ui dependencies...")
+    this.spinner.start("Installing shadcn/ui and Vercel Speed Insights dependencies...")
   }
 
   async installDependencies() {
     const { cmd, args } = this.packageManagerStrategy.getInstallCommand()
-    const dependencies = ["class-variance-authority", "clsx", "tailwind-merge"]
+    const dependencies = ["class-variance-authority", "clsx", "tailwind-merge", "@vercel/speed-insights"]
 
     this.spinner.stop()
 
@@ -251,7 +257,8 @@ export class ShadcnSetupCommand extends SetupCommand {
 
     const templates = [
       { file: "components.json", target: "components.json" },
-      { file: "lib/utils.ts", target: "lib/utils.ts" }
+      { file: "lib/utils.ts", target: "lib/utils.ts" },
+      { file: "app/layout.tsx", target: "app/layout.tsx" }
     ]
 
     for (const { file, target } of templates) {
@@ -351,12 +358,12 @@ export class HeroUISetupCommand extends SetupCommand {
   }
 
   startSpinner() {
-    this.spinner.start("Installing HeroUI dependencies...")
+    this.spinner.start("Installing HeroUI and Vercel Speed Insights dependencies...")
   }
 
   async installDependencies() {
     const { cmd, args } = this.packageManagerStrategy.getInstallCommand()
-    const dependencies = ["@heroui/react", "framer-motion"]
+    const dependencies = ["@heroui/react", "framer-motion", "@vercel/speed-insights"]
 
     this.spinner.stop()
 
@@ -529,6 +536,44 @@ export class GitSetupCommand extends SetupCommand {
   }
 }
 
+export class SpeedInsightsSetupCommand extends SetupCommand {
+  constructor(packageManagerStrategy, projectPath, commandExecutor) {
+    super(packageManagerStrategy, projectPath)
+    this.commandExecutor = commandExecutor
+  }
+
+  startSpinner() {
+    this.spinner.start("Installing Vercel Speed Insights...")
+  }
+
+  async installDependencies() {
+    const { cmd, args } = this.packageManagerStrategy.getInstallCommand()
+    const dependencies = ["@vercel/speed-insights"]
+
+    this.spinner.stop()
+
+    await this.commandExecutor.execute(cmd, [...args, ...dependencies], {
+      cwd: this.projectPath
+    })
+  }
+
+  async copyTemplates() {
+    // NOTE: Speed Insights will be added to layout files by the UI library setup commands
+  }
+
+  logSuccess() {
+    log.success("✓ Vercel Speed Insights installed successfully!")
+    log.info("\nNext steps:")
+    log.info("  1. The Speed Insights component will be added to your layout")
+    log.info("  2. Build and deploy to see performance metrics on Vercel")
+    log.info("  3. Visit https://vercel.com/analytics to view your metrics")
+  }
+
+  logError() {
+    log.error("✗ Failed to setup Vercel Speed Insights")
+  }
+}
+
 export class SetupCommandFactory {
   static createEslintPrettierSetup(packageManagerStrategy, projectPath, commandExecutor) {
     return new EslintPrettierSetupCommand(packageManagerStrategy, projectPath, commandExecutor)
@@ -556,6 +601,10 @@ export class SetupCommandFactory {
 
   static createHeroUISetup(packageManagerStrategy, projectPath, commandExecutor) {
     return new HeroUISetupCommand(packageManagerStrategy, projectPath, commandExecutor)
+  }
+
+  static createSpeedInsightsSetup(packageManagerStrategy, projectPath, commandExecutor) {
+    return new SpeedInsightsSetupCommand(packageManagerStrategy, projectPath, commandExecutor)
   }
 
   static createGitSetup(packageManagerStrategy, projectPath, commandExecutor, linterFormatter) {
