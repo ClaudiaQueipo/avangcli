@@ -19,7 +19,7 @@ const nunito = Nunito({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://avangcli.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://avangcli.vercel.app"),
   title: {
     default: "AvangCLI - Modern CLI Tools for Fullstack Development",
     template: "%s | AvangCLI"
@@ -83,9 +83,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <meta name="google-site-verification" content={process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION} />
-      </head>
       <body className={`${nunito.variable} ${montserrat.variable} font-sans antialiased`}>
         {children}
         <Analytics />
