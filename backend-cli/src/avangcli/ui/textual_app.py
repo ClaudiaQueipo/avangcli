@@ -8,6 +8,7 @@ from textual.screen import Screen
 from textual.widgets import Button, Footer, Header, Label, Static
 
 from avangcli.models.project_config import ProjectConfig
+from avangcli.ui.messages import ASCII_ART
 from avangcli.ui.widgets.database_step import DatabaseStep
 from avangcli.ui.widgets.git_step import GitStep
 from avangcli.ui.widgets.linter_step import LinterStep
@@ -60,15 +61,16 @@ class SetupScreen(Screen):
         yield Header()
 
         with Container(id="main-container"):
-            # Title
+            # ASCII Art Banner
             yield Static(
-                "🚀 AvangCLI - FastAPI Project Setup",
-                classes="static-title",
-                id="header-title"
+                ASCII_ART,
+                classes="ascii-art",
+                id="ascii-banner"
             )
             yield Static(
-                "Configure your new FastAPI backend project",
-                classes="static-hint"
+                "FastAPI Backend Project Generator",
+                classes="static-subtitle",
+                id="subtitle"
             )
 
             # Step indicator

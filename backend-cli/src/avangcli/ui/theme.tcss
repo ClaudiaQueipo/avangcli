@@ -55,6 +55,26 @@ Screen {
     padding: 1 2;
 }
 
+/* ASCII Art Banner */
+#ascii-banner {
+    color: $primary;
+    text-align: center;
+    margin: 0 0 0 0;
+    text-style: bold;
+}
+
+.ascii-art {
+    color: $primary;
+    text-align: center;
+    text-style: bold;
+}
+
+#subtitle {
+    color: $text-secondary;
+    text-align: center;
+    margin: 0 0 1 0;
+}
+
 /* Step Indicator */
 .step-container {
     height: auto;

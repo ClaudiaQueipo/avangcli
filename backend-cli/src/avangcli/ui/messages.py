@@ -7,18 +7,24 @@ from rich.text import Text
 
 console = Console()
 
+# ASCII Art Logo
+ASCII_ART = """
+ █████╗ ██╗   ██╗ █████╗ ███╗   ██╗ ██████╗        ██████╗██╗     ██╗
+██╔══██╗██║   ██║██╔══██╗████╗  ██║██╔════╝       ██╔════╝██║     ██║
+███████║██║   ██║███████║██╔██╗ ██║██║  ███╗█████╗██║     ██║     ██║
+██╔══██║╚██╗ ██╔╝██╔══██║██║╚██╗██║██║   ██║╚════╝██║     ██║     ██║
+██║  ██║ ╚████╔╝ ██║  ██║██║ ╚████║╚██████╔╝      ╚██████╗███████╗██║
+╚═╝  ╚═╝  ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝        ╚═════╝╚══════╝╚═╝
+"""
+
 
 def print_banner() -> None:
-    """Print the AvangCLI welcome banner."""
-    banner = """
-    ╔═══════════════════════════════════════╗
-    ║                                       ║
-    ║         AvangCLI Backend              ║
-    ║    FastAPI Project Generator          ║
-    ║                                       ║
-    ╚═══════════════════════════════════════╝
-    """
-    console.print(banner, style="bold blue")
+    """Print the AvangCLI welcome banner with ASCII art."""
+    console.print(ASCII_ART, style="bold green")
+    console.print(
+        "    [dim]FastAPI Backend Project Generator[/dim]\n",
+        style="bold cyan"
+    )
 
 
 def print_success(message: str) -> None:
