@@ -325,3 +325,8 @@ DataTable > .datatable--cursor {
     background: $success;
     color: $background;
 }
+
+.finish-button {
+    background: $success;
+    color: $background;
+}

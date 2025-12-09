@@ -155,12 +155,14 @@ class SetupScreen(Screen):
         # Back button
         back_btn.disabled = self.current_step == 0
 
-        # Next button
+        # Next button - change label based on step (don't change ID)
         if self.current_step == len(self.steps) - 1:
             next_btn.label = "✓ Create Project"
-            next_btn.id = "btn-finish"
+            # Add a class to style it differently if needed
+            next_btn.add_class("finish-button")
         else:
             next_btn.label = "Next →"
+            next_btn.remove_class("finish-button")
 
     def finish_setup(self) -> None:
         """Finish setup and return configuration."""
