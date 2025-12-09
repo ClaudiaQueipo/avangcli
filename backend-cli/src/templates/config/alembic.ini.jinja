@@ -1,0 +1,69 @@
+[alembic]
+# path to migration scripts
+script_location = alembic
+
+# template used to generate migration files
+# file_template = %%(rev)s_%%(slug)s
+
+# timezone to use when rendering the date
+# within the migration file as well as the filename.
+# string value is passed to dateutil.tz.gettz()
+# leave blank for localtime
+# timezone =
+
+# max length of characters to apply to the
+# "slug" field
+# truncate_slug_length = 40
+
+# set to 'true' to run the environment file as a
+# standalone script, running it in the current process
+# instead of forking. this is useful for debugging
+# and for when the alembic scripts are to be run
+# as part of a larger application boot or migration
+# process.
+# standalone_mode = false
+
+# set to 'true' to run the migration scripts in a
+# standalone fashion, meaning the application is not
+# initialized. this is useful for running migrations
+# in a CI/CD environment or other headless environment.
+# offline_mode = false
+
+# set to 'true' to use colors in console output
+# console_output = true
+
+# Logging configuration
+[loggers]
+keys = root,sqlalchemy,alembic
+
+[handlers]
+keys = console
+
+[formatters]
+keys = generic
+
+[logger_root]
+level = WARN
+handlers = console
+qualname =
+
+[logger_sqlalchemy]
+level = WARN
+handlers =
+qualname = sqlalchemy.engine
+
+[logger_alembic]
+level = INFO
+handlers =
+qualname = alembic
+
+[handler_console]
+class = StreamHandler
+args = (sys.stderr,)
+level = NOTSET
+formatter = generic
+qualname =
+
+[formatter_generic]
+format = %(levelname)-5.5s [%(name)s] %(message)s
+datefmt = %H:%M:%S

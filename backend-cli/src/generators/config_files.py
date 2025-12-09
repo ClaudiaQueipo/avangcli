@@ -66,6 +66,10 @@ class ConfigFilesGenerator:
         if self.config.use_commitizen:
             self._generate_commitlint_config(context)
 
+        # Generate alembic.ini if using database
+        if self.config.use_database:
+            self._generate_alembic_ini(context)
+
     def _generate_pyproject(self, context: dict) -> None:
         """Generate pyproject.toml file."""
         content = self._render_template("pyproject.toml.jinja", context)
@@ -95,3 +99,8 @@ class ConfigFilesGenerator:
         """Generate avangclirc.json configuration file."""
         content = self._render_template("avangclirc.json.jinja", context)
         (self.project_dir / "avangclirc.json").write_text(content)
+
+    def _generate_alembic_ini(self, context: dict) -> None:
+        """Generate alembic.ini configuration file."""
+        content = self._render_template("alembic.ini.jinja", context)
+        (self.project_dir / "alembic.ini").write_text(content)
