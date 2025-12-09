@@ -36,9 +36,9 @@ class DatabaseStep(BaseStep):
         )
 
         with RadioSet(id="db-environments-radio"):
-            yield RadioButton("Development only", value="dev")
-            yield RadioButton("Production only", value="prod")
-            yield RadioButton("Both Development and Production", value="both")
+            yield RadioButton("Development only", id="radio-dev")
+            yield RadioButton("Production only", id="radio-prod")
+            yield RadioButton("Both Development and Production", id="radio-both")
 
         yield Static(
             "💡 Docker configuration will be generated for selected environments",
@@ -50,23 +50,23 @@ class DatabaseStep(BaseStep):
         self.update_environments_visibility()
 
         # Set default environment selection
-        radio_set = self.query_one("#db-environments-radio", RadioSet)
         db_envs = self.config_data.get("db_environments", [])
 
         # Determine which button to select
-        target_value = "both"  # Default
+        target_id = "radio-both"  # Default
         if "dev" in db_envs and "prod" in db_envs:
-            target_value = "both"
+            target_id = "radio-both"
         elif "dev" in db_envs:
-            target_value = "dev"
+            target_id = "radio-dev"
         elif "prod" in db_envs:
-            target_value = "prod"
+            target_id = "radio-prod"
 
         # Toggle the appropriate button
-        for button in radio_set.query(RadioButton):
-            if button.value == target_value:
-                button.toggle()
-                break
+        try:
+            button = self.query_one(f"#{target_id}", RadioButton)
+            button.toggle()
+        except Exception:
+            pass
 
     def on_checkbox_changed(self, event: Checkbox.Changed) -> None:
         """Handle database checkbox changes."""
@@ -95,10 +95,13 @@ class DatabaseStep(BaseStep):
             radio_set = self.query_one("#db-environments-radio", RadioSet)
             selected = radio_set.pressed_button
 
-            if selected:
-                if selected.value == "dev":
+            if selected and selected.id:
+                # Extract value from button ID (radio-dev -> dev, etc.)
+                button_id = selected.id.replace("radio-", "")
+
+                if button_id == "dev":
                     self.config_data["db_environments"] = ["dev"]
-                elif selected.value == "prod":
+                elif button_id == "prod":
                     self.config_data["db_environments"] = ["prod"]
                 else:  # both
                     self.config_data["db_environments"] = ["dev", "prod"]

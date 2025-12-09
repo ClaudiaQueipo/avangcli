@@ -23,8 +23,8 @@ class PackageManagerStep(BaseStep):
         )
 
         with RadioSet(id="package-manager-radio"):
-            yield RadioButton("UV (recommended - faster, modern)", value="uv")
-            yield RadioButton("Poetry (traditional, mature)", value="poetry")
+            yield RadioButton("UV (recommended - faster, modern)", id="radio-uv")
+            yield RadioButton("Poetry (traditional, mature)", id="radio-poetry")
 
         yield Static(
             "💡 UV is a modern, fast package manager built in Rust",
@@ -33,14 +33,20 @@ class PackageManagerStep(BaseStep):
 
     def on_mount(self) -> None:
         """Set default selection on mount."""
-        radio_set = self.query_one("#package-manager-radio", RadioSet)
         current = self.config_data.get("package_manager", "uv")
 
-        # Set pressed based on current value
-        for button in radio_set.query(RadioButton):
-            if button.value == current:
+        # Toggle the appropriate button based on current value
+        button_id = f"radio-{current}"
+        try:
+            button = self.query_one(f"#{button_id}", RadioButton)
+            button.toggle()
+        except Exception:
+            # Default to UV if button not found
+            try:
+                button = self.query_one("#radio-uv", RadioButton)
                 button.toggle()
-                break
+            except Exception:
+                pass
 
     def save_data(self) -> None:
         """Save package manager selection."""
@@ -48,4 +54,8 @@ class PackageManagerStep(BaseStep):
         selected = radio_set.pressed_button
 
         if selected:
-            self.config_data["package_manager"] = selected.value
+            # Extract value from button ID (radio-uv -> uv, radio-poetry -> poetry)
+            button_id = selected.id
+            if button_id:
+                value = button_id.replace("radio-", "")
+                self.config_data["package_manager"] = value
