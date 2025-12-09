@@ -1,0 +1,13 @@
+"""Dependency injection for {{ project_name }}."""
+
+from typing import Annotated
+
+from fastapi import Depends
+{% if use_database %}
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.infrastructure.database import get_db
+
+# Database dependency
+DBSession = Annotated[AsyncSession, Depends(get_db)]
+{% endif %}

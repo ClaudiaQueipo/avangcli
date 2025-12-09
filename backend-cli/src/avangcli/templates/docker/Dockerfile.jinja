@@ -1,0 +1,38 @@
+FROM python:{{ python_version }}-slim
+
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy dependency files
+COPY pyproject.toml {% if package_manager == "uv" %}uv.lock {% endif %}./
+
+# Install dependencies
+{% if package_manager == "uv" %}
+RUN pip install uv
+RUN uv sync --no-dev
+{% elif package_manager == "poetry" %}
+RUN pip install poetry
+RUN poetry config virtualenvs.create false
+RUN poetry install --no-dev --no-interaction --no-ansi
+{% endif %}
+
+# Copy application code
+COPY app/ ./app/
+{% if use_database %}
+COPY alembic/ ./alembic/
+COPY alembic.ini ./
+{% endif %}
+
+# Expose port
+EXPOSE 8000
+
+# Run the application
+{% if package_manager == "uv" %}
+CMD ["uv", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+{% elif package_manager == "poetry" %}
+CMD ["poetry", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+{% endif %}

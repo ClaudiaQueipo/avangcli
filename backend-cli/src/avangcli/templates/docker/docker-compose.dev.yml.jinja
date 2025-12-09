@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: {{ project_slug }}_db_dev
+    environment:
+      POSTGRES_USER: {{ project_slug }}_user
+      POSTGRES_PASSWORD: dev_password
+      POSTGRES_DB: {{ project_slug }}_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U {{ project_slug }}_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: {{ project_slug }}_api_dev
+    command: {% if package_manager == "uv" %}uv run {% elif package_manager == "poetry" %}poetry run {% endif %}uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      DATABASE_URL: postgresql://{{ project_slug }}_user:dev_password@db:5432/{{ project_slug }}_db
+      RELOAD: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data_dev:

@@ -1,0 +1,173 @@
+# {{ project_name }}
+
+FastAPI backend project generated with AvangCLI.
+
+## Getting Started
+
+### Prerequisites
+
+- Python {{ python_version }}+
+{% if package_manager == "uv" %}
+- UV package manager
+{% elif package_manager == "poetry" %}
+- Poetry package manager
+{% endif %}
+{% if use_docker %}
+- Docker and Docker Compose
+{% endif %}
+
+### Installation
+
+1. Clone the repository (if using git):
+```bash
+git clone <your-repository-url>
+cd {{ project_slug }}
+```
+
+2. Install dependencies:
+```bash
+{% if package_manager == "uv" %}
+uv sync
+{% elif package_manager == "poetry" %}
+poetry install
+{% endif %}
+```
+
+3. Set up environment variables:
+```bash
+cp .env.example .env
+# Edit .env with your configuration
+```
+{% if use_database %}
+
+4. Set up the database:
+```bash
+{% if use_docker and has_dev_env %}
+# Start database with Docker
+docker-compose -f docker-compose.dev.yml up -d
+
+{% endif %}
+# Run migrations
+{% if package_manager == "uv" %}
+uv run alembic upgrade head
+{% elif package_manager == "poetry" %}
+poetry run alembic upgrade head
+{% endif %}
+```
+{% endif %}
+
+### Running the Application
+
+{% if use_makefile %}
+Using Makefile:
+```bash
+make dev
+```
+
+Or manually:
+{% endif %}
+```bash
+{% if package_manager == "uv" %}
+uv run uvicorn app.main:app --reload
+{% elif package_manager == "poetry" %}
+poetry run uvicorn app.main:app --reload
+{% endif %}
+```
+
+The API will be available at http://localhost:8000
+
+### API Documentation
+
+- Swagger UI: http://localhost:8000/docs
+- ReDoc: http://localhost:8000/redoc
+
+### Running Tests
+
+```bash
+{% if use_makefile %}
+make test
+{% else %}
+{% if package_manager == "uv" %}
+uv run pytest
+{% elif package_manager == "poetry" %}
+poetry run pytest
+{% endif %}
+{% endif %}
+```
+{% if has_ruff or has_black %}
+
+### Code Quality
+
+{% if has_ruff %}
+Linting with Ruff:
+```bash
+{% if use_makefile %}
+make lint
+{% else %}
+{% if package_manager == "uv" %}
+uv run ruff check .
+{% elif package_manager == "poetry" %}
+poetry run ruff check .
+{% endif %}
+{% endif %}
+```
+
+Formatting with Ruff:
+```bash
+{% if use_makefile %}
+make format
+{% else %}
+{% if package_manager == "uv" %}
+uv run ruff format .
+{% elif package_manager == "poetry" %}
+poetry run ruff format .
+{% endif %}
+{% endif %}
+```
+{% endif %}
+{% if has_black %}
+
+Formatting with Black:
+```bash
+{% if use_makefile %}
+make format
+{% else %}
+{% if package_manager == "uv" %}
+uv run black .
+{% elif package_manager == "poetry" %}
+poetry run black .
+{% endif %}
+{% endif %}
+```
+{% endif %}
+{% endif %}
+
+## Project Structure
+
+```
+{{ project_slug }}/
+├── app/
+│   ├── __init__.py
+│   ├── main.py              # Application entry point
+│   ├── core/                # Core configuration
+│   │   ├── config.py
+│   │   └── dependencies.py
+│   ├── api/                 # API routes
+│   │   └── routes/
+│   │       └── health.py
+│   ├── domain/              # Business logic{% if use_database %}
+│   └── infrastructure/      # External services
+│       └── database.py
+{% endif %}
+├── tests/                   # Test files
+{% if use_database %}
+├── alembic/                 # Database migrations
+{% endif %}
+├── .env.example             # Environment variables template
+├── pyproject.toml           # Project configuration
+└── README.md
+```
+
+## License
+
+This project is licensed under the MIT License.

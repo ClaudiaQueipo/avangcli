@@ -1,0 +1,35 @@
+"""Health check endpoints for {{ project_name }}."""
+
+from fastapi import APIRouter{% if use_database %}, status{% endif %}
+{% if use_database %}
+from app.core.dependencies import DBSession
+from sqlalchemy import text
+{% endif %}
+
+router = APIRouter()
+
+
+@router.get("/health")
+async def health_check({% if use_database %}db: DBSession{% endif %}):
+    """
+    Health check endpoint.
+
+    Returns the health status of the application{% if use_database %} and database connection{% endif %}.
+    """
+    health_status = {
+        "status": "healthy",
+        "service": "{{ project_name }}",
+    }
+{% if use_database %}
+
+    # Check database connection
+    try:
+        await db.execute(text("SELECT 1"))
+        health_status["database"] = "connected"
+    except Exception as e:
+        health_status["status"] = "unhealthy"
+        health_status["database"] = f"error: {str(e)}"
+        return health_status
+{% endif %}
+
+    return health_status

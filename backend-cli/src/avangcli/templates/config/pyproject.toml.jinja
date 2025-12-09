@@ -1,0 +1,91 @@
+[project]
+name = "{{ project_slug }}"
+version = "0.1.0"
+description = "{{ project_name }} - FastAPI Backend"
+requires-python = ">={{ python_version }}"
+dependencies = [
+    "fastapi>=0.104.0",
+    "uvicorn[standard]>=0.24.0",
+    "pydantic>=2.4.0",
+    "pydantic-settings>=2.0.0",
+{% if use_database %}
+    "sqlalchemy>=2.0.0",
+    "alembic>=1.12.0",
+    "asyncpg>=0.29.0",
+{% endif %}
+]
+
+{% if package_manager == "uv" %}
+[tool.uv]
+dev-dependencies = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+    "httpx>=0.25.0",
+{% if has_ruff %}
+    "ruff>=0.1.0",
+{% endif %}
+{% if has_black %}
+    "black>=23.10.0",
+{% endif %}
+{% if has_flake8 %}
+    "flake8>=6.0.0",
+{% endif %}
+]
+{% endif %}
+
+{% if package_manager == "poetry" %}
+[tool.poetry]
+name = "{{ project_slug }}"
+version = "0.1.0"
+description = "{{ project_name }} - FastAPI Backend"
+authors = ["Your Name <your.email@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^{{ python_version }}"
+fastapi = "^0.104.0"
+uvicorn = {extras = ["standard"], version = "^0.24.0"}
+pydantic = "^2.4.0"
+pydantic-settings = "^2.0.0"
+{% if use_database %}
+sqlalchemy = "^2.0.0"
+alembic = "^1.12.0"
+asyncpg = "^0.29.0"
+{% endif %}
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+pytest-asyncio = "^0.21.0"
+httpx = "^0.25.0"
+{% if has_ruff %}
+ruff = "^0.1.0"
+{% endif %}
+{% if has_black %}
+black = "^23.10.0"
+{% endif %}
+{% if has_flake8 %}
+flake8 = "^6.0.0"
+{% endif %}
+{% endif %}
+
+{% if has_ruff %}
+[tool.ruff]
+line-length = 100
+target-version = "py{{ python_version.replace('.', '') }}"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+ignore = []
+{% endif %}
+
+{% if has_black %}
+[tool.black]
+line-length = 100
+target-version = ['py{{ python_version.replace('.', '') }}']
+{% endif %}
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+asyncio_mode = "auto"

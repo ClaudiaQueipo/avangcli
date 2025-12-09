@@ -1,0 +1,122 @@
+.PHONY: install dev test lint format clean{% if use_database %} db-migrate db-revision db-upgrade db-downgrade{% endif %}
+
+install:
+	@echo "Installing dependencies..."
+{% if package_manager == "uv" %}
+	uv sync
+{% elif package_manager == "poetry" %}
+	poetry install
+{% endif %}
+
+dev:
+{% if use_database and has_dev_env %}
+	@echo "Starting development environment..."
+	docker-compose -f docker-compose.dev.yml up -d
+	@echo "Waiting for database..."
+	@sleep 3
+{% endif %}
+	@echo "Starting development server..."
+{% if package_manager == "uv" %}
+	uv run uvicorn app.main:app --reload
+{% elif package_manager == "poetry" %}
+	poetry run uvicorn app.main:app --reload
+{% endif %}
+
+test:
+	@echo "Running tests..."
+{% if package_manager == "uv" %}
+	uv run pytest
+{% elif package_manager == "poetry" %}
+	poetry run pytest
+{% endif %}
+
+{% if has_ruff %}
+lint:
+	@echo "Linting code..."
+{% if package_manager == "uv" %}
+	uv run ruff check .
+{% elif package_manager == "poetry" %}
+	poetry run ruff check .
+{% endif %}
+
+format:
+	@echo "Formatting code..."
+{% if package_manager == "uv" %}
+	uv run ruff format .
+{% elif package_manager == "poetry" %}
+	poetry run ruff format .
+{% endif %}
+{% elif has_black %}
+format:
+	@echo "Formatting code..."
+{% if package_manager == "uv" %}
+	uv run black .
+{% elif package_manager == "poetry" %}
+	poetry run black .
+{% endif %}
+{% endif %}
+
+{% if has_flake8 and not has_ruff %}
+lint:
+	@echo "Linting code..."
+{% if package_manager == "uv" %}
+	uv run flake8 .
+{% elif package_manager == "poetry" %}
+	poetry run flake8 .
+{% endif %}
+{% endif %}
+
+{% if use_database %}
+db-migrate:
+	@echo "Creating new migration..."
+{% if package_manager == "uv" %}
+	uv run alembic revision --autogenerate -m "$(msg)"
+{% elif package_manager == "poetry" %}
+	poetry run alembic revision --autogenerate -m "$(msg)"
+{% endif %}
+
+db-upgrade:
+	@echo "Running migrations..."
+{% if package_manager == "uv" %}
+	uv run alembic upgrade head
+{% elif package_manager == "poetry" %}
+	poetry run alembic upgrade head
+{% endif %}
+
+db-downgrade:
+	@echo "Rolling back migration..."
+{% if package_manager == "uv" %}
+	uv run alembic downgrade -1
+{% elif package_manager == "poetry" %}
+	poetry run alembic downgrade -1
+{% endif %}
+{% endif %}
+
+clean:
+	@echo "Cleaning up..."
+	find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
+	find . -type f -name "*.pyc" -delete
+	find . -type d -name "*.egg-info" -exec rm -rf {} + 2>/dev/null || true
+	find . -type d -name ".pytest_cache" -exec rm -rf {} + 2>/dev/null || true
+	find . -type d -name ".ruff_cache" -exec rm -rf {} + 2>/dev/null || true
+{% if use_database and has_dev_env %}
+	docker-compose -f docker-compose.dev.yml down -v
+{% endif %}
+
+help:
+	@echo "Available commands:"
+	@echo "  make install    - Install dependencies"
+	@echo "  make dev        - Start development server"
+	@echo "  make test       - Run tests"
+{% if has_ruff or has_flake8 %}
+	@echo "  make lint       - Lint code"
+{% endif %}
+{% if has_ruff or has_black %}
+	@echo "  make format     - Format code"
+{% endif %}
+{% if use_database %}
+	@echo "  make db-migrate msg='message' - Create new migration"
+	@echo "  make db-upgrade - Run migrations"
+	@echo "  make db-downgrade - Rollback last migration"
+{% endif %}
+	@echo "  make clean      - Clean up cache and temp files"
