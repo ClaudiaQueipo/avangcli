@@ -75,25 +75,32 @@ Entregables:
 
 Dependencias:
 Ninguna (fase inicial)
-FASE 2: Sistema de Validaciones y Utilidades Core
+
+FASE 2: Sistema de Validaciones y Utilidades Core ✅ COMPLETADA
 Prioridad: Alta
-Duración estimada: 1 día Tareas:
- Implementar validador de dependencias del sistema en validators.py
-Verificar si Poetry está instalado (poetry --version)
-Verificar si UV está instalado (uv --version)
-Verificar si Docker está instalado y corriendo (docker --version, docker ps)
-Verificar si Git está instalado (git --version)
- Crear excepciones personalizadas en exceptions.py
-DependencyNotFoundError
-InvalidProjectNameError
-ProjectAlreadyExistsError
- Implementar modelo ProjectConfig en models/project_config.py usando Pydantic
-Atributos: name, package_manager, use_database, db_environments, linter_formatter, use_git, use_makefile
- Crear utilidades de validación de nombres de proyecto (formato válido Python)
+Duración estimada: 1 día
+Commit: 7340486 - feat(backend-cli): implement validation system and core models
+
+Tareas:
+✅ Implementar validador de dependencias del sistema en validators.py
+  ✅ Verificar si Poetry está instalado (poetry --version)
+  ✅ Verificar si UV está instalado (uv --version)
+  ✅ Verificar si Docker está instalado y corriendo (docker --version, docker ps)
+  ✅ Verificar si Git está instalado (git --version)
+✅ Crear excepciones personalizadas en exceptions.py
+  ✅ DependencyNotFoundError
+  ✅ InvalidProjectNameError
+  ✅ ProjectAlreadyExistsError
+✅ Implementar modelo ProjectConfig en models/project_config.py usando Pydantic
+  ✅ Atributos: name, package_manager, use_database, db_environments, linters, use_git, use_makefile
+✅ Crear utilidades de validación de nombres de proyecto (formato válido Python)
+
 Entregables:
-Sistema de validaciones robusto
-Modelo de configuración del proyecto
-Excepciones tipadas y documentadas
+✅ Sistema de validaciones robusto (DependencyValidator + ProjectValidator)
+✅ Modelo de configuración del proyecto (ProjectConfig con Pydantic)
+✅ Excepciones tipadas y documentadas
+✅ Archivo de configuración global (config.py)
+
 Dependencias:
 FASE 1 completada
 FASE 3: Sistema de UI Interactiva
