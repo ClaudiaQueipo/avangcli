@@ -37,9 +37,9 @@ class PackageManagerStep(BaseStep):
         current = self.config_data.get("package_manager", "uv")
 
         # Set pressed based on current value
-        for idx, button in enumerate(radio_set.query(RadioButton)):
+        for button in radio_set.query(RadioButton):
             if button.value == current:
-                radio_set.pressed_index = idx
+                button.toggle()
                 break
 
     def save_data(self) -> None:

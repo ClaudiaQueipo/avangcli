@@ -53,14 +53,20 @@ class DatabaseStep(BaseStep):
         radio_set = self.query_one("#db-environments-radio", RadioSet)
         db_envs = self.config_data.get("db_environments", [])
 
+        # Determine which button to select
+        target_value = "both"  # Default
         if "dev" in db_envs and "prod" in db_envs:
-            radio_set.pressed_index = 2
+            target_value = "both"
         elif "dev" in db_envs:
-            radio_set.pressed_index = 0
+            target_value = "dev"
         elif "prod" in db_envs:
-            radio_set.pressed_index = 1
-        else:
-            radio_set.pressed_index = 2  # Default to both
+            target_value = "prod"
+
+        # Toggle the appropriate button
+        for button in radio_set.query(RadioButton):
+            if button.value == target_value:
+                button.toggle()
+                break
 
     def on_checkbox_changed(self, event: Checkbox.Changed) -> None:
         """Handle database checkbox changes."""
