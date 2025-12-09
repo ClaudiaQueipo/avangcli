@@ -1,0 +1,327 @@
+/* AvangCLI Textual Theme - Green Color Palette */
+
+/* Color Palette */
+$primary: #00ff87;           /* Bright green - primary actions */
+$primary-dark: #00d97a;      /* Dark green - hover states */
+$secondary: #10b981;         /* Emerald green - secondary elements */
+$accent: #34d399;            /* Light emerald - accents */
+$success: #22c55e;           /* Green - success states */
+$warning: #fbbf24;           /* Amber - warnings */
+$error: #ef4444;             /* Red - errors */
+$surface: #1e293b;           /* Dark slate - surfaces */
+$surface-light: #334155;     /* Lighter slate - elevated surfaces */
+$background: #0f172a;        /* Very dark blue - background */
+$text-primary: #f1f5f9;      /* Light gray - primary text */
+$text-secondary: #94a3b8;    /* Medium gray - secondary text */
+$border: #475569;            /* Slate - borders */
+
+/* Screen Styles */
+Screen {
+    background: $background;
+}
+
+/* Header */
+#header {
+    dock: top;
+    height: 3;
+    background: $surface;
+    border: tall $primary;
+    content-align: center middle;
+}
+
+#header-title {
+    color: $primary;
+    text-style: bold;
+}
+
+/* Footer */
+#footer {
+    dock: bottom;
+    height: 3;
+    background: $surface;
+    border: tall $border;
+    content-align: center middle;
+}
+
+#footer-hint {
+    color: $text-secondary;
+}
+
+/* Main Container */
+#main-container {
+    width: 100%;
+    height: 100%;
+    layout: vertical;
+    padding: 1 2;
+}
+
+/* Step Indicator */
+.step-container {
+    height: auto;
+    margin: 1 0;
+    padding: 1 2;
+    background: $surface;
+    border: round $primary;
+}
+
+.step-title {
+    color: $primary;
+    text-style: bold;
+}
+
+.step-description {
+    color: $text-secondary;
+    margin: 1 0 0 0;
+}
+
+/* Input Widgets */
+Input {
+    border: tall $border;
+    background: $surface-light;
+    color: $text-primary;
+    margin: 1 0;
+}
+
+Input:focus {
+    border: tall $primary;
+}
+
+Input.-valid {
+    border: tall $success;
+}
+
+Input.-invalid {
+    border: tall $error;
+}
+
+/* Buttons */
+Button {
+    background: $secondary;
+    color: $text-primary;
+    border: none;
+    margin: 0 1;
+    min-width: 16;
+    text-style: bold;
+}
+
+Button:hover {
+    background: $primary-dark;
+    color: $background;
+}
+
+Button:focus {
+    background: $primary;
+    color: $background;
+}
+
+Button.-primary {
+    background: $primary;
+    color: $background;
+}
+
+Button.-primary:hover {
+    background: $primary-dark;
+}
+
+/* Checkbox */
+Checkbox {
+    background: transparent;
+    color: $text-primary;
+    margin: 1 0;
+}
+
+Checkbox:focus {
+    color: $primary;
+}
+
+Checkbox > .toggle--label {
+    color: $text-primary;
+}
+
+Checkbox.-on > .toggle--button {
+    color: $primary;
+}
+
+/* RadioSet */
+RadioSet {
+    background: transparent;
+    padding: 1;
+    border: round $border;
+}
+
+RadioSet:focus-within {
+    border: round $primary;
+}
+
+RadioButton {
+    background: transparent;
+    color: $text-primary;
+    margin: 1 0;
+}
+
+RadioButton:focus {
+    color: $primary;
+}
+
+RadioButton.-on {
+    color: $primary;
+}
+
+RadioButton > .toggle--label {
+    color: $text-primary;
+}
+
+RadioButton.-on > .toggle--label {
+    color: $primary;
+    text-style: bold;
+}
+
+/* Select/Option List */
+OptionList {
+    background: $surface-light;
+    border: tall $border;
+    padding: 1;
+}
+
+OptionList:focus {
+    border: tall $primary;
+}
+
+OptionList > .option-list--option {
+    color: $text-primary;
+    background: transparent;
+    padding: 0 1;
+}
+
+OptionList > .option-list--option-highlighted {
+    background: $secondary;
+    color: $background;
+    text-style: bold;
+}
+
+/* Labels */
+Label {
+    color: $text-primary;
+}
+
+.label-success {
+    color: $success;
+}
+
+.label-warning {
+    color: $warning;
+}
+
+.label-error {
+    color: $error;
+}
+
+.label-primary {
+    color: $primary;
+}
+
+.label-secondary {
+    color: $text-secondary;
+}
+
+/* Static Text */
+Static {
+    color: $text-primary;
+}
+
+.static-title {
+    color: $primary;
+    text-style: bold;
+}
+
+.static-subtitle {
+    color: $accent;
+}
+
+.static-hint {
+    color: $text-secondary;
+}
+
+/* Containers */
+Container {
+    background: transparent;
+}
+
+.card {
+    background: $surface;
+    border: round $border;
+    padding: 1 2;
+    margin: 1 0;
+}
+
+.card-highlight {
+    background: $surface-light;
+    border: round $primary;
+    padding: 1 2;
+    margin: 1 0;
+}
+
+/* Progress/Loading */
+LoadingIndicator {
+    color: $primary;
+}
+
+.loading-text {
+    color: $text-secondary;
+}
+
+/* Summary Table */
+DataTable {
+    background: $surface;
+    border: round $border;
+}
+
+DataTable > .datatable--header {
+    background: $surface-light;
+    color: $primary;
+    text-style: bold;
+}
+
+DataTable > .datatable--cursor {
+    background: $secondary;
+    color: $background;
+}
+
+/* Validation Messages */
+.validation-success {
+    color: $success;
+    text-style: bold;
+}
+
+.validation-error {
+    color: $error;
+    text-style: bold;
+}
+
+.validation-warning {
+    color: $warning;
+    text-style: bold;
+}
+
+/* Navigation Buttons */
+#nav-buttons {
+    dock: bottom;
+    height: 3;
+    layout: horizontal;
+    align: center middle;
+    margin: 1 0;
+}
+
+#btn-back {
+    background: $surface-light;
+}
+
+#btn-next {
+    background: $primary;
+    color: $background;
+}
+
+#btn-finish {
+    background: $success;
+    color: $background;
+}

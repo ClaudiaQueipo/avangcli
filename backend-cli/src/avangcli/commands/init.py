@@ -1,5 +1,6 @@
 """Init command for creating new FastAPI projects."""
 
+import os
 import subprocess
 from pathlib import Path
 
@@ -29,6 +30,13 @@ def main(
     project_name: Annotated[
         str, typer.Argument(help="Name of the project to create")
     ] = None,
+    classic_ui: Annotated[
+        bool,
+        typer.Option(
+            "--classic",
+            help="Use classic prompt-based UI instead of interactive TUI"
+        )
+    ] = False,
 ) -> None:
     """
     Initialize a new FastAPI backend project.
@@ -37,17 +45,31 @@ def main(
     a new FastAPI project with your preferred configuration.
     """
     try:
-        # Run interactive setup
-        prompt = ProjectSetupPrompt()
-        config = prompt.run_interactive_setup(project_name=project_name)
+        # Determine which UI to use
+        use_textual = not classic_ui and _should_use_textual()
 
-        # Show configuration summary
-        print_config_summary(config.model_dump_template_context())
+        if use_textual:
+            # Use Textual TUI
+            from avangcli.ui.textual_app import AvangCLIApp
 
-        # Confirm before generating
-        if not confirm_action("Continue with project generation?", default=True):
-            console.print("\n[yellow]Project generation cancelled.[/yellow]")
-            raise typer.Exit(0)
+            app = AvangCLIApp(initial_name=project_name)
+            config = app.run_setup()
+
+            if config is None:
+                console.print("\n[yellow]Project generation cancelled.[/yellow]")
+                raise typer.Exit(0)
+        else:
+            # Use classic Rich prompts
+            prompt = ProjectSetupPrompt()
+            config = prompt.run_interactive_setup(project_name=project_name)
+
+            # Show configuration summary
+            print_config_summary(config.model_dump_template_context())
+
+            # Confirm before generating
+            if not confirm_action("Continue with project generation?", default=True):
+                console.print("\n[yellow]Project generation cancelled.[/yellow]")
+                raise typer.Exit(0)
 
         # Validate project path
         output_dir = Path.cwd()
@@ -171,3 +193,27 @@ def _post_generation(config, project_path: Path) -> None:
             f"[yellow]⚠ {config.package_manager.value} not found[/yellow]"
         )
         console.print("[dim]Install dependencies manually when ready[/dim]")
+
+
+def _should_use_textual() -> bool:
+    """
+    Determine if Textual TUI should be used.
+
+    Returns:
+        True if TUI is supported, False otherwise
+    """
+    # Check if terminal supports TUI
+    # Skip TUI in CI/CD environments or non-interactive terminals
+    if not os.isatty(0):
+        return False
+
+    # Check for explicit environment variable to disable TUI
+    if os.environ.get("AVANGCLI_CLASSIC_UI", "").lower() in ("1", "true", "yes"):
+        return False
+
+    # Check if we're in a minimal terminal (like CI)
+    term = os.environ.get("TERM", "")
+    if term in ("dumb", "unknown"):
+        return False
+
+    return True
