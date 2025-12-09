@@ -47,6 +47,9 @@ class ConfigFilesGenerator:
         """Generate all configuration files."""
         context = self.config.model_dump_template_context()
 
+        # Generate avangclirc.json (project configuration file)
+        self._generate_avangclirc(context)
+
         # Generate pyproject.toml
         self._generate_pyproject(context)
 
@@ -87,3 +90,8 @@ class ConfigFilesGenerator:
         """Generate commitlint configuration file."""
         content = self._render_template("commitlint.config.js.jinja", context)
         (self.project_dir / "commitlint.config.js").write_text(content)
+
+    def _generate_avangclirc(self, context: dict) -> None:
+        """Generate avangclirc.json configuration file."""
+        content = self._render_template("avangclirc.json.jinja", context)
+        (self.project_dir / "avangclirc.json").write_text(content)

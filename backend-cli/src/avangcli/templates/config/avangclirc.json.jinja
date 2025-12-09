@@ -1,0 +1,55 @@
+{
+  "$schema": "https://avangcli.com/schemas/avangclirc.json",
+  "version": "1.0.0",
+  "project": {
+    "name": "{{ project_name }}",
+    "slug": "{{ project_slug }}",
+    "type": "fastapi-backend",
+    "pythonVersion": "{{ python_version }}"
+  },
+  "packageManager": "{{ package_manager }}",
+  "features": {
+    "database": {{ use_database|lower }},
+    "docker": {{ use_docker|lower }},
+    "git": {{ use_git|lower }},
+    "commitizen": {{ use_commitizen|lower }},
+    "makefile": {{ use_makefile|lower }}
+  },
+  "database": {
+    "enabled": {{ use_database|lower }},
+{% if use_database %}
+    "type": "postgresql",
+    "environments": {{ db_environments|tojson }}
+{% else %}
+    "type": null,
+    "environments": []
+{% endif %}
+  },
+  "linting": {
+    "tools": {{ linters|tojson }},
+    "hasRuff": {{ has_ruff|lower }},
+    "hasBlack": {{ has_black|lower }},
+    "hasFlake8": {{ has_flake8|lower }}
+  },
+  "docker": {
+    "enabled": {{ use_docker|lower }},
+{% if use_docker %}
+    "hasDev": {{ has_dev_env|lower }},
+    "hasProd": {{ has_prod_env|lower }}
+{% else %}
+    "hasDev": false,
+    "hasProd": false
+{% endif %}
+  },
+  "structure": {
+    "architecture": "screaming",
+    "hasTests": true,
+    "hasAPI": true,
+    "hasDomain": true,
+{% if use_database %}
+    "hasInfrastructure": true
+{% else %}
+    "hasInfrastructure": false
+{% endif %}
+  }
+}
