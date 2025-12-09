@@ -5,7 +5,7 @@ import re
 import subprocess
 from pathlib import Path
 
-from avangcli.core.exceptions import (
+from ..core.exceptions import (
     DependencyNotFoundError,
     InvalidProjectNameError,
     ProjectAlreadyExistsError,

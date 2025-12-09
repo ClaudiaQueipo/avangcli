@@ -3,39 +3,34 @@
 import os
 import subprocess
 from pathlib import Path
+from typing import Annotated
 
 import typer
 from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, TextColumn
-from typing_extensions import Annotated
 
-from avangcli.core.validators import ProjectValidator
-from avangcli.generators.config_files import ConfigFilesGenerator
-from avangcli.generators.docker import DockerGenerator
-from avangcli.generators.makefile import MakefileGenerator
-from avangcli.generators.project import ProjectGenerator
-from avangcli.ui.messages import (
+from ..core.validators import ProjectValidator
+from ..generators.config_files import ConfigFilesGenerator
+from ..generators.docker import DockerGenerator
+from ..generators.makefile import MakefileGenerator
+from ..generators.project import ProjectGenerator
+from ..ui.messages import (
     confirm_action,
     print_config_summary,
     print_error,
     print_next_steps,
     print_success,
 )
-from avangcli.ui.prompts import ProjectSetupPrompt
+from ..ui.prompts import ProjectSetupPrompt
 
 console = Console()
 
 
 def main(
-    project_name: Annotated[
-        str, typer.Argument(help="Name of the project to create")
-    ] = None,
+    project_name: Annotated[str, typer.Argument(help="Name of the project to create")] = None,
     classic_ui: Annotated[
         bool,
-        typer.Option(
-            "--classic",
-            help="Use classic prompt-based UI instead of interactive TUI"
-        )
+        typer.Option("--classic", help="Use classic prompt-based UI instead of interactive TUI"),
     ] = False,
 ) -> None:
     """
@@ -50,7 +45,7 @@ def main(
 
         if use_textual:
             # Use Textual TUI
-            from avangcli.ui.textual_app import AvangCLIApp
+            from ..ui.textual_app import AvangCLIApp
 
             app = AvangCLIApp(initial_name=project_name)
             config = app.run_setup()
@@ -189,9 +184,7 @@ def _post_generation(config, project_path: Path) -> None:
         console.print(f"[yellow]⚠ Failed to install dependencies: {e}[/yellow]")
         console.print("[dim]You can install them manually later[/dim]")
     except FileNotFoundError:
-        console.print(
-            f"[yellow]⚠ {config.package_manager.value} not found[/yellow]"
-        )
+        console.print(f"[yellow]⚠ {config.package_manager.value} not found[/yellow]")
         console.print("[dim]Install dependencies manually when ready[/dim]")
 
 
@@ -202,16 +195,12 @@ def _should_use_textual() -> bool:
     Returns:
         True if TUI is supported, False otherwise
     """
-    # Check if terminal supports TUI
-    # Skip TUI in CI/CD environments or non-interactive terminals
     if not os.isatty(0):
         return False
 
-    # Check for explicit environment variable to disable TUI
     if os.environ.get("AVANGCLI_CLASSIC_UI", "").lower() in ("1", "true", "yes"):
         return False
 
-    # Check if we're in a minimal terminal (like CI)
     term = os.environ.get("TERM", "")
     if term in ("dumb", "unknown"):
         return False

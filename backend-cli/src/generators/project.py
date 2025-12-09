@@ -5,8 +5,8 @@ from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, Template
 
-from avangcli.core.config import TEMPLATES_DIR
-from avangcli.models.project_config import ProjectConfig
+from ..core.config import TEMPLATES_DIR
+from ..models.project_config import ProjectConfig
 
 
 class ProjectGenerator:

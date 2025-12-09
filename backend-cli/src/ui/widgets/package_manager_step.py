@@ -3,7 +3,8 @@
 from textual.app import ComposeResult
 from textual.widgets import RadioButton, RadioSet, Static
 
-from avangcli.ui.widgets.base_step import BaseStep
+from .base_step import BaseStep
+from .database_step import NavigableRadioSet
 
 
 class PackageManagerStep(BaseStep):
@@ -13,23 +14,14 @@ class PackageManagerStep(BaseStep):
 
     def compose(self) -> ComposeResult:
         """Compose widgets."""
-        yield Static(
-            "📦 Package Manager",
-            classes="step-title"
-        )
-        yield Static(
-            "Choose your preferred Python package manager",
-            classes="step-description"
-        )
+        yield Static("📦 Package Manager", classes="step-title")
+        yield Static("Choose your preferred Python package manager", classes="step-description")
 
-        with RadioSet(id="package-manager-radio"):
+        with NavigableRadioSet(id="package-manager-radio"):
             yield RadioButton("UV (recommended - faster, modern)", id="radio-uv")
             yield RadioButton("Poetry (traditional, mature)", id="radio-poetry")
 
-        yield Static(
-            "💡 UV is a modern, fast package manager built in Rust",
-            classes="static-hint"
-        )
+        yield Static("💡 UV is a modern, fast package manager built in Rust", classes="static-hint")
 
     def on_mount(self) -> None:
         """Set default selection on mount."""

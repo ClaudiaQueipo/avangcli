@@ -4,8 +4,8 @@ from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
 
-from avangcli.core.config import CONFIG_TEMPLATES_DIR
-from avangcli.models.project_config import ProjectConfig
+from ..core.config import CONFIG_TEMPLATES_DIR
+from ..models.project_config import ProjectConfig
 
 
 class ConfigFilesGenerator:

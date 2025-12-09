@@ -1,19 +1,19 @@
 /* AvangCLI Textual Theme - Green Color Palette */
 
 /* Color Palette */
-$primary: #00ff87;           /* Bright green - primary actions */
-$primary-dark: #00d97a;      /* Dark green - hover states */
-$secondary: #10b981;         /* Emerald green - secondary elements */
-$accent: #34d399;            /* Light emerald - accents */
+$primary: #adf042;           /* Green-yellow - primary actions */
+$primary-dark: #85bf4f;      /* Mantis - hover states */
+$secondary: #5d8e44;         /* Hippie-green - secondary elements */
+$accent: #c0f867;            /* Sulu - accents */
 $success: #22c55e;           /* Green - success states */
 $warning: #fbbf24;           /* Amber - warnings */
 $error: #ef4444;             /* Red - errors */
-$surface: #1e293b;           /* Dark slate - surfaces */
-$surface-light: #334155;     /* Lighter slate - elevated surfaces */
-$background: #0f172a;        /* Very dark blue - background */
-$text-primary: #f1f5f9;      /* Light gray - primary text */
-$text-secondary: #94a3b8;    /* Medium gray - secondary text */
-$border: #475569;            /* Slate - borders */
+$surface: #285531;           /* Everglade - surfaces */
+$surface-light: #333333;     /* Light gray - elevated surfaces */
+$background: #161616;        /* Dark background */
+$text-primary: #d1e4d2;      /* Surf-crest - primary text */
+$text-secondary: #c0f867;    /* Sulu - secondary text */
+$border: #052c22;            /* Tiber - borders */
 
 /* Screen Styles */
 Screen {
@@ -21,30 +21,30 @@ Screen {
 }
 
 /* Header */
-#header {
+Header {
     dock: top;
-    height: 3;
-    background: $surface;
-    border: tall $primary;
+    height: 1;
+    background: #2c2c2c;
+    border: none;
     content-align: center middle;
 }
 
-#header-title {
-    color: $primary;
+Header Label {
+    color: #2c2c2c;
     text-style: bold;
 }
 
 /* Footer */
-#footer {
+Footer {
     dock: bottom;
-    height: 3;
-    background: $surface;
-    border: tall $border;
+    height: 1;
+    background: #2c2c2c;
+    border: none;
     content-align: center middle;
 }
 
-#footer-hint {
-    color: $text-secondary;
+Footer Label {
+    color: #2c2c2c;
 }
 
 /* Main Container */
@@ -107,7 +107,7 @@ Input:focus {
 }
 
 Input.-valid {
-    border: tall $success;
+    border: tall $primary;
 }
 
 Input.-invalid {
@@ -159,14 +159,14 @@ Checkbox > .toggle--label {
 }
 
 Checkbox.-on > .toggle--button {
-    color: $primary;
+    color: #85bf4f;
 }
 
 /* RadioSet */
 RadioSet {
     background: transparent;
     padding: 1;
-    border: round $border;
+    border: round $primary;
 }
 
 RadioSet:focus-within {
@@ -184,7 +184,7 @@ RadioButton:focus {
 }
 
 RadioButton.-on {
-    color: $primary;
+    color: #85bf4f;
 }
 
 RadioButton > .toggle--label {
@@ -192,7 +192,7 @@ RadioButton > .toggle--label {
 }
 
 RadioButton.-on > .toggle--label {
-    color: $primary;
+    color: #85bf4f;
     text-style: bold;
 }
 
@@ -309,7 +309,7 @@ DataTable > .datatable--cursor {
 
 /* Validation Messages */
 .validation-success {
-    color: $success;
+    color: $primary;
     text-style: bold;
 }
 
@@ -333,7 +333,12 @@ DataTable > .datatable--cursor {
 }
 
 #btn-back {
+    background: #828b83;
+}
+
+#btn-back:hover {
     background: $surface-light;
+    color: $text-primary;
 }
 
 #btn-next {

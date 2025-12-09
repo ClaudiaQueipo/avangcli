@@ -3,7 +3,7 @@
 from textual.app import ComposeResult
 from textual.widgets import Checkbox, Static
 
-from avangcli.ui.widgets.base_step import BaseStep
+from .base_step import BaseStep
 
 
 class MakefileStep(BaseStep):

@@ -3,7 +3,7 @@
 from textual.app import ComposeResult
 from textual.widgets import Checkbox, Static
 
-from avangcli.ui.widgets.base_step import BaseStep
+from .base_step import BaseStep
 
 
 class GitStep(BaseStep):
@@ -11,44 +11,72 @@ class GitStep(BaseStep):
 
     title = "Version Control"
 
+    checkbox_ids = ["git-checkbox", "commitizen-checkbox"]
+
     def compose(self) -> ComposeResult:
         """Compose widgets."""
-        yield Static(
-            "📚 Version Control",
-            classes="step-title"
-        )
-        yield Static(
-            "Configure Git repository and commit linting",
-            classes="step-description"
-        )
+        yield Static("📚 Version Control", classes="step-title")
+        yield Static("Configure Git repository and commit linting", classes="step-description")
 
         yield Checkbox(
             "Initialize Git repository",
             value=self.config_data.get("use_git", True),
-            id="git-checkbox"
+            id="git-checkbox",
         )
 
         yield Static(
             "Commit Linting (Conventional Commits)",
             classes="static-subtitle",
-            id="commitizen-title"
+            id="commitizen-title",
         )
 
         yield Checkbox(
             "Configure Commitizen and Commitlint for standardized commits",
             value=self.config_data.get("use_commitizen", False),
-            id="commitizen-checkbox"
+            id="commitizen-checkbox",
         )
 
         yield Static(
             "💡 Commitizen helps you write standardized commit messages",
             classes="static-hint",
-            id="commitizen-hint"
+            id="commitizen-hint",
         )
 
     def on_mount(self) -> None:
-        """Set initial visibility based on git checkbox."""
+        """Set initial visibility and focus."""
         self.update_commitizen_visibility()
+        try:
+            first_checkbox = self.query_one(f"#{self.checkbox_ids[0]}")
+            first_checkbox.focus()
+        except:
+            pass
+
+    def on_key(self, event) -> None:
+        """Handle key events for navigation."""
+        if event.key == "down":
+            self.focus_next_checkbox()
+            event.prevent_default()
+        elif event.key == "up":
+            self.focus_previous_checkbox()
+            event.prevent_default()
+
+    def focus_next_checkbox(self) -> None:
+        """Focus the next checkbox."""
+        current = self.app.focused
+        if current and hasattr(current, "id") and current.id in self.checkbox_ids:
+            index = self.checkbox_ids.index(current.id)
+            next_index = (index + 1) % len(self.checkbox_ids)
+            next_checkbox = self.query_one(f"#{self.checkbox_ids[next_index]}")
+            next_checkbox.focus()
+
+    def focus_previous_checkbox(self) -> None:
+        """Focus the previous checkbox."""
+        current = self.app.focused
+        if current and hasattr(current, "id") and current.id in self.checkbox_ids:
+            index = self.checkbox_ids.index(current.id)
+            prev_index = (index - 1) % len(self.checkbox_ids)
+            prev_checkbox = self.query_one(f"#{self.checkbox_ids[prev_index]}")
+            prev_checkbox.focus()
 
     def on_checkbox_changed(self, event: Checkbox.Changed) -> None:
         """Handle checkbox changes."""
@@ -82,6 +110,4 @@ class GitStep(BaseStep):
         commitizen_check = self.query_one("#commitizen-checkbox", Checkbox)
 
         self.config_data["use_git"] = git_check.value
-        self.config_data["use_commitizen"] = (
-            commitizen_check.value if git_check.value else False
-        )
+        self.config_data["use_commitizen"] = commitizen_check.value if git_check.value else False

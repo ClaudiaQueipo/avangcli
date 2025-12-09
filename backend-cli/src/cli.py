@@ -1,13 +1,12 @@
 """Main CLI entry point for AvangCLI Backend."""
 
 import logging
-from pathlib import Path
+from typing import Annotated
 
 import typer
 from rich.console import Console
-from typing_extensions import Annotated
 
-from avangcli.commands import init
+from .commands import init
 
 # Package version
 __version__ = "0.1.0"
@@ -30,7 +29,9 @@ app.command(name="init", help="Initialize a new FastAPI backend project")(init.m
 def version_callback(value: bool) -> None:
     """Show version and exit."""
     if value:
-        console.print(f"[bold blue]AvangCLI Backend[/bold blue] version [green]{__version__}[/green]")
+        console.print(
+            f"[bold #052c22]AvangCLI Backend[/bold #052c22] version [#adf042]{__version__}[/#adf042]"
+        )
         raise typer.Exit()
 
 

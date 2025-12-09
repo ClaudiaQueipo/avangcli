@@ -3,8 +3,8 @@
 from textual.app import ComposeResult
 from textual.widgets import Input, Static
 
-from avangcli.core.validators import ProjectValidator
-from avangcli.ui.widgets.base_step import BaseStep
+from ...core.validators import ProjectValidator
+from .base_step import BaseStep
 
 
 class NameStep(BaseStep):
@@ -19,13 +19,10 @@ class NameStep(BaseStep):
 
     def compose(self) -> ComposeResult:
         """Compose widgets."""
-        yield Static(
-            "📝 Project Name",
-            classes="step-title"
-        )
+        yield Static("📝 Project Name", classes="step-title")
         yield Static(
             "Enter a name for your FastAPI project (snake_case recommended)",
-            classes="step-description"
+            classes="step-description",
         )
 
         yield Input(
@@ -56,9 +53,7 @@ class NameStep(BaseStep):
                 # Show success
                 validation_msg = self.query_one("#validation-message", Static)
                 if normalized != name:
-                    validation_msg.update(
-                        f"✓ Will be normalized to: {normalized}"
-                    )
+                    validation_msg.update(f"✓ Will be normalized to: {normalized}")
                     validation_msg.add_class("validation-warning")
                 else:
                     validation_msg.update("✓ Valid project name")

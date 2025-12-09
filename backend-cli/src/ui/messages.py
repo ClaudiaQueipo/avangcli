@@ -20,11 +20,8 @@ ASCII_ART = """
 
 def print_banner() -> None:
     """Print the AvangCLI welcome banner with ASCII art."""
-    console.print(ASCII_ART, style="bold green")
-    console.print(
-        "    [dim]FastAPI Backend Project Generator[/dim]\n",
-        style="bold cyan"
-    )
+    console.print(ASCII_ART, style="bold #adf042")
+    console.print("    [dim]FastAPI Backend Project Generator[/dim]\n", style="bold #052c22")
 
 
 def print_success(message: str) -> None:
@@ -34,7 +31,7 @@ def print_success(message: str) -> None:
     Args:
         message: Success message to display
     """
-    console.print(f"✓ {message}", style="bold green")
+    console.print(f"✓ {message}", style="bold #adf042")
 
 
 def print_error(message: str, suggestion: str | None = None) -> None:
@@ -47,7 +44,7 @@ def print_error(message: str, suggestion: str | None = None) -> None:
     """
     console.print(f"✗ Error: {message}", style="bold red")
     if suggestion:
-        console.print(f"💡 Suggestion: {suggestion}", style="yellow")
+        console.print(f"💡 Suggestion: {suggestion}", style="#c0f867")
 
 
 def print_warning(message: str) -> None:
@@ -57,7 +54,7 @@ def print_warning(message: str) -> None:
     Args:
         message: Warning message to display
     """
-    console.print(f"⚠ Warning: {message}", style="bold yellow")
+    console.print(f"⚠ Warning: {message}", style="bold #c0f867")
 
 
 def print_info(message: str) -> None:
@@ -67,7 +64,7 @@ def print_info(message: str) -> None:
     Args:
         message: Info message to display
     """
-    console.print(f"ℹ {message}", style="blue")
+    console.print(f"ℹ {message}", style="#052c22")
 
 
 def print_step(step_number: int, total_steps: int, description: str) -> None:
@@ -79,9 +76,7 @@ def print_step(step_number: int, total_steps: int, description: str) -> None:
         total_steps: Total number of steps
         description: Step description
     """
-    console.print(
-        f"\n[bold cyan]Step {step_number}/{total_steps}:[/bold cyan] {description}"
-    )
+    console.print(f"\n[bold #052c22]Step {step_number}/{total_steps}:[/bold #052c22] {description}")
 
 
 def print_config_summary(config_data: dict) -> None:
@@ -92,14 +87,12 @@ def print_config_summary(config_data: dict) -> None:
         config_data: Dictionary with configuration values
     """
     table = Table(title="Project Configuration Summary", show_header=False)
-    table.add_column("Setting", style="cyan", no_wrap=True)
-    table.add_column("Value", style="green")
+    table.add_column("Setting", style="#052c22", no_wrap=True)
+    table.add_column("Value", style="#adf042")
 
     # Add rows
     table.add_row("Project Name", config_data.get("project_name", "N/A"))
-    table.add_row(
-        "Package Manager", config_data.get("package_manager", "N/A").upper()
-    )
+    table.add_row("Package Manager", config_data.get("package_manager", "N/A").upper())
 
     # Database configuration
     if config_data.get("use_database"):
@@ -140,31 +133,31 @@ def print_next_steps(project_name: str, use_makefile: bool = True) -> None:
         use_makefile: Whether a Makefile was generated
     """
     panel_content = f"""
-[bold green]Project '{project_name}' created successfully![/bold green]
+[bold #adf042]Project '{project_name}' created successfully![/bold #adf042]
 
-[bold cyan]Next steps:[/bold cyan]
+[bold #052c22]Next steps:[/bold #052c22]
 
 1. Navigate to your project:
-   [yellow]cd {project_name}[/yellow]
+   [#c0f867]cd {project_name}[/#c0f867]
 
 2. Activate the virtual environment:
-   [yellow]source .venv/bin/activate[/yellow]  (Unix/macOS)
-   [yellow].venv\\Scripts\\activate[/yellow]     (Windows)
+   [#c0f867]source .venv/bin/activate[/#c0f867]  (Unix/macOS)
+   [#c0f867].venv\\Scripts\\activate[/#c0f867]     (Windows)
 
 """
 
     if use_makefile:
         panel_content += """3. Install dependencies:
-   [yellow]make install[/yellow]
+   [#c0f867]make install[/#c0f867]
 
 4. Start the development server:
-   [yellow]make dev[/yellow]
+   [#c0f867]make dev[/#c0f867]
 
 5. Run tests:
-   [yellow]make test[/yellow]
+   [#c0f867]make test[/#c0f867]
 
 6. Check linting:
-   [yellow]make lint[/yellow]
+   [#c0f867]make lint[/#c0f867]
 """
     else:
         panel_content += """3. Install dependencies and start developing!
@@ -175,15 +168,13 @@ def print_next_steps(project_name: str, use_makefile: bool = True) -> None:
     panel = Panel(
         panel_content,
         title="Success!",
-        border_style="green",
+        border_style="#adf042",
         padding=(1, 2),
     )
     console.print(panel)
 
 
-def print_dependency_not_found(
-    dependency: str, install_url: str | None = None
-) -> None:
+def print_dependency_not_found(dependency: str, install_url: str | None = None) -> None:
     """
     Print a message about a missing dependency.
 
@@ -211,7 +202,7 @@ def confirm_action(message: str, default: bool = True) -> bool:
         True if user confirms, False otherwise
     """
     prompt_text = f"{message} [Y/n]" if default else f"{message} [y/N]"
-    console.print(f"\n{prompt_text}", style="bold yellow", end=" ")
+    console.print(f"\n{prompt_text}", style="bold #c0f867", end=" ")
 
     response = input().strip().lower()
 

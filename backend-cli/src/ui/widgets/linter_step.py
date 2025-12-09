@@ -3,7 +3,7 @@
 from textual.app import ComposeResult
 from textual.widgets import Checkbox, Static
 
-from avangcli.ui.widgets.base_step import BaseStep
+from .base_step import BaseStep
 
 
 class LinterStep(BaseStep):
@@ -11,40 +11,71 @@ class LinterStep(BaseStep):
 
     title = "Code Quality Tools"
 
+    checkbox_ids = ["linter-ruff", "linter-black", "linter-flake8"]
+
     def compose(self) -> ComposeResult:
         """Compose widgets."""
-        yield Static(
-            "🔍 Code Quality Tools",
-            classes="step-title"
-        )
-        yield Static(
-            "Select linters and formatters for your project",
-            classes="step-description"
-        )
+        yield Static("🔍 Code Quality Tools", classes="step-title")
+        yield Static("Select linters and formatters for your project", classes="step-description")
 
         current_linters = self.config_data.get("linters", ["ruff"])
 
         yield Checkbox(
             "Ruff (recommended - fast, all-in-one linter and formatter)",
             value="ruff" in current_linters,
-            id="linter-ruff"
+            id="linter-ruff",
         )
         yield Checkbox(
             "Black (opinionated code formatter)",
             value="black" in current_linters,
-            id="linter-black"
+            id="linter-black",
         )
         yield Checkbox(
             "Flake8 (traditional Python linter)",
             value="flake8" in current_linters,
-            id="linter-flake8"
+            id="linter-flake8",
         )
 
         yield Static("", id="warning-message", classes="validation-warning")
         yield Static(
             "💡 Ruff is recommended as it combines linting and formatting in one tool",
-            classes="static-hint"
+            classes="static-hint",
         )
+
+    def on_mount(self) -> None:
+        """Set initial focus."""
+        try:
+            first_checkbox = self.query_one(f"#{self.checkbox_ids[0]}")
+            first_checkbox.focus()
+        except:
+            pass
+
+    def on_key(self, event) -> None:
+        """Handle key events for navigation."""
+        if event.key == "down":
+            self.focus_next_checkbox()
+            event.prevent_default()
+        elif event.key == "up":
+            self.focus_previous_checkbox()
+            event.prevent_default()
+
+    def focus_next_checkbox(self) -> None:
+        """Focus the next checkbox."""
+        current = self.app.focused
+        if current and hasattr(current, "id") and current.id in self.checkbox_ids:
+            index = self.checkbox_ids.index(current.id)
+            next_index = (index + 1) % len(self.checkbox_ids)
+            next_checkbox = self.query_one(f"#{self.checkbox_ids[next_index]}")
+            next_checkbox.focus()
+
+    def focus_previous_checkbox(self) -> None:
+        """Focus the previous checkbox."""
+        current = self.app.focused
+        if current and hasattr(current, "id") and current.id in self.checkbox_ids:
+            index = self.checkbox_ids.index(current.id)
+            prev_index = (index - 1) % len(self.checkbox_ids)
+            prev_checkbox = self.query_one(f"#{self.checkbox_ids[prev_index]}")
+            prev_checkbox.focus()
 
     def on_checkbox_changed(self, event: Checkbox.Changed) -> None:
         """Handle linter checkbox changes."""

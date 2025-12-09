@@ -6,15 +6,15 @@ from rich.console import Console
 from rich.prompt import Confirm, Prompt
 from rich.table import Table
 
-from avangcli.core.exceptions import InvalidProjectNameError
-from avangcli.core.validators import DependencyValidator, ProjectValidator
-from avangcli.models.project_config import (
+from ..core.exceptions import InvalidProjectNameError
+from ..core.validators import DependencyValidator, ProjectValidator
+from ..models.project_config import (
     DockerEnvironment,
     Linter,
     PackageManager,
     ProjectConfig,
 )
-from avangcli.ui.messages import print_error, print_step, print_warning
+from ..ui.messages import print_error, print_step, print_warning
 
 console = Console()
 
@@ -301,7 +301,7 @@ class ProjectSetupPrompt:
             Complete project configuration
         """
         console.print("\n")
-        from avangcli.ui.messages import print_banner
+        from ..ui.messages import print_banner
 
         print_banner()
         console.print(

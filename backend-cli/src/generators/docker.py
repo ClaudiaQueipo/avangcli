@@ -4,8 +4,8 @@ from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
 
-from avangcli.core.config import DOCKER_TEMPLATES_DIR
-from avangcli.models.project_config import DockerEnvironment, ProjectConfig
+from ..core.config import DOCKER_TEMPLATES_DIR
+from ..models.project_config import DockerEnvironment, ProjectConfig
 
 
 class DockerGenerator:
