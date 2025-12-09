@@ -4,28 +4,30 @@ CLI tool to generate and manage FastAPI backend projects following Screaming Arc
 
 ## Installation
 
-```bash
-# Using UV (recommended)
-uv pip install -e .
+This project uses **UV** as the package manager.
 
-# Using pip
-pip install -e .
+```bash
+# Install with UV
+uv sync
+
+# Or install in editable mode
+uv pip install -e .
 ```
 
 ## Development
 
 ```bash
-# Install development dependencies
-uv pip install -e ".[dev]"
+# Sync dependencies (including dev dependencies)
+uv sync
 
 # Run tests
-pytest
+uv run pytest
 
 # Run linter
-ruff check .
+uv run ruff check .
 
 # Format code
-ruff format .
+uv run ruff format .
 ```
 
 ## Usage
