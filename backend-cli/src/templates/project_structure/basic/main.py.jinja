@@ -3,8 +3,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.core.config import settings
-from app.api.routes import health
+from app.config import settings
+from app.routers import health
 
 app = FastAPI(
     title=settings.PROJECT_NAME,

@@ -2,7 +2,7 @@
 
 from fastapi import APIRouter{% if use_database %}, status{% endif %}
 {% if use_database %}
-from app.core.dependencies import DBSession
+from app.dependencies import DBSession
 from sqlalchemy import text
 {% endif %}
 
