@@ -67,6 +67,11 @@ class ProjectConfig(BaseModel):
         description="Whether to initialize a Git repository",
     )
 
+    use_commitizen: bool = Field(
+        default=False,
+        description="Whether to configure Commitizen and Commitlint for commit linting",
+    )
+
     use_makefile: bool = Field(
         default=True,
         description="Whether to generate a Makefile with useful commands",
@@ -87,6 +92,15 @@ class ProjectConfig(BaseModel):
         use_database = info.data.get("use_database", False)
         if not use_database and v:
             return []
+        return v
+
+    @field_validator("use_commitizen")
+    @classmethod
+    def validate_use_commitizen(cls, v: bool, info) -> bool:
+        """Ensure use_commitizen is False if use_git is False."""
+        use_git = info.data.get("use_git", True)
+        if not use_git and v:
+            return False
         return v
 
     @property
@@ -116,6 +130,7 @@ class ProjectConfig(BaseModel):
             "use_docker": self.use_docker,
             "linters": [linter.value for linter in self.linters],
             "use_git": self.use_git,
+            "use_commitizen": self.use_commitizen,
             "use_makefile": self.use_makefile,
             # Convenience flags for templates
             "has_ruff": Linter.RUFF in self.linters,

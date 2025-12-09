@@ -33,7 +33,7 @@ class ProjectSetupPrompt:
         Returns:
             Valid project name
         """
-        print_step(1, 6, "Project Name")
+        print_step(1, 7, "Project Name")
         console.print(
             "[dim]Enter a name for your project (snake_case recommended)[/dim]"
         )
@@ -72,7 +72,7 @@ class ProjectSetupPrompt:
         Returns:
             Selected package manager
         """
-        print_step(2, 6, "Package Manager")
+        print_step(2, 7, "Package Manager")
         console.print("[dim]Choose your preferred package manager[/dim]\n")
 
         # Display options
@@ -116,7 +116,7 @@ class ProjectSetupPrompt:
         Returns:
             Tuple of (use_database, db_environments)
         """
-        print_step(3, 6, "Database Configuration")
+        print_step(3, 7, "Database Configuration")
         console.print("[dim]Configure database support with Docker[/dim]\n")
 
         use_database = Confirm.ask(
@@ -172,7 +172,7 @@ class ProjectSetupPrompt:
         Returns:
             List of selected linters
         """
-        print_step(4, 6, "Code Quality Tools")
+        print_step(4, 7, "Code Quality Tools")
         console.print("[dim]Select linter and formatter (you can select multiple)[/dim]\n")
 
         table = Table(show_header=False, box=None, padding=(0, 2))
@@ -231,7 +231,7 @@ class ProjectSetupPrompt:
         Returns:
             Whether to initialize Git repository
         """
-        print_step(5, 6, "Git Repository")
+        print_step(5, 7, "Git Repository")
         console.print("[dim]Initialize a Git repository for version control[/dim]\n")
 
         use_git = Confirm.ask(
@@ -249,6 +249,31 @@ class ProjectSetupPrompt:
 
         return use_git
 
+    def prompt_commitizen(self, use_git: bool) -> bool:
+        """
+        Prompt for Commitizen and Commitlint configuration.
+
+        Args:
+            use_git: Whether Git will be initialized
+
+        Returns:
+            Whether to configure Commitizen and Commitlint
+        """
+        if not use_git:
+            return False
+
+        print_step(6, 7, "Commit Linting")
+        console.print(
+            "[dim]Configure Commitizen and Commitlint for conventional commits[/dim]\n"
+        )
+
+        console.print("[dim]This will help you write standardized commit messages[/dim]")
+        console.print("[dim]following the Conventional Commits specification.[/dim]\n")
+
+        return Confirm.ask(
+            "[cyan]Set up Commitizen and Commitlint?[/cyan]", default=True
+        )
+
     def prompt_makefile(self) -> bool:
         """
         Prompt for Makefile generation.
@@ -256,7 +281,7 @@ class ProjectSetupPrompt:
         Returns:
             Whether to generate Makefile
         """
-        print_step(6, 6, "Makefile")
+        print_step(7, 7, "Makefile")
         console.print(
             "[dim]Generate a Makefile with convenient commands (install, dev, test, etc.)[/dim]\n"
         )
@@ -293,6 +318,7 @@ class ProjectSetupPrompt:
         use_database, db_environments = self.prompt_database_config()
         linters = self.prompt_linters()
         use_git = self.prompt_git_init()
+        use_commitizen = self.prompt_commitizen(use_git)
         use_makefile = self.prompt_makefile()
 
         # Create configuration
@@ -303,6 +329,7 @@ class ProjectSetupPrompt:
             db_environments=db_environments,
             linters=linters,
             use_git=use_git,
+            use_commitizen=use_commitizen,
             use_makefile=use_makefile,
         )
 

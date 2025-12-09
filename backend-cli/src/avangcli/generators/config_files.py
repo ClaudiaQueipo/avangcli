@@ -59,6 +59,10 @@ class ConfigFilesGenerator:
         # Generate README.md
         self._generate_readme(context)
 
+        # Generate commitizen/commitlint config if enabled
+        if self.config.use_commitizen:
+            self._generate_commitlint_config(context)
+
     def _generate_pyproject(self, context: dict) -> None:
         """Generate pyproject.toml file."""
         content = self._render_template("pyproject.toml.jinja", context)
@@ -78,3 +82,8 @@ class ConfigFilesGenerator:
         """Generate README.md file."""
         content = self._render_template("README.md.jinja", context)
         (self.project_dir / "README.md").write_text(content)
+
+    def _generate_commitlint_config(self, context: dict) -> None:
+        """Generate commitlint configuration file."""
+        content = self._render_template("commitlint.config.js.jinja", context)
+        (self.project_dir / "commitlint.config.js").write_text(content)

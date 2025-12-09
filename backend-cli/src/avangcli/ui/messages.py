@@ -113,6 +113,11 @@ def print_config_summary(config_data: dict) -> None:
 
     # Git and Makefile
     table.add_row("Git Repository", "Yes" if config_data.get("use_git") else "No")
+
+    # Commitizen (only if Git is enabled)
+    if config_data.get("use_git"):
+        table.add_row("Commitizen/Commitlint", "Yes" if config_data.get("use_commitizen") else "No")
+
     table.add_row("Makefile", "Yes" if config_data.get("use_makefile") else "No")
 
     console.print("\n")
