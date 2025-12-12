@@ -1,0 +1,15 @@
+"""SQLAlchemy models for {{ module_name }} module."""
+
+from sqlalchemy import Column, Integer, String, Text
+
+from app.database import Base
+
+
+class {{ module_name|title }}(Base):
+    """{{ module_name|title }} database model."""
+
+    __tablename__ = "{{ module_name }}s"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True)
+    description = Column(Text, nullable=True)

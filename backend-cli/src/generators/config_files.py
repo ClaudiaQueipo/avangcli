@@ -21,6 +21,7 @@ class ConfigFilesGenerator:
         """
         self.config = config
         self.project_dir = project_dir
+        self.project_dir.mkdir(parents=True, exist_ok=True)
 
         # Set up Jinja2 environment
         self.jinja_env = Environment(
@@ -66,9 +67,10 @@ class ConfigFilesGenerator:
         if self.config.use_commitizen:
             self._generate_commitlint_config(context)
 
-        # Generate alembic.ini if using database
+        # Generate alembic files if using database
         if self.config.use_database:
             self._generate_alembic_ini(context)
+            self._generate_alembic_env(context)
 
     def _generate_pyproject(self, context: dict) -> None:
         """Generate pyproject.toml file."""
@@ -104,3 +106,15 @@ class ConfigFilesGenerator:
         """Generate alembic.ini configuration file."""
         content = self._render_template("alembic.ini.jinja", context)
         (self.project_dir / "alembic.ini").write_text(content)
+
+    def _generate_alembic_env(self, context: dict) -> None:
+        """Generate alembic/env.py configuration file."""
+        alembic_dir = self.project_dir / "alembic"
+        alembic_dir.mkdir(parents=True, exist_ok=True)
+
+        content = self._render_template("alembic/env.py.jinja", context)
+        (alembic_dir / "env.py").write_text(content)
+
+        # Generate script.py.mako
+        script_content = self._render_template("alembic/script.py.mako.jinja", context)
+        (alembic_dir / "script.py.mako").write_text(script_content)

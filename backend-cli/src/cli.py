@@ -6,7 +6,7 @@ from typing import Annotated
 import typer
 from rich.console import Console
 
-from .commands import init
+from .commands import init, module
 
 # Package version
 __version__ = "0.1.0"
@@ -22,8 +22,11 @@ app = typer.Typer(
     rich_markup_mode="rich",
 )
 
-# Register init command
+# Register commands
 app.command(name="init", help="Initialize a new FastAPI backend project")(init.main)
+app.command(name="module", help="Generate a new FastAPI module with boilerplate code")(
+    module.module
+)
 
 
 def version_callback(value: bool) -> None:

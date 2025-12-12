@@ -1,5 +1,7 @@
 """Project name input step."""
 
+from pathlib import Path
+
 from textual.app import ComposeResult
 from textual.widgets import Input, Static
 
@@ -28,7 +30,7 @@ class NameStep(BaseStep):
         yield Input(
             placeholder="my_awesome_project",
             value=self.config_data.get("name", ""),
-            id="project-name-input"
+            id="project-name-input",
         )
 
         yield Static("", id="error-message")
@@ -83,6 +85,7 @@ class NameStep(BaseStep):
         try:
             normalized = self.validator.normalize_project_name(name)
             self.validator.validate_project_name(normalized)
+            self.validator.validate_project_path(Path(normalized))
             return True
         except Exception as e:
             self.show_error(str(e))

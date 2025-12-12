@@ -1,0 +1,28 @@
+"""Pydantic schemas for {{ module_name }} module."""
+
+from pydantic import BaseModel
+
+
+class {{ module_name|title }}Base(BaseModel):
+    """Base schema for {{ module_name }}."""
+    name: str
+    description: str | None = None
+
+
+class {{ module_name|title }}Create({{ module_name|title }}Base):
+    """Schema for creating {{ module_name }}."""
+    pass
+
+
+class {{ module_name|title }}Update(BaseModel):
+    """Schema for updating {{ module_name }}."""
+    name: str | None = None
+    description: str | None = None
+
+
+class {{ module_name|title }}({{ module_name|title }}Base):
+    """Schema for {{ module_name }} response."""
+    id: int
+
+    class Config:
+        from_attributes = True

@@ -1,0 +1,88 @@
+"""Routes for {{ module_name }} module."""
+
+from typing import List
+
+from fastapi import APIRouter, Depends, HTTPException
+
+from app.dependencies import DBSession
+{% if use_database %}
+from . import crud, models, schemas
+{% else %}
+from . import schemas
+{% endif %}
+
+router = APIRouter()
+
+
+@router.get("/{{ module_name }}/", response_model=List[schemas.{{ module_name|title }}])
+async def read_{{ module_name }}s({% if use_database %}db: DBSession{% endif %}skip: int = 0, limit: int = 100):
+    """Get all {{ module_name }}s."""
+    {% if use_database %}
+    {{ module_name }}s = crud.get_{{ module_name }}s(db, skip=skip, limit=limit)
+    return {{ module_name }}s
+    {% else %}
+    # TODO: Implement without database
+    return []
+    {% endif %}
+
+
+@router.post("/{{ module_name }}/", response_model=schemas.{{ module_name|title }})
+async def create_{{ module_name }}({{ module_name }}: schemas.{{ module_name|title }}Create{% if use_database %}, db: DBSession{% endif %}):
+    """Create a new {{ module_name }}."""
+    {% if use_database %}
+    db_{{ module_name }} = crud.get_{{ module_name }}_by_name(db, name={{ module_name }}.name)
+    if db_{{ module_name }}:
+        raise HTTPException(status_code=400, detail="{{ module_name|title }} already exists")
+    return crud.create_{{ module_name }}(db=db, {{ module_name }}={{ module_name }})
+    {% else %}
+    # TODO: Implement without database
+    return schemas.{{ module_name|title }}(id=1, **{{ module_name }}.model_dump())
+    {% endif %}
+
+
+@router.get("/{{ module_name }}/{ {{ module_name }}_id}", response_model=schemas.{{ module_name|title }})
+async def read_{{ module_name }}({{ module_name }}_id: int{% if use_database %}, db: DBSession{% endif %}):
+    """Get {{ module_name }} by ID."""
+    {% if use_database %}
+    db_{{ module_name }} = crud.get_{{ module_name }}(db, {{ module_name }}_id={{ module_name }}_id)
+    if db_{{ module_name }} is None:
+        raise HTTPException(status_code=404, detail="{{ module_name|title }} not found")
+    return db_{{ module_name }}
+    {% else %}
+    # TODO: Implement without database
+    if {{ module_name }}_id == 1:
+        return schemas.{{ module_name|title }}(id={{ module_name }}_id, name="Sample", description="Sample {{ module_name }}")
+    raise HTTPException(status_code=404, detail="{{ module_name|title }} not found")
+    {% endif %}
+
+
+@router.put("/{{ module_name }}/{ {{ module_name }}_id}", response_model=schemas.{{ module_name|title }})
+async def update_{{ module_name }}({{ module_name }}_id: int, {{ module_name }}: schemas.{{ module_name|title }}Update{% if use_database %}, db: DBSession{% endif %}):
+    """Update {{ module_name }}."""
+    {% if use_database %}
+    db_{{ module_name }} = crud.update_{{ module_name }}(db, {{ module_name }}_id={{ module_name }}_id, {{ module_name }}={{ module_name }})
+    if db_{{ module_name }} is None:
+        raise HTTPException(status_code=404, detail="{{ module_name|title }} not found")
+    return db_{{ module_name }}
+    {% else %}
+    # TODO: Implement without database
+    if {{ module_name }}_id == 1:
+        return schemas.{{ module_name|title }}(id={{ module_name }}_id, name={{ module_name }}.name or "Sample", description={{ module_name }}.description or "Sample {{ module_name }}")
+    raise HTTPException(status_code=404, detail="{{ module_name|title }} not found")
+    {% endif %}
+
+
+@router.delete("/{{ module_name }}/{ {{ module_name }}_id}")
+async def delete_{{ module_name }}({{ module_name }}_id: int{% if use_database %}, db: DBSession{% endif %}):
+    """Delete {{ module_name }}."""
+    {% if use_database %}
+    success = crud.delete_{{ module_name }}(db, {{ module_name }}_id={{ module_name }}_id)
+    if not success:
+        raise HTTPException(status_code=404, detail="{{ module_name|title }} not found")
+    return {"message": "{{ module_name|title }} deleted"}
+    {% else %}
+    # TODO: Implement without database
+    if {{ module_name }}_id == 1:
+        return {"message": "{{ module_name|title }} deleted"}
+    raise HTTPException(status_code=404, detail="{{ module_name|title }} not found")
+    {% endif %}

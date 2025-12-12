@@ -1,0 +1,17 @@
+"""Helper functions for {{ module_name }} module."""
+
+
+def format_{{ module_name }}_name(name: str) -> str:
+    """Format {{ module_name }} name."""
+    return name.strip().title()
+
+
+def validate_{{ module_name }}_data(data: dict) -> dict:
+    """Validate and clean {{ module_name }} data."""
+    # TODO: Implement data validation
+    return data
+
+
+def generate_{{ module_name }}_slug(name: str) -> str:
+    """Generate URL slug for {{ module_name }}."""
+    return name.lower().replace(" ", "-")
