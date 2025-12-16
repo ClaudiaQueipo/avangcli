@@ -55,6 +55,12 @@ export class ActionsManager {
     await command.execute()
   }
 
+  async setupSpeedInsights(packageManager, projectPath) {
+    const strategy = PackageManagerFactory.create(packageManager)
+    const command = SetupCommandFactory.createSpeedInsightsSetup(strategy, projectPath, this.commandExecutor)
+    await command.execute()
+  }
+
   async setupGit(packageManager, projectPath, linterFormatter) {
     const strategy = PackageManagerFactory.create(packageManager)
     const command = SetupCommandFactory.createGitSetup(strategy, projectPath, this.commandExecutor, linterFormatter)
@@ -75,5 +81,7 @@ export const setupMaterialUI = (packageManager, projectPath) =>
 export const setupShadcn = (packageManager, projectPath) => actionsManager.setupShadcn(packageManager, projectPath)
 export const setupTailwind = (packageManager, projectPath) => actionsManager.setupTailwind(packageManager, projectPath)
 export const setupHeroUI = (packageManager, projectPath) => actionsManager.setupHeroUI(packageManager, projectPath)
+export const setupSpeedInsights = (packageManager, projectPath) =>
+  actionsManager.setupSpeedInsights(packageManager, projectPath)
 export const setupGit = (packageManager, projectPath, linterFormatter) =>
   actionsManager.setupGit(packageManager, projectPath, linterFormatter)

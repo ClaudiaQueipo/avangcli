@@ -137,6 +137,8 @@ export const handler = async (argv) => {
         useTailwind = true
       }
       await actionsManager.setupHeroUI(packageManager, projectName)
+    } else {
+      await actionsManager.setupSpeedInsights(packageManager, projectName)
     }
 
     let gitSetup = argv["git-setup"] || argv.git
