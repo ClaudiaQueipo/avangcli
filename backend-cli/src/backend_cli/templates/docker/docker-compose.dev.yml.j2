@@ -1,0 +1,98 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: {{ project_name }}-app-dev
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - /app/.venv
+    environment:
+      - APP_ENV=development
+      - DEBUG=true
+{% if database == "postgres" %}
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@postgres:5432/{{ package_name }}
+{% elif database == "mysql" %}
+      - DATABASE_URL=mysql+aiomysql://root:root@mysql:3306/{{ package_name }}
+{% elif database == "sqlserver" %}
+      - DATABASE_URL=mssql+aioodbc://sa:YourStrong@Passw0rd@sqlserver:1433/{{ package_name }}?driver=ODBC+Driver+18+for+SQL+Server&TrustServerCertificate=yes
+{% endif %}
+    depends_on:
+{% if database == "postgres" %}
+      postgres:
+        condition: service_healthy
+{% elif database == "mysql" %}
+      mysql:
+        condition: service_healthy
+{% elif database == "sqlserver" %}
+      sqlserver:
+        condition: service_healthy
+{% endif %}
+
+{% if database == "postgres" %}
+  postgres:
+    image: postgres:16-alpine
+    container_name: {{ project_name }}-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: {{ package_name }}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+{% elif database == "mysql" %}
+  mysql:
+    image: mysql:8.0
+    container_name: {{ project_name }}-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: {{ package_name }}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    command: --default-authentication-plugin=mysql_native_password
+
+volumes:
+  mysql_data:
+{% elif database == "sqlserver" %}
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: {{ project_name }}-sqlserver
+    restart: unless-stopped
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "YourStrong@Passw0rd"
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    healthcheck:
+      test: /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "YourStrong@Passw0rd" -C -Q "SELECT 1" || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  sqlserver_data:
+{% endif %}
