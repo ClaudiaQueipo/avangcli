@@ -1,0 +1,32 @@
+class DomainException(Exception):
+    def __init__(self, message: str, code: str = "DOMAIN_ERROR"):
+        self.message = message
+        self.code = code
+        super().__init__(self.message)
+
+
+class EntityNotFoundException(DomainException):
+    def __init__(self, entity_name: str, entity_id: str | int):
+        super().__init__(
+            message=f"{entity_name} with id '{entity_id}' not found",
+            code="ENTITY_NOT_FOUND",
+        )
+        self.entity_name = entity_name
+        self.entity_id = entity_id
+
+
+class EntityAlreadyExistsException(DomainException):
+    def __init__(self, entity_name: str, field: str, value: str):
+        super().__init__(
+            message=f"{entity_name} with {field}='{value}' already exists",
+            code="ENTITY_ALREADY_EXISTS",
+        )
+        self.entity_name = entity_name
+        self.field = field
+        self.value = value
+
+
+class ValidationException(DomainException):
+    def __init__(self, message: str, field: str | None = None):
+        super().__init__(message=message, code="VALIDATION_ERROR")
+        self.field = field

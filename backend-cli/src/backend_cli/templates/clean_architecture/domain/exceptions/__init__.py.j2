@@ -1,0 +1,13 @@
+from {{ package_name }}.domain.exceptions.base import (
+    DomainException,
+    EntityAlreadyExistsException,
+    EntityNotFoundException,
+    ValidationException,
+)
+
+__all__ = [
+    "DomainException",
+    "EntityNotFoundException",
+    "EntityAlreadyExistsException",
+    "ValidationException",
+]

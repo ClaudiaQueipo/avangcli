@@ -1,0 +1,52 @@
+from typing import Generic, TypeVar
+
+from sqlalchemy import func, select
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from {{ package_name }}.infrastructure.orm.base import Base
+
+T = TypeVar("T", bound=Base)
+ID = TypeVar("ID", int, str)
+
+
+class SQLAlchemyRepository(Generic[T, ID]):
+    def __init__(self, session: AsyncSession, model: type[T]):
+        self._session = session
+        self._model = model
+
+    async def get_by_id(self, id: ID) -> T | None:
+        return await self._session.get(self._model, id)
+
+    async def get_all(self, skip: int = 0, limit: int = 100) -> list[T]:
+        query = select(self._model).offset(skip).limit(limit)
+        result = await self._session.execute(query)
+        return list(result.scalars().all())
+
+    async def create(self, entity: T) -> T:
+        self._session.add(entity)
+        await self._session.flush()
+        await self._session.refresh(entity)
+        return entity
+
+    async def update(self, entity: T) -> T:
+        await self._session.merge(entity)
+        await self._session.flush()
+        await self._session.refresh(entity)
+        return entity
+
+    async def delete(self, id: ID) -> bool:
+        entity = await self.get_by_id(id)
+        if entity is None:
+            return False
+        await self._session.delete(entity)
+        await self._session.flush()
+        return True
+
+    async def exists(self, id: ID) -> bool:
+        entity = await self.get_by_id(id)
+        return entity is not None
+
+    async def count(self) -> int:
+        query = select(func.count()).select_from(self._model)
+        result = await self._session.execute(query)
+        return result.scalar() or 0

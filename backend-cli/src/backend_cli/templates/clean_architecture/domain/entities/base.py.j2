@@ -1,0 +1,31 @@
+from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Generic, TypeVar
+from uuid import UUID, uuid4
+
+ID = TypeVar("ID", int, UUID)
+
+
+@dataclass
+class BaseEntity(Generic[ID]):
+    id: ID | None = field(default=None)
+    created_at: datetime = field(default_factory=datetime.utcnow)
+    updated_at: datetime | None = field(default=None)
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, BaseEntity):
+            return False
+        return self.id == other.id
+
+    def __hash__(self) -> int:
+        return hash(self.id)
+
+
+@dataclass
+class UUIDEntity(BaseEntity[UUID]):
+    id: UUID = field(default_factory=uuid4)
+
+
+@dataclass
+class IntEntity(BaseEntity[int]):
+    id: int | None = field(default=None)
