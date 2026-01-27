@@ -1,0 +1,120 @@
+# {{ project_name }}
+
+FastAPI project with clean architecture.
+
+## Requirements
+
+- Python 3.11+
+- [UV](https://docs.astral.sh/uv/) package manager
+- Docker & Docker Compose (optional)
+
+## Getting Started
+
+### 1. Install dependencies
+
+```bash
+uv sync
+```
+
+### 2. Configure environment
+
+```bash
+cp .env.example .env
+# Edit .env with your configuration
+```
+
+### 3. Start database
+
+{% if docker != "none" %}
+```bash
+docker compose -f docker-compose.dev.yml up -d
+```
+{% else %}
+Configure your database connection in `.env` file.
+{% endif %}
+
+### 4. Run migrations
+
+```bash
+uv run alembic upgrade head
+```
+
+### 5. Start development server
+
+```bash
+uv run uvicorn src.{{ package_name }}.api.main:app --reload
+```
+
+The API will be available at `http://localhost:8000`.
+
+## Project Structure
+
+```
+src/{{ package_name }}/
+├── api/                 # API layer (FastAPI routes, schemas)
+│   ├── dependencies/    # Dependency injection
+│   ├── routes/          # API endpoints
+│   └── schemas/         # Pydantic schemas for API
+├── application/         # Application layer (use cases, DTOs)
+│   ├── dtos/            # Data Transfer Objects
+│   └── use_cases/       # Business use cases
+├── domain/              # Domain layer (entities, repositories)
+│   ├── entities/        # Domain entities
+│   ├── exceptions/      # Domain exceptions
+│   └── repositories/    # Repository interfaces (Protocols)
+└── infrastructure/      # Infrastructure layer (implementations)
+    ├── orm/             # SQLAlchemy models and session
+    └── repositories/    # Repository implementations
+```
+
+## Development
+
+### Run tests
+
+```bash
+uv run pytest
+```
+
+### Run linter
+
+```bash
+uv run ruff check .
+uv run ruff format .
+```
+
+{% if precommit %}
+### Pre-commit hooks
+
+```bash
+uv run pre-commit install
+uv run pre-commit run --all-files
+```
+{% endif %}
+
+## API Documentation
+
+- Swagger UI: `http://localhost:8000/docs`
+- ReDoc: `http://localhost:8000/redoc`
+
+## Database
+
+- **Type**: {{ database | capitalize }}
+- **Migrations**: Alembic
+
+### Create a new migration
+
+```bash
+uv run alembic revision --autogenerate -m "description"
+```
+
+### Apply migrations
+
+```bash
+uv run alembic upgrade head
+```
+
+### Rollback migration
+
+```bash
+uv run alembic downgrade -1
+```
