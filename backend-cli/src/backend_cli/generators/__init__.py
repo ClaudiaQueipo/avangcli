@@ -1,3 +1,4 @@
+from backend_cli.generators.alembic_setup import AlembicSetupGenerator
 from backend_cli.generators.base import BaseGenerator
 from backend_cli.generators.database_setup import DatabaseSetupGenerator
 from backend_cli.generators.docker_setup import DockerSetupGenerator
@@ -8,4 +9,5 @@ __all__ = [
     "ProjectStructureGenerator",
     "DatabaseSetupGenerator",
     "DockerSetupGenerator",
+    "AlembicSetupGenerator",
 ]
