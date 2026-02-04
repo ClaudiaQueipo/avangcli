@@ -16,6 +16,31 @@ const packageJson = JSON.parse(
 )
 const version = packageJson.version
 
+if (process.argv[2] === "backend") {
+  const backendCliPath = join(rootDir, "backend-cli")
+  const backendArgs = process.argv.slice(3)
+
+  const backendCli = spawn("uv", ["run", "python", "-m", "backend_cli.main", ...backendArgs], {
+    stdio: "inherit",
+    cwd: backendCliPath
+  })
+
+  backendCli.on("exit", (code) => {
+    process.exit(code || 0)
+  })
+
+  backendCli.on("error", (err) => {
+    console.error("Failed to launch backend CLI:", err)
+    console.error("Make sure UV is installed and backend-cli dependencies are set up")
+    console.error("Run: cd backend-cli && uv sync")
+    process.exit(1)
+  })
+} else {
+  runYargsCli()
+}
+
+function runYargsCli() {
+
 function launchFrontendCli(args) {
   const frontendCliPath = join(rootDir, "frontend-cli", "index.js")
 
@@ -35,7 +60,7 @@ function launchFrontendCli(args) {
 
 yargs(hideBin(process.argv))
   .scriptName("avangcli")
-  .usage("Usage: $0 <command> [options]")
+  .usage("Usage: $0 <command> [options]\n\nNote: Use 'avangcli backend <command>' for FastAPI backend scaffolding")
   .command(
     "init [project-name]",
     "Initialize a new Next.js project",
@@ -160,3 +185,5 @@ yargs(hideBin(process.argv))
   .alias("v", "version")
   .epilogue("For more information, visit: https://github.com/ClaudiaQueipo/avangcli")
   .parse()
+
+}

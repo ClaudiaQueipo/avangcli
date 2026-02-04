@@ -8,14 +8,15 @@
   },
   "files": [
     "bin",
-    "frontend-cli"
+    "frontend-cli",
+    "backend-cli"
   ],
   "scripts": {
     "dev": "node bin/avangcli",
     "dev:frontend": "cd frontend-cli && node index.js",
-    "dev:backend": "cd backend-cli && python3 generator.py",
+    "dev:backend": "cd backend-cli && uv run python -m backend_cli.main",
     "install:frontend": "cd frontend-cli && bun install",
-    "install:backend": "cd backend-cli && pip install -r requirements.txt",
+    "install:backend": "cd backend-cli && uv sync",
     "install:all": "bun install && bun run install:frontend && bun run install:backend",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

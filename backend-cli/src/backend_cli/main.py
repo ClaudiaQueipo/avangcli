@@ -2,6 +2,7 @@ import typer
 from rich.console import Console
 
 from backend_cli import __version__
+from backend_cli.commands.init import init
 
 app = typer.Typer(
     name="avangcli-backend",
@@ -10,6 +11,8 @@ app = typer.Typer(
 )
 
 console = Console()
+
+app.command(name="init", help="Initialize a new FastAPI project")(init)
 
 
 def version_callback(value: bool) -> None:

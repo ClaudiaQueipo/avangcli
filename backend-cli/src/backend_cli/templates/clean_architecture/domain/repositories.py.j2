@@ -1,0 +1,31 @@
+from abc import abstractmethod
+from typing import Generic, Protocol, TypeVar
+from uuid import UUID
+
+from {{ package_name }}.domain.entities import BaseEntity
+
+T = TypeVar("T", bound=BaseEntity)
+ID = TypeVar("ID", int, UUID)
+
+
+class BaseRepository(Protocol, Generic[T, ID]):
+    @abstractmethod
+    async def get_by_id(self, id: ID) -> T | None: ...
+
+    @abstractmethod
+    async def get_all(self, skip: int = 0, limit: int = 100) -> list[T]: ...
+
+    @abstractmethod
+    async def create(self, entity: T) -> T: ...
+
+    @abstractmethod
+    async def update(self, entity: T) -> T: ...
+
+    @abstractmethod
+    async def delete(self, id: ID) -> bool: ...
+
+    @abstractmethod
+    async def exists(self, id: ID) -> bool: ...
+
+    @abstractmethod
+    async def count(self) -> int: ...

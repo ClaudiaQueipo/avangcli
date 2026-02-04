@@ -8,11 +8,12 @@ from rich.progress import Progress, SpinnerColumn, TextColumn
 
 class ConsoleUI:
     LOGO = r"""
-    ___  _    _____    _  __________   ____  ___   ________ ______  _   ______
-   /   || |  / /   |  / |/ / ____/ /  /  _/ / _ ) / ____/ //_/ __ \/ | / / __ \
-  / /| || | / / /| | /    / / __/ /   / /  / _  |/ __/ / ,< / / / /  |/ / / / /
- / ___ || |/ / ___ |/ /|  / /_/ / /____/ / /____/ /___/ /| / /_/ / /|  / /_/ /
-/_/  |_||___/_/  |_/_/ |_/\____/_____/___/      /_____/_/ |_\____/_/ |_/_____/
+ █████╗ ██╗   ██╗ █████╗ ███╗   ██╗ ██████╗  ██████╗██╗     ██╗    ██████╗  █████╗  ██████╗██╗  ██╗███████╗███╗   ██╗██████╗
+██╔══██╗██║   ██║██╔══██╗████╗  ██║██╔════╝ ██╔════╝██║     ██║    ██╔══██╗██╔══██╗██╔════╝██║ ██╔╝██╔════╝████╗  ██║██╔══██╗
+███████║██║   ██║███████║██╔██╗ ██║██║  ███╗██║     ██║     ██║    ██████╔╝███████║██║     █████╔╝ █████╗  ██╔██╗ ██║██║  ██║
+██╔══██║╚██╗ ██╔╝██╔══██║██║╚██╗██║██║   ██║██║     ██║     ██║    ██╔══██╗██╔══██║██║     ██╔═██╗ ██╔══╝  ██║╚██╗██║██║  ██║
+██║  ██║ ╚████╔╝ ██║  ██║██║ ╚████║╚██████╔╝╚██████╗███████╗██║    ██████╔╝██║  ██║╚██████╗██║  ██╗███████╗██║ ╚████║██████╔╝
+╚═╝  ╚═╝  ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝  ╚═════╝╚══════╝╚═╝    ╚═════╝ ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝╚═════╝
     """
 
     def __init__(self):
@@ -44,6 +45,9 @@ class ConsoleUI:
 
     def show_warning(self, message: str) -> None:
         self._console.print(f"[yellow]⚠[/yellow] {message}")
+
+    def show_phase(self, message: str) -> None:
+        self._console.print(f"\n[bold cyan]▶[/bold cyan] {message}")
 
     def show_panel(self, content: str, title: str = "", style: str = "blue") -> None:
         self._console.print(Panel(content, title=title, border_style=style))
@@ -77,13 +81,8 @@ class ConsoleUI:
         )
         self.show_panel(summary, title="Project Configuration", style="green")
 
-    def show_next_steps(self, project_name: str) -> None:
-        steps = (
-            f"[bold]1.[/bold] cd {project_name}\n"
-            f"[bold]2.[/bold] uv sync\n"
-            f"[bold]3.[/bold] cp .env.example .env\n"
-            f"[bold]4.[/bold] docker compose -f docker-compose.dev.yml up -d\n"
-            f"[bold]5.[/bold] uv run alembic upgrade head\n"
-            f"[bold]6.[/bold] uv run uvicorn src.{project_name.replace('-', '_')}.api.main:app --reload"
+    def show_next_steps(self, steps: list[str]) -> None:
+        formatted_steps = "\n".join(
+            f"[bold]{i}.[/bold] {step}" for i, step in enumerate(steps, start=1)
         )
-        self.show_panel(steps, title="Next Steps", style="cyan")
+        self.show_panel(formatted_steps, title="Next Steps", style="cyan")
