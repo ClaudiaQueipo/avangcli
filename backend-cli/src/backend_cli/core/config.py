@@ -1,16 +1,16 @@
-from enum import Enum
+from enum import StrEnum
 from pathlib import Path
 
 from pydantic import BaseModel, field_validator
 
 
-class DatabaseType(str, Enum):
+class DatabaseType(StrEnum):
     POSTGRES = "postgres"
     MYSQL = "mysql"
     SQLSERVER = "sqlserver"
 
 
-class DockerConfig(str, Enum):
+class DockerConfig(StrEnum):
     DEV = "dev"
     PROD = "prod"
     BOTH = "both"

@@ -194,12 +194,12 @@ def _show_next_steps(config: ProjectConfig, ui: ConsoleUI) -> None:
         else:
             steps.append("docker-compose -f docker-compose.prod.yml up -d")
 
-    steps.extend([
-        "alembic upgrade head",
-        "uv run uvicorn {package}.api.main:app --reload".format(
-            package=config.package_name
-        ),
-    ])
+    steps.extend(
+        [
+            "alembic upgrade head",
+            f"uv run uvicorn {config.package_name}.api.main:app --reload",
+        ]
+    )
 
     if config.precommit:
         steps.insert(-1, "pre-commit install")
