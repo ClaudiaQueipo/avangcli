@@ -6,7 +6,11 @@ export default {
       "always",
       ["feat", "fix", "docs", "style", "refactor", "perf", "test", "build", "ci", "chore", "revert"]
     ],
-    "scope-enum": [2, "always", ["frontend-cli", "web-docs", "backend-cli", "root", "deps", "config"]],
+    "scope-enum": [
+      2,
+      "always",
+      ["frontend-cli", "web-docs", "backend-cli", "root", "deps", "config", "vscode", "jetbrains"]
+    ],
     "scope-empty": [2, "never"],
     "subject-case": [2, "never", ["sentence-case", "start-case", "pascal-case", "upper-case"]],
     "subject-empty": [2, "never"],
