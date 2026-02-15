@@ -158,7 +158,7 @@ const Navbar = () => {
     >
       <div
         className={`
-                    grid grid-cols-[80%_20%] md:grid-cols-[1fr_auto_1fr]  items-center px-6 md:px-3
+                    grid grid-cols-[80%_20%] md:grid-cols-[1fr_auto_1fr]  items-center px-6 md:px-1
                     ${
                       isScrolled
                         ? "bg-[#1a1a1a]/80 backdrop-blur-xl border border-white/10 rounded-full py-3 shadow-[0_8px_30px_rgba(0,0,0,0.4)]"
@@ -174,7 +174,7 @@ const Navbar = () => {
         <div className="hidden md:flex justify-center">
           <div
             className={`
-                            inline-flex items-center gap-2 relative
+                            inline-flex items-center gap-1 relative
                             ${isScrolled ? "" : "p-1 rounded-full backdrop-blur-md border bg-[#1a1a1a]/50 border-white/5"}
                         `}
           >
