@@ -173,3 +173,14 @@ export function useGitHubStars(owner: string, repo: string, options: FetchOption
     refetch
   }
 }
+
+export function useGitHubForks(owner: string, repo: string, options: FetchOptions = {}) {
+  const { data, loading, error, refetch } = useGitHubRepository(owner, repo, options)
+
+  return {
+    forkCount: data?.forks_count ?? null,
+    loading,
+    error,
+    refetch
+  }
+}

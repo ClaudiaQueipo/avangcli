@@ -2,12 +2,12 @@
 
 import { Icon } from "@iconify/react"
 import gsap from "gsap"
-import { BookOpen, Check, ChevronDown, Github, Star } from "lucide-react"
+import { BookOpen, Check, ChevronDown, GitFork, Github, Star } from "lucide-react"
 import { useLocale, useTranslations } from "next-intl"
 import React, { useEffect, useRef, useState } from "react"
 
 import { constants } from "@/constants/global-constants"
-import { useGitHubStars } from "@/hooks/use-github-api"
+import { useGitHubForks, useGitHubStars } from "@/hooks/use-github-api"
 import { Link, usePathname, useRouter } from "@/i18n/routing"
 import { formatStarCount } from "@/modules/shared/utils"
 
@@ -21,6 +21,7 @@ const Navbar = () => {
   const router = useRouter()
   const pathname = usePathname()
   const { starCount, loading: loadingStars } = useGitHubStars(constants.github_owner, constants.github_repo)
+  const { forkCount, loading: loadingForks } = useGitHubForks(constants.github_owner, constants.github_repo)
   const [isScrolled, setIsScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState("home")
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 })
@@ -157,7 +158,7 @@ const Navbar = () => {
     >
       <div
         className={`
-                    grid grid-cols-[80%_20%] md:grid-cols-[1fr_auto_1fr]  items-center px-6 md:px-4
+                    grid grid-cols-[80%_20%] md:grid-cols-[1fr_auto_1fr]  items-center px-6 md:px-3
                     ${
                       isScrolled
                         ? "bg-[#1a1a1a]/80 backdrop-blur-xl border border-white/10 rounded-full py-3 shadow-[0_8px_30px_rgba(0,0,0,0.4)]"
@@ -284,6 +285,15 @@ const Navbar = () => {
                   <span className="w-6 h-4 bg-lime-400/20 rounded animate-pulse"></span>
                 ) : (
                   formatStarCount(starCount)
+                )}
+              </span>
+
+              <span className="flex items-center gap-1 font-bold">
+                <GitFork className="w-4 h-4" />
+                {loadingForks || forkCount === null ? (
+                  <span className="w-6 h-4 bg-lime-400/20 rounded animate-pulse"></span>
+                ) : (
+                  formatStarCount(forkCount)
                 )}
               </span>
             </a>
