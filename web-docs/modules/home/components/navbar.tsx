@@ -33,6 +33,7 @@ const Navbar = () => {
   const NAV_ITEMS = [
     { id: "home", label: t("home"), href: "#home" },
     { id: "features", label: t("features"), href: "#features" },
+    { id: "tools", label: t("tools"), href: "#tools" },
     { id: "scaffolding", label: t("scaffolding"), href: "#scaffolding" },
     { id: "roadmap", label: t("roadmap"), href: "#roadmap" },
     { id: "creators", label: t("creators"), href: "#creators" },
@@ -156,7 +157,7 @@ const Navbar = () => {
     >
       <div
         className={`
-                    grid grid-cols-[80%_20%] md:grid-cols-[1fr_auto_1fr]  items-center px-6 md:px-8
+                    grid grid-cols-[80%_20%] md:grid-cols-[1fr_auto_1fr]  items-center px-6 md:px-4
                     ${
                       isScrolled
                         ? "bg-[#1a1a1a]/80 backdrop-blur-xl border border-white/10 rounded-full py-3 shadow-[0_8px_30px_rgba(0,0,0,0.4)]"
@@ -276,7 +277,6 @@ const Navbar = () => {
               className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-lime-400/50 text-lime-400 hover:bg-lime-400 hover:text-black transition-all text-sm font-medium"
             >
               <Github className="w-4 h-4" />
-              {/* <span className="flex items-center gap-1.5 border-r border-lime-400/50 pr-3">GitHub</span> */}
 
               <span className="flex items-center gap-1 font-bold">
                 <Star className="w-4 h-4" />

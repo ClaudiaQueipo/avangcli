@@ -9,6 +9,7 @@ import {
   LogoSkeleton,
   RoadmapSection,
   ScaffoldinSection,
+  ToolsSection,
   TopButton,
   useLoaderAnimation
 } from "@/modules/home"
@@ -34,6 +35,7 @@ export default function Home() {
         <HeroeSection />
         <FeaturesSection />
         <ScaffoldinSection />
+        <ToolsSection />
         <RoadmapSection />
         <CreatorsSection />
         <CtaSection />

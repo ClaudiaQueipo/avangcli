@@ -5,6 +5,7 @@
     "features": "Características",
     "scaffolding": "Scaffolding",
     "roadmap": "Roadmap",
+    "tools": "Herramientas",
     "creators": "Creadores",
     "startProject": "Iniciar proyecto",
     "docs": "Docs"
@@ -102,11 +103,49 @@
           "description": "Generación automática de interfaces, types y services de TypeScript desde openapi.json spec. Mantén tu código type-safe sin duplicación.",
           "quarter": "Noviembre 2025"
         },
+        "vscode": {
+          "title": "VS Code Extension",
+          "description": "Una extensión de Visual Studio Code para desarrolladores full-stack.",
+          "quarter": "Febrero 2026"
+        },
+        "jetbrains": {
+          "title": "JetBrains Extension",
+          "description": "Una extensión de JetBrains para desarrolladores full-stack.",
+          "quarter": "Febrero 2026",
+          "status": "En desarrollo"
+        },
         "future": {
           "title": "¿Qué sigue?",
           "description": "El roadmap sigue evolucionando. ¿Tienes ideas? Compártelas en nuestro repositorio de GitHub y ayúdanos a definir el futuro de AvangCLI.",
           "quarter": "TBD"
         }
+      }
+    },
+    "tools": {
+      "title": "Herramientas para",
+      "titleHighlight": "Desarrolladores",
+      "description": "Mejora tu experiencia de desarrollo con nuestras herramientas e integraciones.",
+      "install": "Instalar Extensión",
+      "marketplace": "Ver en Marketplace",
+      "vscode": {
+        "title": "Extensión VS Code",
+        "description": "Potencia tu flujo de trabajo con la extensión oficial de AvangCLI para VS Code. Integración completa con todas las funciones del CLI.",
+        "features": [
+          "Inicialización de proyectos con configuración guiada",
+          "Generación de módulos con gestión de estado",
+          "Regeneración automática de configuración",
+          "Generación de clientes OpenAPI"
+        ]
+      },
+      "jetbrains": {
+        "title": "Extensión Web Storm",
+        "description": "Potencia tu flujo de trabajo con la extensión oficial de AvangCLI para WebStorm. Integración completa con todas las funciones del CLI.",
+        "features": [
+          "Inicialización de proyectos con configuración guiada",
+          "Generación de módulos con gestión de estado",
+          "Regeneración automática de configuración",
+          "Generación de clientes OpenAPI"
+        ]
       }
     },
     "creators": {

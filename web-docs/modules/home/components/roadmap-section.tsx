@@ -2,7 +2,7 @@
 
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { Check, Cloud, Plug } from "lucide-react"
+import { BlocksIcon, Check, Cloud, Plug } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
 
@@ -213,6 +213,64 @@ export default function RoadmapSection() {
 
               <div className="md:w-1/2 pl-12 md:pl-12 order-3 md:order-3">
                 <span className="text-sm font-mono font-bold text-lime-400">{t("items.fastapi.quarter")}</span>
+              </div>
+            </div>
+
+            <div className="roadmap-item relative flex flex-col md:flex-row gap-8 items-start md:items-center group">
+              <div className="md:w-1/2 md:text-right order-2 md:order-1 hidden md:block pr-12">
+                <span className="text-sm font-mono font-bold text-lime-400">{t("items.vscode.quarter")}</span>
+              </div>
+
+              <div className="timeline-dot absolute left-6 md:left-1/2 -translate-x-[7px] md:-translate-x-1/2 flex items-center justify-center z-10 order-1 md:order-2">
+                <span className="progress-glow absolute inline-flex h-full w-full rounded-full bg-lime-400 opacity-75"></span>
+                <div className="w-4 h-4 rounded-full bg-[#161616] border-2 border-lime-400 relative z-10 shadow-[0_0_15px_rgba(163,230,53,0.5)]" />
+              </div>
+
+              <div className="roadmap-content md:w-1/2 pl-12 md:pl-0 order-3 md:order-3 w-full">
+                <div className="relative bg-[#1a1a1a] border border-white/10 p-6 rounded-2xl shadow-xl overflow-hidden group-hover:border-lime-500/30 transition-all duration-500">
+                  <div className="absolute -bottom-[40%] left-1/2 -translate-x-1/2 w-[120%] h-[100px] bg-lime-500/20 rounded-[100%] blur-2xl pointer-events-none" />
+
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-xl font-bold flex items-center gap-2 text-white">
+                      <BlocksIcon className="w-5 h-5 text-lime-400" />
+                      {t("items.vscode.title")}
+                    </h3>
+                    <span className="status-badge flex items-center justify-center w-5 h-5 rounded-full bg-lime-400/20 text-lime-400">
+                      <Check className="w-3 h-3" strokeWidth={3} />
+                    </span>
+                  </div>
+
+                  <p className="text-gray-400 text-sm leading-relaxed">{t("items.vscode.description")}</p>
+                </div>
+
+                <div className="md:hidden mt-2">
+                  <span className="text-sm font-mono font-bold text-lime-400">{t("items.vscode.quarter")}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="roadmap-item relative flex flex-col md:flex-row gap-8 items-start md:items-center group">
+              <div className="roadmap-content md:w-1/2 md:text-right order-2 md:order-1 pl-12 md:pl-0">
+                <div className="relative bg-[#1a1a1a] border border-white/10 p-6 rounded-2xl shadow-xl overflow-hidden group-hover:border-lime-500/30 transition-all duration-500">
+                  <div className="absolute -bottom-[40%] left-1/2 -translate-x-1/2 w-[120%] h-[100px] bg-lime-500/20 rounded-[100%] blur-2xl pointer-events-none" />
+
+                  <h3 className="text-xl font-bold mb-2 flex items-center md:justify-end gap-2 text-white">
+                    {t("items.jetbrains.title")}
+                    <span className="status-badge px-2 py-0.5 rounded text-[10px] font-bold bg-lime-400/10 text-lime-400 border border-lime-400/20 uppercase tracking-wide">
+                      {t("items.jetbrains.status")}
+                    </span>
+                  </h3>
+
+                  <p className="text-gray-400 text-sm leading-relaxed">{t("items.jetbrains.description")}</p>
+                </div>
+              </div>
+
+              <div className="timeline-dot absolute left-6 md:left-1/2 -translate-x-[7px] md:-translate-x-1/2 flex items-center justify-center z-10 order-1 md:order-2">
+                <div className="w-4 h-4 rounded-full bg-[#161616] border-2 border-lime-400 shadow-[0_0_15px_rgba(163,230,53,0.5)]" />
+              </div>
+
+              <div className="md:w-1/2 pl-12 md:pl-12 order-3 md:order-3">
+                <span className="text-sm font-mono font-bold text-lime-400">{t("items.jetbrains.quarter")}</span>
               </div>
             </div>
 

@@ -5,6 +5,7 @@
     "features": "Features",
     "scaffolding": "Scaffolding",
     "roadmap": "Roadmap",
+    "tools": "Tools",
     "creators": "Creators",
     "startProject": "Start project",
     "docs": "Docs"
@@ -102,11 +103,49 @@
           "description": "Automatic generation of TypeScript interfaces, types and services from openapi.json specs. Keep your code type-safe without duplication.",
           "quarter": "November 2025"
         },
+        "vscode": {
+          "title": "VS Code Extension",
+          "description": "Una extensión de Visual Studio Code para desarrolladores full-stack.",
+          "quarter": "Febrero 2026"
+        },
+        "jetbrains": {
+          "title": "JetBrains Extension",
+          "description": "A JetBrains extension for full-stack developers.",
+          "quarter": "Febrero 2026",
+          "status": "En desarrollo"
+        },
         "future": {
           "title": "What's next?",
           "description": "The roadmap continues to evolve. Have ideas? Share them in our GitHub repository and help us define the future of AvangCLI.",
           "quarter": "TBD"
         }
+      }
+    },
+    "tools": {
+      "title": "Developer",
+      "titleHighlight": "Tools",
+      "description": "Enhance your development experience with our integrated tools and extensions.",
+      "install": "Install Extension",
+      "marketplace": "View in Marketplace",
+      "vscode": {
+        "title": "VS Code Extension",
+        "description": "Supercharge your workflow with the official AvangCLI VS Code extension. Full integration with all CLI features.",
+        "features": [
+          "Project initialization with guided setup",
+          "Module generation with state management",
+          "Automatic configuration regeneration",
+          "OpenAPI client generation"
+        ]
+      },
+      "jetbrains": {
+        "title": "Web Storm Extension",
+        "description": "Supercharge your workflow with the official AvangCLI Web Storm extension. Full integration with all CLI features.",
+        "features": [
+          "Project initialization with guided setup",
+          "Module generation with state management",
+          "Automatic configuration regeneration",
+          "OpenAPI client generation"
+        ]
       }
     },
     "creators": {
